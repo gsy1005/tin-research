@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>铜数据库 · 图表画廊</title>
+<link rel="stylesheet" href="report.css">
+<style>
+body{padding:0}
+.db-head{padding:14px 20px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.db-head h2{font-size:15px;color:var(--gold);letter-spacing:2px;margin:0}
+.db-head .hint{font-size:11px;color:var(--dim)}
+.db-search{margin-left:auto;font-size:12.5px;padding:5px 12px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);width:220px;outline:none}
+.db-search:focus{border-color:var(--gold)}
+.db-wrap{display:flex;min-height:calc(100vh - 49px)}
+.db-side{width:230px;flex:none;border-right:1px solid var(--line);padding:10px 12px;overflow-y:auto;max-height:calc(100vh - 49px)}
+.db-g{font-size:12.5px;color:var(--gold);padding:6px 8px;cursor:pointer;border-radius:5px;display:flex;justify-content:space-between;align-items:center}
+.db-g:hover{background:var(--card)}
+.db-g.on{background:rgba(212,169,68,.1);box-shadow:inset 0 0 0 1px rgba(212,169,68,.4)}
+.db-g .cnt{font-size:10.5px;color:var(--dim)}
+.db-sg{font-size:11px;color:var(--dim);padding:3px 8px 3px 18px;cursor:pointer;border-radius:4px;display:flex;justify-content:space-between}
+.db-sg:hover{background:var(--card);color:var(--txt)}
+.db-sg.on{color:var(--txt);background:var(--card)}
+.db-main{flex:1;padding:14px 20px;min-width:0}
+.db-count{font-size:11.5px;color:var(--dim);margin:2px 0 12px}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .15s}
+.gcard:hover{border-color:var(--gold)}
+.gcard .gt{font-size:12px;color:var(--txt);height:32px;overflow:hidden;line-height:1.35;margin-bottom:4px}
+.gcard .gt b{color:var(--gold);font-weight:600}
+.gcard .gc{height:150px}
+.gcard .gf{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);margin-top:5px;font-variant-numeric:tabular-nums}
+.gcard .gf b{color:var(--txt)}
+.pager{display:flex;gap:10px;align-items:center;justify-content:center;margin:16px 0 6px}
+.pager button{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:5px;padding:4px 14px;font-size:12px;cursor:pointer}
+.pager button:hover:not(:disabled){border-color:var(--gold)}
+.pager button:disabled{opacity:.35;cursor:default}
+.pager span{font-size:12px;color:var(--dim)}
+.gmodal{position:fixed;inset:0;background:rgba(6,8,12,.82);z-index:1000;display:none;align-items:center;justify-content:center}
+.gmodal.on{display:flex}
+.gmodal .box{width:min(1060px,92vw);height:min(620px,84vh);background:var(--card);border:1px solid var(--gold);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column}
+.gmodal .mt{font-size:14px;color:var(--gold);margin-bottom:8px;line-height:1.4}
+.gmodal .mc{flex:1;min-height:0}
+.gmodal .mf{font-size:11px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between}
+.gmodal .x{position:absolute;top:14px;right:22px;font-size:22px;color:var(--dim);cursor:pointer}
+.gmodal .x:hover{color:var(--gold)}
+</style></head><body>
+<div class="db-head">
+  <h2>铜数据库 · 图表画廊</h2>
+  <span class="hint">铜数据库 + 铜跟踪 两表全量 1,432 条序列 · 点任意小图看大图 · 叠加分析请用「图表工作区」</span>
+  <input class="db-search" id="db-q" placeholder="搜索指标名称…">
+</div>
+<div class="db-wrap">
+  <div class="db-side" id="db-side"></div>
+  <div class="db-main">
+    <div class="db-count" id="db-count"></div>
+    <div class="gal" id="gal"></div>
+    <div class="pager" id="pager"></div>
+  </div>
+</div>
+<div class="gmodal" id="gmodal"><span class="x" id="gm-x">✕</span>
+  <div class="box"><div class="mt" id="gm-t"></div><div class="mc"><canvas id="gm-cv"></canvas></div><div class="mf" id="gm-f"></div></div>
+</div>
+<script src="lib/chart.min.js"></script>
+<script src="cu_db_data.js"></script>
+<script src="cu_gallery.js"></script>
+<script src="protect.js"></script>
+</body></html>

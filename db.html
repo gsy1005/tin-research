@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>数据库 · 锡研究工作台</title>
+<link rel="stylesheet" href="report.css">
+<style>
+body{padding:0}
+.db-head{padding:14px 20px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.db-head h2{font-size:15px;color:var(--gold);letter-spacing:2px;margin:0}
+.db-head .hint{font-size:11px;color:var(--dim)}
+.db-search{margin-left:auto;font-size:12.5px;padding:5px 12px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);width:220px;outline:none}
+.db-search:focus{border-color:var(--gold)}
+.db-wrap{display:flex;min-height:calc(100vh - 49px)}
+.db-side{width:230px;flex:none;border-right:1px solid var(--line);padding:10px 12px;overflow-y:auto;max-height:calc(100vh - 49px)}
+.db-g{font-size:12.5px;color:var(--gold);padding:6px 8px;cursor:pointer;border-radius:5px;display:flex;justify-content:space-between;align-items:center}
+.db-g:hover{background:var(--card)}
+.db-g.on{background:rgba(212,169,68,.1);box-shadow:inset 0 0 0 1px rgba(212,169,68,.4)}
+.db-g .cnt{font-size:10.5px;color:var(--dim)}
+.db-sg{font-size:11px;color:var(--dim);padding:3px 8px 3px 18px;cursor:pointer;border-radius:4px;display:flex;justify-content:space-between}
+.db-sg:hover{background:var(--card);color:var(--txt)}
+.db-sg.on{color:var(--txt);background:var(--card)}
+.db-main{flex:1;padding:14px 20px;min-width:0}
+.db-view{height:300px;margin-bottom:12px}
+.db-view .cbox{height:100%}
+.db-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.db-table th{position:sticky;top:0;background:#0d1117;text-align:left;font-size:11px;color:var(--dim);font-weight:normal;padding:6px 10px;border-bottom:1px solid var(--line)}
+.db-table td{padding:5px 10px;border-bottom:1px solid rgba(38,45,61,.5);color:var(--txt)}
+.db-table tr.r{cursor:pointer}
+.db-table tr.r:hover td{background:var(--card)}
+.db-table tr.r.on td{background:rgba(212,169,68,.07)}
+.db-table .nm{max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.db-table .num{font-variant-numeric:tabular-nums;text-align:right}
+.db-table .src{font-size:10.5px;color:var(--faint)}
+.db-count{font-size:11.5px;color:var(--dim);margin:4px 0 10px}
+</style></head><body>
+<div class="db-head">
+  <h2>数据库</h2>
+  <span class="hint" id="db-hint">钢联 + 12锡数据库 + 铜持仓 · 点击任意序列预览 · 叠加分析请用「图表工作区」</span>
+  <input class="db-search" id="db-q" placeholder="搜索指标名称…">
+</div>
+<div class="db-wrap">
+  <div class="db-side" id="db-side"></div>
+  <div class="db-main">
+    <div class="db-view"><div class="cbox"><canvas id="db-cv"></canvas></div></div>
+    <div class="db-count" id="db-count"></div>
+    <table class="db-table">
+      <thead><tr><th>指标名称</th><th>单位</th><th style="text-align:right">起始</th><th style="text-align:right">最新</th><th style="text-align:right">最新值</th><th style="text-align:right">条数</th><th>来源表</th></tr></thead>
+      <tbody id="db-rows"></tbody>
+    </table>
+  </div>
+</div>
+<script src="lib/chart.min.js"></script>
+<script src="db_data.js"></script>
+<script src="db.js"></script>
+<script src="protect.js"></script>
+</body></html>
