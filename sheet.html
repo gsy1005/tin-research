@@ -13,7 +13,8 @@
   .ctrl button.sec{background:#1f4e79}
   .ctrl .hint{color:#8a919c;font-size:12px}
   #sheet{max-width:1460px;margin:0 auto 30px;background:#fff;padding:0 0 14px}
-  .shead-bar{background:#1f3864;color:#fff;text-align:center;padding:10px 0 8px}
+  .shead-bar{background:#1f3864;color:#fff;text-align:center;padding:10px 0 8px;position:relative}
+  .shead-bar .author{position:absolute;top:10px;right:16px;font-size:12.5px;letter-spacing:2px;color:rgba(255,214,140,.9);font-weight:700}
   .shead-bar h1{font-size:26px;letter-spacing:6px;font-weight:800}
   .shead-bar .sub{font-size:12.5px;opacity:.85;margin-top:3px;letter-spacing:1px}
   .main{display:flex;gap:0;align-items:stretch}
@@ -71,7 +72,7 @@
   <span class="hint">日内总结可直接点击编辑，改完再导出；数据随 db_data.js 自动更新</span>
 </div>
 <div id="sheet">
-  <div class="shead-bar"><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET</div></div>
+  <div class="shead-bar"><span class="author">中哲金属 · 甘思雨</span><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET</div></div>
   <div class="summary"><h2>日 内 总 结</h2>
     <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
