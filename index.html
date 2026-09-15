@@ -35,6 +35,7 @@
 <div class="topbar">
   <div class="seg" id="seg">
     <button data-v="daily" class="on">日报</button>
+    <button data-v="sheet">数据日报</button>
     <button data-v="weekly">周报</button>
     <button data-v="news">锡市场信息和情绪</button>
     <button data-v="metals">其他有色</button>
@@ -44,9 +45,10 @@
     <button data-v="cudb">铜数据库</button>
     <button data-v="lab">图表工作区</button>
   </div>
-  <div class="author">锡研究工作台 · <b>TIN RESEARCH</b><span>SN · 有色</span><span style="color:#d4a944;border:1px solid #d4a944;border-radius:4px;padding:1px 8px;margin-left:10px;font-size:11px">日报已更新 9/14</span></div>
+  <div class="author">锡研究工作台 · <b>TIN RESEARCH</b><span>SN · 有色</span><span style="color:#d4a944;border:1px solid #d4a944;border-radius:4px;padding:1px 8px;margin-left:10px;font-size:11px">日报9/14 · 数据日报上线</span></div>
 </div>
 <iframe id="f-daily" src="daily_2026-09-14.html" title="锡研究日报"></iframe>
+<iframe id="f-sheet" data-lazy="sheet.html" title="锡数据日报" hidden></iframe>
 <iframe id="f-weekly" data-lazy="weekly_2026-W37.html" title="锡研究周报" hidden></iframe>
 <iframe id="f-news" data-lazy="news.html" title="锡产业新闻" hidden></iframe>
 <iframe id="f-metals" data-lazy="metals.html" title="其他有色" hidden></iframe>
@@ -60,14 +62,14 @@
   var seg=document.getElementById('seg');
   function show(v){
     seg.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
-    ['daily','weekly','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
+    ['daily','sheet','weekly','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
       var f=document.getElementById('f-'+k); if(!f)return;
       f.hidden = (k!==v);
       if(k===v && f.dataset.lazy && !f.dataset.loaded){ f.src=f.dataset.lazy; f.dataset.loaded='1'; }
     });
   }
   seg.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.v);});
-  var m=/[?&]v=(daily|weekly|news|metals|db|bal|cu|cudb|lab)/.exec(location.search);
+  var m=/[?&]v=(daily|sheet|weekly|news|metals|db|bal|cu|cudb|lab)/.exec(location.search);
   if(m) show(m[1]);
 })();
 </script>
