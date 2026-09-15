@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>平衡表 · 锡研究工作台</title>
+<link rel="stylesheet" href="report.css">
+<style>
+body{padding:0}
+.db-head{padding:14px 20px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.db-head h2{font-size:15px;color:var(--gold);letter-spacing:2px;margin:0}
+.db-head .hint{font-size:11px;color:var(--dim)}
+.bal-tabs{display:flex;gap:8px;padding:12px 20px 0;flex-wrap:wrap}
+.bal-tab{font-size:12.5px;padding:6px 18px;background:var(--card);border:1px solid var(--line);border-radius:6px;color:var(--dim);cursor:pointer}
+.bal-tab:hover{color:var(--txt)}
+.bal-tab.on{color:var(--gold);border-color:rgba(212,169,68,.55);background:rgba(212,169,68,.08)}
+.bal-main{padding:14px 20px 30px}
+.bal-block{margin-bottom:26px}
+.bal-bt{font-size:13px;color:var(--gold);margin:0 0 8px;font-weight:600;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.bal-bt .u{font-size:11px;color:var(--dim);font-weight:400}
+.bal-chart{height:250px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+.bal-chart canvas{width:100%!important;height:100%!important}
+.bal-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+table.bal{border-collapse:collapse;min-width:100%;font-size:12px}
+table.bal th,table.bal td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:right;white-space:nowrap}
+table.bal thead th{background:rgba(212,169,68,.07);color:var(--gold);font-weight:600;font-size:11.5px;position:sticky;top:0}
+table.bal td.rn,table.bal th.rn{text-align:left;position:sticky;left:0;background:var(--card);min-width:180px;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+table.bal thead th.rn{background:#141a24}
+table.bal tr.calc td{color:#7fb3e8;font-style:italic}
+table.bal tr.calc td.rn::after{content:" Σ";color:var(--faint);font-style:normal}
+table.bal tr.sec td{background:rgba(212,169,68,.05);color:var(--gold);font-weight:600;text-align:left}
+table.bal td input{width:82px;background:transparent;border:1px solid transparent;border-radius:4px;color:var(--txt);font-size:12px;text-align:right;padding:2px 4px;outline:none;font-family:inherit}
+table.bal td input:hover{border-color:var(--line)}
+table.bal td input:focus{border-color:var(--gold);background:rgba(212,169,68,.06)}
+table.bal td input.edited{color:#e8c96a;border-color:rgba(212,169,68,.35)}
+table.bal td.cv{color:#7fb3e8;font-style:italic}
+table.bal tbody tr:hover td{background:rgba(255,255,255,.02)}
+table.bal tbody tr:hover td.rn{background:#171e2a}
+.bal-bar{display:flex;gap:10px;align-items:center;margin:2px 0 16px;flex-wrap:wrap}
+.bal-bar button{font-size:12px;padding:5px 16px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);cursor:pointer}
+.bal-bar button:hover{border-color:var(--gold)}
+.bal-bar .msg{font-size:11px;color:var(--faint)}
+.bal-note{font-size:11px;color:var(--faint);line-height:1.7;margin-top:6px}
+.pos{color:#c96a6a}
+</style></head><body>
+<div class="db-head">
+  <h2>平衡表 · 可编辑</h2>
+  <span class="hint">矿·年度 / 锭·年度 / 锭·月度 / 锭·季度 · 每张表上方配供需与平衡图，点击单元格直接改数，图表和计算行随编辑实时联动 · 改动自动保存在本浏览器</span>
+</div>
+<div class="bal-tabs" id="bal-tabs"></div>
+<div class="bal-main" id="bal-main"></div>
+<script src="lib/chart.min.js"></script>
+<script src="balance_data.js"></script>
+<script src="balance.js"></script>
+<script src="protect.js"></script>
+</body></html>

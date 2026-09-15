@@ -7,47 +7,63 @@ body{padding:0}
 .db-head{padding:14px 20px 10px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .db-head h2{font-size:15px;color:var(--gold);letter-spacing:2px;margin:0}
 .db-head .hint{font-size:11px;color:var(--dim)}
-.db-search{margin-left:auto;font-size:12.5px;padding:5px 12px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);width:220px;outline:none}
+.bal-link{margin-left:auto;font-size:12.5px;padding:6px 16px;background:rgba(212,169,68,.12);border:1px solid rgba(212,169,68,.55);border-radius:6px;color:var(--gold);text-decoration:none;white-space:nowrap}
+.bal-link:hover{background:rgba(212,169,68,.22)}
+.db-search{font-size:12.5px;padding:5px 12px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);width:220px;outline:none}
 .db-search:focus{border-color:var(--gold)}
 .db-wrap{display:flex;min-height:calc(100vh - 49px)}
-.db-side{width:230px;flex:none;border-right:1px solid var(--line);padding:10px 12px;overflow-y:auto;max-height:calc(100vh - 49px)}
+.db-side{width:250px;flex:none;border-right:1px solid var(--line);padding:10px 12px;overflow-y:auto;max-height:calc(100vh - 49px)}
 .db-g{font-size:12.5px;color:var(--gold);padding:6px 8px;cursor:pointer;border-radius:5px;display:flex;justify-content:space-between;align-items:center}
 .db-g:hover{background:var(--card)}
 .db-g.on{background:rgba(212,169,68,.1);box-shadow:inset 0 0 0 1px rgba(212,169,68,.4)}
 .db-g .cnt{font-size:10.5px;color:var(--dim)}
-.db-sg{font-size:11px;color:var(--dim);padding:3px 8px 3px 18px;cursor:pointer;border-radius:4px;display:flex;justify-content:space-between}
+.db-sg{font-size:11px;color:var(--dim);padding:3px 8px 3px 18px;cursor:pointer;border-radius:4px;display:flex;justify-content:space-between;gap:6px}
 .db-sg:hover{background:var(--card);color:var(--txt)}
 .db-sg.on{color:var(--txt);background:var(--card)}
+.db-sg .cnt{font-size:10px;color:var(--faint)}
 .db-main{flex:1;padding:14px 20px;min-width:0}
-.db-view{height:300px;margin-bottom:12px}
-.db-view .cbox{height:100%}
-.db-table{width:100%;border-collapse:collapse;font-size:12.5px}
-.db-table th{position:sticky;top:0;background:#0d1117;text-align:left;font-size:11px;color:var(--dim);font-weight:normal;padding:6px 10px;border-bottom:1px solid var(--line)}
-.db-table td{padding:5px 10px;border-bottom:1px solid rgba(38,45,61,.5);color:var(--txt)}
-.db-table tr.r{cursor:pointer}
-.db-table tr.r:hover td{background:var(--card)}
-.db-table tr.r.on td{background:rgba(212,169,68,.07)}
-.db-table .nm{max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.db-table .num{font-variant-numeric:tabular-nums;text-align:right}
-.db-table .src{font-size:10.5px;color:var(--faint)}
 .db-count{font-size:11.5px;color:var(--dim);margin:4px 0 10px}
+#gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+.gcard{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px 8px;cursor:pointer;transition:border-color .15s}
+.gcard:hover{border-color:rgba(212,169,68,.5)}
+.gcard .gt{font-size:12px;color:var(--txt);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gcard .gc{height:150px}
+.gcard .gf{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);margin-top:5px}
+.gcard .gf b{color:var(--gold)}
+#pager{display:flex;gap:10px;align-items:center;justify-content:center;margin:16px 0 8px}
+#pager button{font-size:12px;padding:5px 16px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--txt);cursor:pointer}
+#pager button:hover:not(:disabled){border-color:var(--gold)}
+#pager button:disabled{opacity:.35;cursor:default}
+#pager span{font-size:11.5px;color:var(--dim)}
+#gmodal{position:fixed;inset:0;background:rgba(4,6,10,.82);display:none;align-items:center;justify-content:center;z-index:99;padding:30px}
+#gmodal.on{display:flex}
+.gm-box{background:#0d1117;border:1px solid rgba(212,169,68,.35);border-radius:10px;width:min(1080px,96vw);padding:16px 18px}
+.gm-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.gm-head h3{font-size:13.5px;color:var(--gold);margin:0;font-weight:600}
+#gm-x{cursor:pointer;color:var(--dim);font-size:18px;line-height:1;padding:2px 6px}
+#gm-x:hover{color:var(--txt)}
+#gm-f{display:flex;justify-content:space-between;font-size:11px;color:var(--faint);margin:6px 0 10px}
+.gm-c{height:min(62vh,560px)}
 </style></head><body>
 <div class="db-head">
-  <h2>数据库</h2>
-  <span class="hint" id="db-hint">钢联 + 12锡数据库 + 铜持仓 · 点击任意序列预览 · 叠加分析请用「图表工作区」</span>
+  <h2>数据库 · 图表画廊</h2>
+  <span class="hint">0913锡数据库final + Mysteel锡线下数据（全量写入，重复表取更新到最新日期的版本）· 按研究框架分类，新增「成本与估值」（加工费·冶炼利润·矿山成本·锡业财报·进口盈亏）· 点任意小图看大图 · 叠加分析用「图表工作区」</span>
+  <a class="bal-link" href="index.html?v=bal" target="_top">平衡表 · 可编辑（矿/锭·年月季）</a>
   <input class="db-search" id="db-q" placeholder="搜索指标名称…">
 </div>
 <div class="db-wrap">
   <div class="db-side" id="db-side"></div>
   <div class="db-main">
-    <div class="db-view"><div class="cbox"><canvas id="db-cv"></canvas></div></div>
     <div class="db-count" id="db-count"></div>
-    <table class="db-table">
-      <thead><tr><th>指标名称</th><th>单位</th><th style="text-align:right">起始</th><th style="text-align:right">最新</th><th style="text-align:right">最新值</th><th style="text-align:right">条数</th><th>来源表</th></tr></thead>
-      <tbody id="db-rows"></tbody>
-    </table>
+    <div id="gal"></div>
+    <div id="pager"></div>
   </div>
 </div>
+<div id="gmodal"><div class="gm-box">
+  <div class="gm-head"><h3 id="gm-t"></h3><span id="gm-x">✕</span></div>
+  <div id="gm-f"></div>
+  <div class="gm-c"><canvas id="gm-cv"></canvas></div>
+</div></div>
 <script src="lib/chart.min.js"></script>
 <script src="db_data.js"></script>
 <script src="db.js"></script>

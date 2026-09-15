@@ -6,6 +6,14 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>锡研究周报 · 2026-W37</title>
 <link rel="stylesheet" href="report.css">
+<style>
+.wk-charts{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:14px}
+.wk-chart{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px 6px;min-width:0}
+.wk-chart .wt{font-size:11.5px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk-chart .wu{font-size:10px;color:var(--faint);margin:2px 0 4px}
+.wk-chart .wc{height:150px}
+.bal-frame{width:100%;height:940px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -19,11 +27,12 @@
     <span>周度库存 / 开工率口径</span>
   </div>
   <div class="tone">本周定调：冲高回落 · 宏观主导（油价→加息预期 + 铜关税双杀，SOX 降权）· 现货转松延续 · 弱势区间反弹沽空为主 · 宏观闸门（实际利率 2.45%）</div>
+  <p style="margin:12px 0 0;padding:10px 14px;border:1px solid var(--gold);border-radius:6px;background:rgba(212,169,68,.07);font-size:13.5px"><b style="color:var(--gold)">策略每日滚动更新：</b>周报为周一存档，最新决策见 <a href="daily_2026-09-14.html" style="color:var(--gold)">日报 · 2026-09-14</a>（9/14 盘中已击穿 40 万触发线，待收盘确认 → 确认则区间作废、转趋势空看 36–38 万）。</p>
 </header>
 
 <nav class="toc">
   <a href="#sum">总结</a><a href="#macro">宏观环境</a><a href="#semi">半导体·AI</a>
-  <a href="#supply">供给</a><a href="#demand">需求</a><a href="#spot">现货</a><a href="#inv">库存</a><a href="#trade">进出口</a>
+  <a href="#supply">供给</a><a href="#demand">需求</a><a href="#spot">现货</a><a href="#inv">库存</a><a href="#trade">进出口</a><a href="#bal">平衡表</a>
   <a href="#strategy">策略观点</a>
   <a href="#calendar">下周验证点</a><a href="#charts">重点图表</a>
 </nav>
@@ -57,7 +66,7 @@
       <tr><td><b>宏观</b></td><td>10Y 实际利率 +17bp 逼近 2.45% 闸门线；WTI 周 +8.8% 破百 → 加息定价 61.2%→71.3%；9/10 铜关税停滞 LME 铜 -3.5%</td><td class="concl">滞胀紧缩象限，宏观为本周唯一定价主线，闸门压制区间下沿</td><td><span class="dir dn">利空</span></td></tr>
       <tr><td><b>股市·半导体</b></td><td>SOX 周 +0.76%、同比 +94.9%，与沪锡周 -1.55%、LME 金属指数 -1.63% 方向背离；存储超级周期延续</td><td class="concl">Beta 周度解释力破产，由「主导同步指标」降为「辅助情绪指标」；产业景气是「远水」</td><td><span class="dir nt">中性</span></td></tr>
       <tr><td><b>供给·矿端</b></td><td>TC 17,500 全周持平；印尼 7 月出口 4,564.5 吨（环比 +52.2%、同比 +20.4%）；银漫选厂复产 + 曼相重启</td><td class="concl">供给恢复三箭头同向，矿紧叙事钝化</td><td><span class="dir dn">利空</span></td></tr>
-      <tr><td><b>供给·冶炼端</b></td><td>SMM 两省开工率 68.14%（环比 +3.76pct）；云南检修复产 91.32%，江西再生亏损压制仅 32.79%</td><td class="concl">锭端供给边际回升</td><td><span class="dir dn">利空</span></td></tr>
+      <tr><td><b>供给·冶炼端</b></td><td>SMM 两省开工率 68.14%（环比 +3.76pct）；云南检修复产 91.32%，江西再生亏损压制仅 32.79%；<b>云锡年度检修尚未启动</b>（单体减量未兑现）</td><td class="concl">锭端供给边际回升</td><td><span class="dir dn">利空</span></td></tr>
       <tr><td><b>需求·焊料</b></td><td>8 月开工率预估 67.75%（环比 -1.27pct、同比 +2.3pct）连降两月，小型仅 50.1%；手机出货预测 -16.7%</td><td class="concl">需求弱证据链延续，AI 强 vs 消费弱，旺季待验</td><td><span class="dir dn">利空</span></td></tr>
       <tr><td><b>需求·化工/马口铁</b></td><td>PVC 热稳定剂 7.2 吨锡/万吨 PVC；马口铁 ≈3.68kg 锡/吨板；浮法玻璃弱稳</td><td class="concl">弱稳，非焊料端无增量叙事</td><td><span class="dir nt">中性</span></td></tr>
       <tr><td><b>现货</b></td><td>升水 +800~+1000 全周持稳；周五跌价放量成交 2,087 吨（近一月最高）</td><td class="concl">41 万跌价有承接——是「不追跌」的理由，不是做多理由</td><td><span class="dir up">利多</span></td></tr>
@@ -165,8 +174,19 @@
     </tbody>
   </table>
 
+  <div class="change" style="margin-top:14px">
+    <h3><span class="tag">AI 行业新闻</span>OpenAI 放缓前沿开发：军备竞赛从「加速」转向「安全刹车」</h3>
+    <p>
+      <b>8/7–8/8</b> OpenAI 放缓新模型 Astra 发布——网络安全能力或触及自家 Preparedness 框架最高「临界（Critical）」级，头部实验室首次因安全主动踩刹车（TechCrunch / Axios）。<br>
+      <b>8/18</b> OpenAI 官网博客确认：AI 智能体测试中逃逸并入侵 Hugging Face + Astra 临界风险 → 主动放缓 scaling 节奏、强化学习训练暂停两周，最大规模前沿 RL run 至今仍搁置（OpenAI 官方）。<br>
+      <b>9/11</b> 彭博：奥尔特曼在全员会议称 OpenAI 正考虑放缓前沿 AI 开发、希望行业协同；首席科学家帕乔基呼吁「自愿放缓应成为行业惯例」。<br>
+      <b>9/12–13</b> 《财富》专访：奥尔特曼称 2026 年不上市（IPO 推迟至 2027），暗示头部 AI 公司或将宣布联合放缓协议；Anthropic CEO 阿莫代伊发长文「必须放慢提升模型能力的速度」+ 引入第三方评估，马斯克与奥尔特曼先后公开赞同（中新经纬 / 路透社）。<br>
+      【解读】AI 军备竞赛从「比谁更快」转向「比谁更可信」——<b>AI 资本开支叙事边际降温</b>：不改变当下存储涨价的现实，但削弱「AI 需求加速」的远端故事弹性，科技腿对锡的定价权重进一步让位于宏观利率与铜；若头部联合放缓协议落地，需下修 2027 年 AI 服务器 / 焊料增量的乐观假设。
+    </p>
+  </div>
+
   <div class="ruling" style="margin-top:14px">
-    <div class="row"><div class="k">一句话总结</div><div class="vv"><b>股价层背离降权、产业层景气延续、兑现层尚未兑现</b>——半导体对锡的定价意义从「SOX 同步 Beta」切换为「AI 长期需求叙事」，短期让位于宏观利率与铜。</div></div>
+    <div class="row"><div class="k">一句话总结</div><div class="vv"><b>股价层背离降权、产业层景气延续但叙事降温（OpenAI 放缓前沿开发）、兑现层尚未兑现</b>——半导体对锡的定价意义从「SOX 同步 Beta」切换为「AI 长期需求叙事」，短期让位于宏观利率与铜。</div></div>
   </div>
 
   <div class="charts" style="margin-top:16px">
@@ -185,12 +205,13 @@
       <tr><td>矿端</td><td>缅甸进口矿（最新·7月）</td><td class="r num">1,077 金属吨</td><td class="r num down">月 -23%</td><td>占比降至 20%；佤邦复产上限 40–50%、全面复产预计 2027——未放量但方向在恢复</td></tr>
       <tr><td>矿端</td><td>银漫矿业（内蒙）</td><td class="r num">选厂 9/3 复产</td><td class="r num up">采区待定</td><td>影响量级 1,000–1,500 金属吨；国内供给恢复第一箭头</td></tr>
       <tr><td>矿端</td><td>曼相矿（佤邦）/ 印尼出口</td><td class="r num">重启 / 7月 4,564.5 吨</td><td class="r num up">印尼 +52% MoM</td><td>供给恢复第二、三箭头：缅甸矿山重启 + 印尼出口节奏修复</td></tr>
-      <tr><td>冶炼端</td><td>SMM 精炼锡开工率（W35）</td><td class="r num">云南 91.32% / 江西 32.79%</td><td class="r num up">+6.23pct / 持平</td><td>云南检修复产拉动两省合计至 68.14%（+3.76pct）；江西再生锡受 TC 亏损压制维持低开工</td></tr>
+      <tr><td>冶炼端</td><td>SMM 精炼锡开工率（W35）</td><td class="r num">云南 91.32% / 江西 32.79%</td><td class="r num up">+6.23pct / 持平</td><td>云南检修复产拉动两省合计至 68.14%（+3.76pct）；江西再生锡受 TC 亏损压制维持低开工；<b>注意：云锡年度检修尚未启动</b>——冶炼端最大单体减量未兑现，一旦落地将阶段性收紧锭端供给</td></tr>
       <tr><td>冶炼端</td><td>锭端供给结构（年框架）</td><td class="r num">国内 92% / 进口 8% / 再生 12%</td><td class="r dim">—</td><td>矿：国产 32% / 进口 68%——矿端对外依存度远高于锭端，缅甸变量权重最高</td></tr>
     </tbody>
   </table>
+  <div class="wk-charts" id="wkc-supply"></div>
   <div class="ruling" style="margin-top:14px">
-    <div class="row"><div class="k">一句话总结</div><div class="vv"><b>矿紧叙事钝化 + 复产三箭头（银漫/曼相/印尼）+ 冶炼开工回升</b>——供给端天平向恢复倾斜；9 月下旬 8 月海关数据是矿紧证伪线（缅甸月进口回 4,000+ 金属吨即翻面）。</div></div>
+    <div class="row"><div class="k">一句话总结</div><div class="vv"><b>矿紧叙事钝化 + 复产三箭头（银漫/曼相/印尼）+ 冶炼开工回升（云锡年度检修尚未落地、减量待兑现）</b>——供给端天平向恢复倾斜；9 月下旬 8 月海关数据是矿紧证伪线（缅甸月进口回 4,000+ 金属吨即翻面）。</div></div>
   </div>
 </section>
 <!-- ============ 需求 ============ -->
@@ -212,6 +233,7 @@
         <td>镀锡板</td><td class="r num">≈3.68kg 锡/吨板</td><td>食品罐等刚需平稳，季节性波动小</td></tr>
     </tbody>
   </table>
+  <div class="wk-charts" id="wkc-demand"></div>
   <div class="ruling" style="margin-top:14px">
     <div class="row"><div class="k">一句话总结</div><div class="vv"><b>总量看焊料开工率连降、结构看 AI 强 vs 消费弱</b>——需求弱证据链延续，9–10 月旺季（9 月焊料开工率）是下一个验证窗。</div></div>
   </div>
@@ -230,6 +252,7 @@
       <tr><td>现货进口盈亏 / 沪伦比值</td><td class="r num">+415 元/吨 / 7.66</td><td class="r num up">窗口边际打开</td><td>LME 周内跌幅大于沪锡，进口窗口接近开启（详见进出口）</td></tr>
     </tbody>
   </table>
+  <div class="wk-charts" id="wkc-spot"></div>
   <div class="ruling" style="margin-top:14px">
     <div class="row"><div class="k">一句话总结</div><div class="vv"><b>升水不崩 + 跌价放量 = 41 万有承接</b>——这是「不追跌」的理由，不是做多的理由；承接持续性用「成交连续 3 日 >800 吨 + 升水走扩」验证。</div></div>
   </div>
@@ -247,6 +270,7 @@
       <tr><td><b>全球显性库存（三口径加总）</b></td><td class="r num"><b>≈21,622</b></td><td class="r num up"><b>周 +2,191（+11.3%）</b></td><td>社库 + SHFE + LME 加总（未含保税/在途）；<b>同比 +9.1%</b>（去年 ≈19,814）——总量同比已转增，紧平衡叙事在库存端失效</td></tr>
     </tbody>
   </table>
+  <div class="wk-charts" id="wkc-inv"></div>
   <div class="ruling" style="margin-top:14px">
     <div class="row"><div class="k">一句话总结</div><div class="vv"><b>内松外紧、总量向上，且同比已转增</b>——社库回升至去年同期持平、全球显性同比 +9.1%、LME 同比翻倍，库存端「低库存托底」逻辑明显弱化，只剩斜率问题没有水位优势。</div></div>
   </div>
@@ -264,9 +288,16 @@
       <tr><td>现货进口盈亏 / 沪伦比值（9/11）</td><td class="r num">+415 元/吨 / 7.66</td><td class="r num up">窗口边际打开</td><td>LME 周内跌幅大于沪锡；若持续为正，进口锡流入将加剧国内现货转松——下周新增观测点</td></tr>
     </tbody>
   </table>
+  <div class="wk-charts" id="wkc-trade"></div>
   <div class="ruling" style="margin-top:14px">
     <div class="row"><div class="k">一句话总结</div><div class="vv"><b>进口窗口接近开启 + 印尼放量 + 缅矿低位未放量</b>——边际方向是海外货流入增加，8 月海关数据（9 月下旬）同时验证「矿紧证伪线」与「进口放量线」。</div></div>
   </div>
+</section>
+
+<!-- ============ 平衡表 ============ -->
+<section id="bal">
+  <div class="shead"><h2>平衡表 · 矿 / 锭（年度 · 月度 · 季度）— 可编辑</h2><span class="en">BALANCE TABLES · EDITABLE</span><span class="note">点击单元格直接改数，图表与计算行实时联动 · 改动只保存在本浏览器</span></div>
+  <iframe class="bal-frame" src="balance.html" title="锡平衡表（可编辑）"></iframe>
 </section>
 
 <!-- ============ 策略观点 ============ -->
@@ -332,6 +363,7 @@
       <tr><td>下周五（9/18）</td><td>社会库存 + SHFE 仓单</td><td>现货转松斜率是否延续</td><td>转降且升水走扩 → 「金九」去库启动；继续双增 → 压制上沿逻辑强化</td></tr>
       <tr><td>9 月下旬</td><td>8 月海关进口矿数据</td><td>缅甸是否放量（矿紧证伪线）</td><td>缅甸月进口金属吨回到 4,000+（实物万吨级）→ 矿紧证伪，中期逻辑翻面</td></tr>
       <tr><td>9 月底</td><td>9 月焊料开工率</td><td>「金九银十」需求验证</td><td>回升 → 需求弱判断下修；持平/下滑 → 需求弱证据链延续</td></tr>
+      <tr><td>随时</td><td><b>云锡年度检修公告</b></td><td>冶炼端最大单体减量是否落地（云南开工 91.32% 高位、检修未启动）</td><td>公告检修 → 锭端供给阶段性收紧、供给恢复叙事打折（偏多确认）；迟迟不动 → 供给宽松延续</td></tr>
       <tr><td>10 月</td><td>云锡交仓节奏 + Back 结构</td><td>中长期排序中的结果确认项</td><td>Back 结构深化 → 现货趋紧确认；转 Contango → 转松延续</td></tr>
     </tbody>
   </table>
@@ -364,7 +396,9 @@
 <script src="lib/chart.min.js"></script>
 <script src="data.js"></script>
 <script src="semi_data.js"></script>
+<script src="db_data.js"></script>
 <script src="report.js"></script>
+<script src="wk_charts.js"></script>
 <script src="chart_lab.js"></script>
 <script src="page_nav.js"></script>
 <script>
