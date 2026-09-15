@@ -49,8 +49,11 @@
   .wsx{position:absolute;right:7px;top:4px;cursor:pointer;color:#c00000;font-weight:800;font-size:13px}
   .charts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 0}
   .cbox{border:1px solid #8e8e8e}
-  .cbox .ct{background:#dbe4f0;font-size:12.5px;font-weight:700;padding:4px 8px;border-bottom:1px solid #8e8e8e;text-align:center}
+  .cbox .ct{background:#dbe4f0;font-size:12.5px;font-weight:700;padding:4px 8px;border-bottom:1px solid #8e8e8e;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+  .cbox .ct span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cty{flex:0 0 auto;width:64px;padding:1px 2px;font-size:10.5px;font-family:inherit;border:1px solid #8ea3bd;border-radius:3px;background:#fff;color:#1f4e79;font-weight:400}
   .cbox .cc{height:215px;padding:4px}
+  .catcol{width:56px;text-align:center!important;font-weight:800;letter-spacing:1px;font-size:12.5px;vertical-align:middle}
   .sfoot{padding:8px 10px 0;font-size:11px;color:#777;line-height:1.6}
 </style>
 </head>
@@ -68,14 +71,14 @@
 </div>
 <div id="sheet">
   <div class="shead-bar"><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET</div></div>
-  <div class="main">
-    <div class="ttable"><table id="dtable"></table></div>
-  </div>
   <div class="summary"><h2>日 内 总 结</h2>
     <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
     <div class="sumblk"><b>情　绪</b><div contenteditable="true" id="sumC"></div></div>
     <div class="sumblk"><b>技术面·策略</b><div contenteditable="true" id="sumD"></div></div>
+  </div>
+  <div class="main">
+    <div class="ttable"><table id="dtable"></table></div>
   </div>
   <div class="charts" id="charts"></div>
   <div class="sfoot" id="sfoot"></div>
