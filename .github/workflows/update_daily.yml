@@ -45,6 +45,8 @@ jobs:
         run: python .gen/auto_daily.py --ci
       - name: 补回跨品种比价序列
         run: python tools/gen_ratio_series.py
+      - name: 日报去机构名
+        run: python tools/sanitize_daily.py
       - name: 提交并推送网站
         run: |
           base64 -w0 .gen/cfg_daily.py > gen_cfg.b64
