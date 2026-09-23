@@ -46,7 +46,8 @@
   .wsbar select{padding:6px 8px;font-size:12.5px;max-width:330px;font-family:inherit}
   .wsbar button{background:#1f4e79;color:#fff;border:0;border-radius:4px;padding:7px 16px;font-size:13px;cursor:pointer;font-weight:700;font-family:inherit}
   #wsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 0}
-  #wsgrid:empty{padding:0}
+  #wsgrid:empty{padding:0;display:none}
+  #wswrap:has(#wsgrid:empty){padding-bottom:0;margin-bottom:0}
   .wsbox .ct{position:relative;padding-right:20px}
   .wsx{position:absolute;right:7px;top:4px;cursor:pointer;color:#c00000;font-weight:800;font-size:13px}
   .charts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 0}
@@ -96,9 +97,9 @@
   <div id="wsgrid"></div>
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="db_data.js?v=202609231224"></script>
-<script src="summary_note.js?v=202609231224"></script>
-<script src="tech.js?v=202609231224"></script>
-<script src="sheet.js?v=202609231224"></script>
+<script src="db_data.js?v=202609232030"></script>
+<script src="summary_note.js?v=202609231136"></script>
+<script src="tech.js?v=202609231136"></script>
+<script src="sheet.js?v=202609231136"></script>
 </body>
 </html>
