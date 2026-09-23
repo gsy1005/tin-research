@@ -2,16 +2,22 @@
 """
 gen_ratio_series.py — 日报一键更新后自动补回跨品种比价序列
 ===========================================================
-背景：update_daily.yml 的生成器会整体重建 db_data.js，本脚本追加的三条序列
+背景：update_daily.yml 的生成器会整体重建 db_data.js，本脚本维护的三条序列
 （d900 沪铜主力 / d901 锡铜比 / d902 银锡比）会被覆盖。因此在生成器跑完后
-执行本脚本，把三条序列重新贴回 db_data.js 末尾。
+执行本脚本，把三条序列重新写回 db_data.js。
+
+【重要格式约束】生成器（auto_daily.py）用
+    raw[raw.index('[') : raw.rindex(']')+1]
+解析本文件——即"首个 [ 到末个 ] 必须恰好是一个合法 JSON 数组"。
+因此三条序列必须并入主数组（window.DB_DATA=[...]）内部，
+主数组之后不能再出现任何方括号（不能用 window.DB_DATA.push 追加）。
 
 数据来源（均为仓库内文件，无需外部网络）：
   d900 沪铜主力   ← cu_data.js 的 cu_px（上海腿），可加补充点 SUPPLEMENT_CU
   d901 锡铜比     ← db_data.js 的 d719（沪锡连续收盘）÷ d900，共同日期逐日计算
   d902 银锡比     ← data.js 的 ag_sn
 
-幂等：先移除旧的追加块与同名序列，再重新生成追加，可重复运行。
+幂等：先移除旧的 push 追加块与主数组内同名序列，再重新生成并入。
 用法：python tools/gen_ratio_series.py
 """
 import json
@@ -29,7 +35,9 @@ SUPPLEMENT_CU = [
 ]
 
 RATIO_KEYS = ("d900", "d901", "d902")
-APPEND_MARK = "/* 追加序列（tools/gen_ratio_series.py 自动维护，勿手改） */"
+TAIL_COMMENT = ("/* 跨品种比价序列 d900/d901/d902 由 tools/gen_ratio_series.py 在每次日报更新后"
+                "自动维护（已并入上方主数组；生成器按首个左方括号到末个右方括号解析本文件，"
+                "主数组之后不得再出现任何方括号字符）。d900 手工补充点见脚本内 SUPPLEMENT_CU */")
 
 
 def read_js_object(path: Path, var_pattern: str):
@@ -41,27 +49,15 @@ def read_js_object(path: Path, var_pattern: str):
     return json.loads(m.group(1))
 
 
-def load_series_map(db_raw: str):
-    """解析 db_data.js 主数组：字符串定位（前缀 + 最后一个 `];`），避免大文件上的回溯灾难。"""
-    prefix = "window.DB_DATA=window.DB_DATA="
-    start = db_raw.find(prefix)
-    end = db_raw.rfind("];")
-    if start < 0 or end <= start:
-        raise SystemExit("无法定位 db_data.js 主数组")
-    return db_raw[start + len(prefix):end + 1]
-
-
 def main():
     db_path = ROOT / "db_data.js"
     db_raw = db_path.read_text(encoding="utf-8")
 
-    # 1) 幂等：移除旧的自动/手工追加块
-    db_raw = re.sub(r"\n?/\* 追加序列[^\n]*\*/\nwindow\.DB_DATA\.push\(.*?\);\n?", "\n", db_raw, flags=re.S)
-    db_raw = re.sub(r"\n?/\* 追加序列[^\n]*\nwindow\.DB_DATA\.push\(.*?\);\n?", "\n", db_raw, flags=re.S)
-
-    # 2) 读主数组并剔除旧的 d900-d902（防止生成器把它们编进主数组后重复）
-    main_json = load_series_map(db_raw)
-    data = json.loads(main_json)
+    # 2) 定位主数组：从首个 [ 用 raw_decode 精准读出数组终点（之后的历史残留
+    #    （push 块、含方括号的注释）一律丢弃），再剔除主数组内同名序列
+    i0 = db_raw.index("[")
+    data, _end = json.JSONDecoder().raw_decode(db_raw, i0)
+    head = db_raw[:i0]                      # 头部注释 + window.DB_DATA= 前缀
     data = [x for x in data if x.get("k") not in RATIO_KEYS]
     by_k = {x["k"]: x for x in data}
     if "d719" not in by_k:
@@ -90,20 +86,20 @@ def main():
         ser("d901", "锡铜比（沪锡/沪铜）", ratio),
         ser("d902", "银锡比（沪银/沪锡）", ag),
     ]
-    blob = ",".join(json.dumps(x, ensure_ascii=False, separators=(",", ":")) for x in new_series)
 
-    # 6) 重新组装文件：原内容（含生成器新数据）+ 追加块
-    append = f"\n{APPEND_MARK}\nwindow.DB_DATA.push({blob});\n"
-    db_path.write_text(db_raw.rstrip("\n") + append, encoding="utf-8")
+    # 6) 并入主数组，保持全文件为单一 JSON 数组（生成器解析口径）
+    new_main = json.dumps(data + new_series, ensure_ascii=False, separators=(",", ":"))
+    db_path.write_text(f"{head}{new_main};\n{TAIL_COMMENT}\n", encoding="utf-8")
 
-    # 7) 自检：文件可执行、序列就位
+    # 7) 自检：按生成器口径解析 + 序列就位
     check = db_path.read_text(encoding="utf-8")
+    json.loads(check[check.index("["):check.rindex("]") + 1])  # 解析不过会直接抛异常
     for k in RATIO_KEYS:
         if f'"k":"{k}"' not in check:
             raise SystemExit(f"自检失败：{k} 未写入")
     print(f"OK：d900 {cu_sh[-1][0]}={cu_sh[-1][1]:.0f} | "
           f"d901 {ratio[-1][0]}={ratio[-1][1]} | "
-          f"d902 {ag[-1][0]}={ag[-1][1]:.1f} | 主数组序列数 {len(data)}")
+          f"d902 {ag[-1][0]}={ag[-1][1]:.1f} | 主数组序列数 {len(data) + 3}")
 
 
 if __name__ == "__main__":
