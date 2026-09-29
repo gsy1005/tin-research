@@ -12,10 +12,12 @@ gen_ratio_series.py — 日报一键更新后自动补回跨品种比价序列
 因此三条序列必须并入主数组（window.DB_DATA=[...]）内部，
 主数组之后不能再出现任何方括号（不能用 window.DB_DATA.push 追加）。
 
-数据来源（均为仓库内文件，无需外部网络）：
-  d900 沪铜主力   ← cu_data.js 的 cu_px（上海腿），可加补充点 SUPPLEMENT_CU
+数据来源：
+  d900 沪铜主力   ← cu_data.js 的 cu_px（上海腿）+ 手工补充点 SUPPLEMENT_CU
+                    + 新浪 CU0 日K自动延伸（东财 113.CUM 备用；都抓不到时以前两者兜底）
   d901 锡铜比     ← db_data.js 的 d719（沪锡连续收盘）÷ d900，共同日期逐日计算
-  d902 银锡比     ← data.js 的 ag_sn
+  d902 银锡比     ← data.js 的 ag_sn 历史 + 新浪 AG0 ÷ d719 自动延伸
+                    （口径保持：沪银元/公斤 ÷ 沪锡万元/吨）
 
 幂等：先移除旧的 push 追加块与主数组内同名序列，再重新生成并入。
 用法：python tools/gen_ratio_series.py
@@ -23,6 +25,7 @@ gen_ratio_series.py — 日报一键更新后自动补回跨品种比价序列
 import json
 import re
 import sys
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,6 +41,37 @@ RATIO_KEYS = ("d900", "d901", "d902")
 TAIL_COMMENT = ("/* 跨品种比价序列 d900/d901/d902 由 tools/gen_ratio_series.py 在每次日报更新后"
                 "自动维护（已并入上方主数组；生成器按首个左方括号到末个右方括号解析本文件，"
                 "主数组之后不得再出现任何方括号字符）。d900 手工补充点见脚本内 SUPPLEMENT_CU */")
+
+# 行情源（主：新浪期货日K；备：东方财富日K），用于把 d900/d902 自动延伸到最新交易日
+SINA_KLINE = {
+    "CU": "https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_x=/InnerFuturesNewService.getDailyKLine?symbol=CU0",
+    "AG": "https://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_x=/InnerFuturesNewService.getDailyKLine?symbol=AG0",
+}
+EM_KLINE = {
+    "CU": "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+          "?secid=113.CUM&fields1=f1,f2,f3&fields2=f51,f53&klt=101&fqt=1&beg=20250101&end=20991231",
+    "AG": "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+          "?secid=113.AGM&fields1=f1,f2,f3&fields2=f51,f53&klt=101&fqt=1&beg=20250101&end=20991231",
+}
+
+
+def fetch_px(sym):
+    """沪铜/沪银主连日K。新浪优先，东财备用；全部失败返回空列表（由兜底数据接替）。"""
+    try:
+        req = urllib.request.Request(SINA_KLINE[sym], headers={"User-Agent": "Mozilla/5.0",
+                                                               "Referer": "https://finance.sina.com.cn"})
+        t = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+        m = re.search(r"\[.*\]", t, re.S)
+        return sorted([[r["d"], float(r["c"])] for r in json.loads(m.group(0))])
+    except Exception as e:
+        print(f"  {sym}: 新浪抓取失败，转东财（{e}）")
+    try:
+        req = urllib.request.Request(EM_KLINE[sym], headers={"User-Agent": "Mozilla/5.0"})
+        d = json.loads(urllib.request.urlopen(req, timeout=30).read().decode("utf-8"))
+        return sorted([[k.split(",")[0], float(k.split(",")[1])] for k in d["data"]["klines"]])
+    except Exception as e:
+        print(f"  {sym}: 东财也失败（用兜底数据）: {e}")
+        return []
 
 
 def read_js_object(path: Path, var_pattern: str):
@@ -63,20 +97,40 @@ def main():
     if "d719" not in by_k:
         raise SystemExit("db_data.js 缺少 d719（沪锡连续收盘），无法计算锡铜比")
 
-    # 3) d900 沪铜主力
+    # 3) d900 沪铜主力：cu_px → 东财自动延伸 → 手工补充点（后者覆盖前者）
     cu = read_js_object(ROOT / "cu_data.js", r"=\s*(\{.*\})\s*;?\s*$")
-    cu_sh = [[p[0], float(p[2])] for p in cu["cu_px"]]
-    cu_sh += [[d, float(v)] for d, v, _ in SUPPLEMENT_CU]
-    cu_sh.sort(key=lambda p: p[0])
-    m_cu = {d: v for d, v in cu_sh}
+    m_cu = {p[0]: float(p[2]) for p in cu["cu_px"]}
+    live_cu = fetch_px("CU")
+    if live_cu:
+        last_d = max(m_cu)
+        fresh = [p for p in live_cu if p[0] > last_d]
+        if fresh and abs(fresh[0][1] / m_cu[last_d] - 1) > 0.05:
+            print(f"  CU: 行情首点 {fresh[0]} 相对 {last_d}={m_cu[last_d]} 跳变超 5%，忽略本批")
+            fresh = []
+        for d, v in fresh:
+            m_cu[d] = v
+        print(f"  CU: 行情新增 {len(fresh)} 点" if fresh else "  CU: 行情无新增/未延伸")
+    for d, v, _ in SUPPLEMENT_CU:   # 手工读数优先级最高（覆盖同源日期）
+        m_cu[d] = v
+    cu_sh = [[d, m_cu[d]] for d in sorted(m_cu)]
 
     # 4) d901 锡铜比 = d719 / d900（共同日期）
     ratio = [[p[0], round(float(p[1]) / m_cu[p[0]], 3)]
              for p in by_k["d719"]["s"] if p[0] in m_cu]
 
-    # 5) d902 银锡比
+    # 5) d902 银锡比：data.js ag_sn 历史保持不动，东财沪银 ÷ d719 延伸新日期
+    #    口径与原序列一致：沪银(元/公斤) ÷ 沪锡(万元/吨)
     dj = read_js_object(ROOT / "data.js", r"=\s*(\{.*\})\s*;?\s*$")
     ag = [[str(d), float(v)] for d, v in dj["ag_sn"]]
+    tin = {p[0]: float(p[1]) for p in by_k["d719"]["s"]}
+    live_ag = fetch_px("AG")
+    if live_ag:
+        last_hist = ag[-1][0] if ag else "0000-00-00"
+        fresh = [p for p in live_ag if p[0] > last_hist and p[0] in tin]
+        for d, v in fresh:
+            ag.append([d, round(v / (tin[d] / 10000.0), 1)])
+        ag.sort(key=lambda p: p[0])
+        print(f"  AG: 行情新增 {len(fresh)} 点" if fresh else "  AG: 行情无新增/未延伸")
 
     def ser(k, n, s, u=""):
         return {"g": "价格·盘面与估值", "sg": "跨品种比价", "k": k, "n": n, "u": u, "s": s}
