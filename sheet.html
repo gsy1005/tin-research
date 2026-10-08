@@ -48,6 +48,12 @@
   #wsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 0}
   #wsgrid:empty{padding:0;display:none}
   #wswrap:has(#wsgrid:empty){padding-bottom:0;margin-bottom:0}
+  /* 无图表时整个工作区收成一条标题（点击展开操作条） */
+  #wswrap:has(#wsgrid:empty) .wsbar{display:none}
+  #wswrap:has(#wsgrid:empty) .wshead{cursor:pointer;user-select:none}
+  #wswrap:has(#wsgrid:empty) .wshead::after{content:" ▸ 点击展开添加图表";font-size:11px;color:#9aa0a8;font-weight:400;letter-spacing:0;margin-left:8px}
+  #wswrap.wsopen:has(#wsgrid:empty) .wsbar{display:flex}
+  #wswrap.wsopen:has(#wsgrid:empty) .wshead::after{content:""}
   .wsbox .ct{position:relative;padding-right:20px}
   .wsx{position:absolute;right:7px;top:4px;cursor:pointer;color:#c00000;font-weight:800;font-size:13px}
   .charts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px 6px 0}
@@ -97,9 +103,20 @@
   <div id="wsgrid"></div>
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="db_data.js?v=202609291304"></script>
-<script src="summary_note.js?v=202609291304"></script>
-<script src="tech.js?v=202609291304"></script>
-<script src="sheet.js?v=202609291304"></script>
+<script src="db_data.js?v=202609291247"></script>
+<script src="summary_note.js?v=202609291247"></script>
+<script src="tech.js?v=202609291247"></script>
+<script src="sheet.js?v=202609291247"></script>
+<script>
+/* 无图表时工作区收成一条，点击标题展开操作条；有图表后操作条常显 */
+(function(){
+  var w=document.getElementById('wswrap'),h=w&&w.querySelector('.wshead');
+  if(!h)return;
+  h.addEventListener('click',function(){
+    var grid=document.getElementById('wsgrid');
+    if(grid&&grid.children.length===0)w.classList.toggle('wsopen');
+  });
+})();
+</script>
 </body>
 </html>
