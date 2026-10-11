@@ -79,7 +79,19 @@
   <span class="hint">日内总结可直接点击编辑，改完再导出；数据随 db_data.js 自动更新</span>
 </div>
 <div id="sheet">
-  <div class="shead-bar"><span class="author">中哲金属 · 甘思雨</span><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET</div></div>
+  <div class="shead-bar"><span class="author">中哲金属 · 甘思雨</span><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET · <span id="pageVer" style="letter-spacing:0">版本检测中…</span></div></div>
+  <script>
+  /* 页面版本戳：读自己文件的 Last-Modified（部署时间），便于分辨新旧缓存 */
+  (function(){
+    var el=document.getElementById('pageVer'); if(!el) return;
+    fetch(location.pathname,{method:'HEAD',cache:'no-cache'}).then(function(r){
+      var p=r.headers.get('Last-Modified'); if(!p) return;
+      var t=new Date(p).getTime()+8*3600000, d=new Date(t);
+      var z=function(n){return (n<10?'0':'')+n;};
+      el.textContent='页面构建 '+(d.getUTCMonth()+1)+'/'+d.getUTCDate()+' '+z(d.getUTCHours())+':'+z(d.getUTCMinutes())+'（北京）';
+    }).catch(function(){el.textContent='';});
+  })();
+  </script>
   <div class="summary"><h2>日 内 总 结</h2>
     <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
