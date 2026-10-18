@@ -60,11 +60,31 @@ tr.final td{border:1.5px solid var(--red);background:var(--soft)}
 .stats{font-size:11.5px;color:#8a6d3b;text-align:center;margin-top:2px}
 .cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
 .note{font-size:13px;color:var(--faint);margin-top:6px}
+.toc{position:sticky;top:0;z-index:60;display:flex;flex-wrap:wrap;gap:6px;background:var(--bg);padding:8px 0;margin:6px 0 12px;border-bottom:2px solid var(--red)}
+.toc a{font-size:13px;color:var(--ink);text-decoration:none;padding:3px 12px;border-radius:14px;background:var(--leadbg);white-space:nowrap}
+.toc a:hover{background:var(--red);color:#fff}
+h2,details.fold{scroll-margin-top:64px}
+.labwrap{display:grid;grid-template-columns:230px 1fr;gap:12px;margin-top:12px}
+.labside{max-height:460px;overflow:auto;background:var(--cardbg);padding:8px 10px;font-size:12.5px}
+.labside .lg2{font-weight:700;color:var(--red);margin:8px 0 3px}
+.labside label{display:block;padding:1px 0;cursor:pointer;color:var(--grey)}
+.labside input{vertical-align:-1px}
+.labtools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px;font-size:12.5px}
+.labtools button{font-size:12px;padding:2px 10px;border:1px solid var(--line);background:var(--cardbg);color:var(--grey);border-radius:12px;cursor:pointer;font-family:inherit}
+.labtools button.on{background:var(--red);border-color:var(--red);color:#fff}
+.labtools .lg{font-weight:700;color:var(--ink)}
+.labtools .hint{color:var(--faint);font-size:11.5px}
+.labchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;min-height:20px}
+.labchips .chip{font-size:12px;padding:2px 8px;border-radius:12px;background:var(--leadbg);cursor:pointer;color:var(--ink)}
+.labchips .chip b{color:var(--red)}
+.labchips .chip .x{color:var(--faint);margin-left:4px}
+.labchart{height:380px;background:var(--cardbg);padding:6px}
+.labfoot{font-size:11.5px;color:var(--faint);margin-top:4px}
 footer{margin-top:36px;border-top:1px solid var(--line);padding-top:12px;font-size:12.5px;color:var(--foot);line-height:1.9}
 @media print{
   body{padding:0;background:#fff;color:#1a1a1a}
   body.dark{--ink:#1a1a1a;--grey:#555;--faint:#777;--line:#D9D9D9;--bg:#fff;--soft:#FDF6F6;--cardbg:#fff;--thbg:#F2F2F2;--leadbg:#EEF3FA;--rollbg:#FFFAFA;--rollline:#E3C9C9;--foot:#777;--red:#C00000;--blue:#1F4E79}
-  .thbtn,.editbtn{display:none}
+  .thbtn,.editbtn,.toc,.labwrap,#lab{display:none}
   body.editmode [data-e]{outline:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   h2{page-break-after:avoid}
@@ -167,6 +187,9 @@ body.my .bl{color:#000}
   <button class="editbtn" id="editbtn" type="button">✏️ 编辑文字</button>
   <button class="editbtn" id="pdfbtn" type="button" onclick="document.querySelectorAll('details.fold').forEach(function(d){d.open=true});window.print()">🖨 导出PDF</button>
 </div>
+<nav class="toc" id="toc">
+  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#minecost">矿山成本</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a>
+</nav>
 <details class="fold" id="framework">
   <summary>📖 锡产业研究框架（基础认知 · 供给×需求×工艺×单耗，点击展开/折叠）</summary>
   <div class="foldbody pptzone">
@@ -297,10 +320,10 @@ body.my .bl{color:#000}
 </details>
 
 <!-- ============ 本周重点关注 ============ -->
-<h2>本周重点关注<span class="en">WEEKLY FOCUS</span></h2>
+<h2 id="focus">本周重点关注<span class="en">WEEKLY FOCUS</span></h2>
 
 <div class="pptzone">
-<h2 style="margin-top:26px">市场情绪 × 有色情绪 · 一页速览<span class="en">SENTIMENT SNAPSHOT</span></h2>
+<h2 id="sentiment" style="margin-top:26px">市场情绪 × 有色情绪 · 一页速览<span class="en">SENTIMENT SNAPSHOT</span></h2>
 <div class="cols2">
   <div>
     <div class="lead">锡市场情绪（全网研报扫描 · 2026 年 10 月第 3 周，覆盖至 10/16）</div>
@@ -351,7 +374,7 @@ body.my .bl{color:#000}
   <div class="cbox"><div class="echart" data-fn="a_nasdaq.png"></div><img class="pimg" src="charts_full/a_nasdaq.png" alt="纳斯达克指数"><div class="cap">纳斯达克指数</div><div class="stats">最新 26,713（10/15）｜环比 +20（+0.1%）｜同比 +4,043（+17.8%）</div></div>
 </div>
 
-<div class="lead">库存：节后首周社库大幅去化、SHFE 仓单回落，LME 库存已恢复更新（最新 10/15）</div>
+<div class="lead" id="invsec">库存：节后首周社库大幅去化、SHFE 仓单回落，LME 库存已恢复更新（最新 10/15）</div>
 <ul class="sq">
   <li>全球显性库存 <span class="rd">12,173 吨</span>（Mysteel 社库 7,968 ＋ LME 4,205），较上周 13,804 吨<span class="rd">减少 1,631 吨（-11.8%）</span>。</li>
   <li>本周中国锡锭社会库存（SMM）<span class="rd">7,770 吨</span>，较上周 8,750 吨减少 980 吨；Mysteel 口径 7,968 吨（-1,526 吨），两口径共振去化。</li>
@@ -701,7 +724,7 @@ body.my .bl{color:#000}
 </details>
 
 <!-- ============ 供给 ============ -->
-<h2>供给<span class="en">SUPPLY</span></h2>
+<h2 id="supply">供给<span class="en">SUPPLY</span></h2>
 <div class="lead">矿端：TC 五周首降，矿紧从预期走向确认</div>
 <ul class="sq">
   <li>锡精矿加工费：云南 17,000（<span class="rd">-500</span>）/ 江西 13,000（<span class="rd">-500</span>），连续五周持平后首次下移，矿端紧张开始向 TC 传导。</li>
@@ -715,7 +738,7 @@ body.my .bl{color:#000}
   <div class="cbox"><div class="echart" data-fn="s_oreimp.png"></div><img class="pimg" src="charts_full/s_oreimp.png" alt="锡精矿月度进口"><div class="cap">锡精矿月度进口</div><div class="stats">最新 19,332（8/2）｜环比 +2,374（+14.0%）｜同比 +9,078（+88.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="m_mines.png"></div><img class="pimg" src="charts_full/m_mines.png" alt="主要矿山产量"><div class="cap">主要矿山产量</div><div class="stats">最新 54,374（9/1）｜环比 +2,417（+4.7%）｜同比 +45,396（+505.6%）</div></div>
 </div>
-<div class="lead">冶炼端：云锡检修兑现为开工率暴跌</div>
+<div class="lead" id="smelt">冶炼端：云锡检修兑现为开工率暴跌</div>
 <ul class="sq">
   <li>SMM 精炼锡开工率（10/9 周）：两省合计 <span class="rd">29.74%</span>（-12.99pct），云南 28.68 / 江西 31.37——云锡 45 天检修（9/30 启动）首次计入周度读数，预计持续至 11 月初。</li>
   <li>冶炼毛利仍亏，开工率下行有被动成分；10/16 周读数 29.36%，检修满周影响兑现。</li>
@@ -729,7 +752,7 @@ body.my .bl{color:#000}
 </div>
 
 <!-- ============ 需求 ============ -->
-<h2>需求<span class="en">DEMAND</span></h2>
+<h2 id="demand">需求<span class="en">DEMAND</span></h2>
 <div class="lead">锡焊料：节后补库脉冲三天即消退，9 月开工率回暖</div>
 <ul class="sq">
   <li>下游成交 10/14 <b>1,308</b> 吨 → 10/15 330 → 10/16 <b>276</b> 吨，回归地量；同业成交 217/410/32 吨。</li>
@@ -804,7 +827,7 @@ body.my .bl{color:#000}
 </div>
 
 <!-- ============ 现货 ============ -->
-<h2>现货与进出口<span class="en">SPOT & TRADE</span></h2>
+<h2 id="spot">现货与进出口<span class="en">SPOT &amp; TRADE</span></h2>
 <div class="lead">现货：本周（10/12–10/16）周度成交 <b>3,261 吨</b>（下游 2,442 ＋ 贸易商 819），较上周 2,962 吨 <b>+299 吨</b>；基差（现货 - 主力）最新见「基差·结构」行。</div><ul class="sq"><li>下游：周度成交 <b>2,442 吨</b>，较上周 +150 吨。</li><li>贸易商：周度成交 <b>819 吨</b>，较上周 +149 吨。</li><li>成交均价：本周约 <b>388,500</b> 元/吨（日均），上周 405,500 元/吨。</li><li>现货升水大幅抬升：云锡 1,300 → <b>3,000</b> 元/吨（周 <span class="rd">+1,700</span>），云字 2,500 / 小牌 2,000 同步走高；<b>现货偏紧，中游贸易环节库存偏干，可流通货源近乎出清。</b></li><li>周内节奏：10/14 单日冲高 <b>1,525 吨</b> 后，后半周价格站稳 37 万上方，成交明显走弱，10/16 合计仅 <b>308 吨</b>——高价抑制补库意愿。</li></ul>
 <div class="charts3 fix2">
   <div class="cbox"><div class="echart" data-fn="p_vol.png"></div><img class="pimg" src="charts_full/p_vol.png" alt="日度成交量"><div class="cap">日度成交量</div><div class="stats">最新 308.0（10/16）｜环比 -432（-58.4%）</div></div>
@@ -829,7 +852,7 @@ body.my .bl{color:#000}
 </div>
 
 <!-- ============ 策略与验证点 ============ -->
-<h2>策略观点与下周验证点<span class="en">STRATEGY & WATCHLIST</span></h2>
+<h2 id="strategy">策略观点与下周验证点<span class="en">STRATEGY &amp; WATCHLIST</span></h2>
 <div class="cols2">
   <div>
     <div class="lead">策略</div>
@@ -851,10 +874,28 @@ body.my .bl{color:#000}
   </div>
 </div>
 
+<!-- ============ 图表工作区（屏幕端交互工具，打印时隐藏） ============ -->
+<h2 id="lab">图表工作区 · 自选指标叠加<span class="en">CHART LAB</span></h2>
+<div class="labwrap">
+  <div class="labside" id="lablist"></div>
+  <div class="labmain">
+    <div class="labtools">
+      <span class="lg">模式</span>
+      <button type="button" data-m="line" class="on">折线</button><button type="button" data-m="bar">柱状</button><button type="button" data-m="stack">堆叠</button>
+      <span class="lg">区间</span>
+      <button type="button" data-r="1">近1月</button><button type="button" data-r="3" class="on">近3月</button><button type="button" data-r="6">近6月</button><button type="button" data-r="12">近1年</button><button type="button" data-r="0">全部</button>
+      <span class="hint">左侧勾选指标自由叠加；点下方标签切左/右轴、点 ✕ 移除；悬停或点击图上任意位置显示数值</span>
+    </div>
+    <div class="labchips" id="labchips"></div>
+    <div class="labchart"><canvas id="labcanvas"></canvas></div>
+    <div class="labfoot" id="labfoot"></div>
+  </div>
+</div>
+
 
 <!-- ============ 详细周报（PPT 1-7 按序全量收录） ============ -->
 
-<h2>矿山成本与边际<span class="en">MINE COST &amp; MARGIN</span></h2>
+<h2 id="minecost">矿山成本与边际<span class="en">MINE COST &amp; MARGIN</span></h2>
 <div class="pptzone">
 <div class="mcgrid">
   <img src="charts_full/c_minecost.png" style="width:100%" alt="全球矿山C2成本">
@@ -877,7 +918,7 @@ body.my .bl{color:#000}
 </ul>
 </div>
 
-<h2>详细周报 · 全量数据图表<span class="en">DETAIL DECKS 1–7</span></h2>
+<h2 id="decks">详细周报 · 全量数据图表<span class="en">DETAIL DECKS 1–7</span></h2>
 <h2>详细周报 · 供给篇一：海外矿山 · 矿端 · 锡锭进口<span class="en">DECK 1</span></h2>
 <div class="charts3 fix3">
 </div>
@@ -1223,6 +1264,7 @@ body.my .bl{color:#000}
       <li><b>ITA 全球季度产量底稿</b>：季度表已录入到 2026Q2，更细月度底稿未见。</li>
       <li><b>有色与美股 60 日滚动相关性</b>（市场情绪页图 6）：原始计算底稿未找到。</li>
       <li><b>矿山成本 C2 曲线底稿</b>：现为按公开资料整理的估算值，如有精确数据可替换。</li>
+      <li><b>详细周报 PPT 篇（DECK 1–7）图表</b>：数据来自你发的 1–7.pptx 内嵌工作簿，不随两个 Excel 自动更新；发新版 PPT 后我重跑提取渲染即全部刷新。主报告区（目录「重点关注」之前的全部图表与平衡表）均随两个 Excel 自动更新，宏观 4 图（核心CPI/美债10Y/美元/WTI）走公开数据源自动更新，银锡比/铜锡比随 SMM 表更新。</li>
     </ul>
   </div>
 </details>
@@ -1266,6 +1308,125 @@ body.my .bl{color:#000}
     }});
     var cb=el.closest('.cbox');if(cb)cb.classList.add('ec');
   });
+})();
+</script>
+<script>
+/* ============ 图表工作区：自选指标叠加（Chart.js 交互） ============ */
+(function(){
+  if(!window.Chart||!window.CHART_DATA)return;
+  var KAI='KaiTi,"楷体",STKaiti,serif';
+  function dstr(ord){var t=new Date((ord-719163)*864e5);return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}
+  function ordOf(y,mon,day){return Math.floor(Date.UTC(y,mon-1,day)/864e5)+719163;}
+  function dim(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+  function fmtv(v){return Math.abs(v)>=1000?v.toLocaleString('zh-CN',{maximumFractionDigits:0}):(+v.toFixed(2)).toLocaleString('zh-CN');}
+
+  /* 展开指标库：每图每线一条；季节图按年份重建为日期序数，便于与时间序列同图叠加 */
+  var ITEMS=[],GROUPS=[],GIDX={};
+  Object.keys(CHART_DATA).forEach(function(fn){
+    var d=CHART_DATA[fn];if(!d||!d.series||!d.series.length)return;
+    var multi=d.series.length>1;
+    d.series.forEach(function(s,i){
+      var pts;
+      if(d.type==='seasonal'){
+        var ym=/(\d{4})/.exec(s.name);if(!ym)return;
+        var y=+ym[1];
+        pts=s.pts.map(function(p){var mf=p[0],mo=Math.floor(mf),fr=mf-mo;var day=Math.round(fr*dim(y,mo+1))+1;return[ordOf(y,mo+1,day),p[1]];});
+      }else{pts=s.pts;}
+      if(!pts||!pts.length)return;
+      var it={fn:fn,idx:i,label:d.title+(multi?' · '+s.name:''),sec:d.sec||'其他',color:s.color,pts:pts,axis:'y'};
+      var k=fn+'|'+i;it.key=k;ITEMS.push(it);
+      if(!(it.sec in GIDX)){GIDX[it.sec]=GROUPS.length;GROUPS.push({sec:it.sec,items:[]});}
+      GROUPS[GIDX[it.sec]].items.push(it);
+    });
+  });
+  var BYKEY={};ITEMS.forEach(function(it){BYKEY[it.key]=it;});
+
+  /* 左侧分组勾选列表 */
+  var list=document.getElementById('lablist'),html='';
+  GROUPS.forEach(function(g){
+    html+='<div class="lg2">'+g.sec+'</div>';
+    g.items.forEach(function(it){html+='<label><input type="checkbox" value="'+it.key+'"> '+it.label+'</label>';});
+  });
+  list.innerHTML=html;
+
+  var sel=[],mode='line',range=3,chart=null;
+  var chipsEl=document.getElementById('labchips'),footEl=document.getElementById('labfoot');
+
+  /* 默认勾选：城市锡价·报价1#、升贴水·云锡、下游成交 */
+  ['p_city.png|0','p_prem.png|0','p_vol.png|0'].forEach(function(k){
+    var box=list.querySelector('input[value="'+k+'"]');
+    if(box){box.checked=true;addSel(k);}
+  });
+
+  function medAbs(pts){var vs=pts.map(function(p){return Math.abs(p[1]);}).filter(function(v){return v>0;}).sort(function(a,b){return a-b;});return vs.length?vs[Math.floor(vs.length/2)]:1;}
+  function addSel(k){
+    var it=BYKEY[k];if(!it||sel.indexOf(k)>=0)return;
+    /* 量级差>20 倍自动放右轴 */
+    var left=sel.filter(function(x){return BYKEY[x].axis==='y';});
+    if(left.length){var m1=medAbs(it.pts),m2=medAbs(BYKEY[left[0]].pts);if(m1/m2>20||m2/m1>20)it.axis='y2';}
+    sel.push(k);render();
+  }
+  function delSel(k){var i=sel.indexOf(k);if(i<0)return;sel.splice(i,1);var box=list.querySelector('input[value="'+k+'"]');if(box)box.checked=false;render();}
+
+  list.addEventListener('change',function(e){
+    var k=e.target.value;
+    if(e.target.checked)addSel(k);else delSel(k);
+  });
+
+  document.querySelectorAll('.labtools button').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(b.dataset.m){mode=b.dataset.m;b.parentNode.querySelectorAll('button[data-m]').forEach(function(x){x.classList.toggle('on',x===b);});}
+      else if(b.dataset.r!==undefined){range=+b.dataset.r;b.parentNode.querySelectorAll('button[data-r]').forEach(function(x){x.classList.toggle('on',x===b);});}
+      render();
+    });
+  });
+
+  function renderChips(){
+    chipsEl.innerHTML=sel.map(function(k){
+      var it=BYKEY[k];
+      return '<span class="chip" data-k="'+k+'" title="点击切换左/右轴"><b>'+(it.axis==='y2'?'右轴':'左轴')+'</b> '+it.label+'<span class="x" data-x="1">✕</span></span>';
+    }).join('');
+  }
+  chipsEl.addEventListener('click',function(e){
+    var c=e.target.closest('.chip');if(!c)return;
+    var k=c.getAttribute('data-k');
+    if(e.target.getAttribute('data-x')){delSel(k);return;}
+    var it=BYKEY[k];it.axis=it.axis==='y'?'y2':'y';render();
+  });
+
+  function render(){
+    renderChips();
+    var maxOrd=-Infinity;
+    sel.forEach(function(k){var p=BYKEY[k].pts;if(p.length)maxOrd=Math.max(maxOrd,p[p.length-1][0]);});
+    var minX=range>0?maxOrd-range*31:-Infinity;
+    var isBar=(mode!=='line');
+    var datasets=sel.map(function(k){
+      var it=BYKEY[k];
+      var pts=it.pts.filter(function(p){return p[0]>=minX;}).map(function(p){return{x:p[0],y:p[1]};});
+      return {label:it.label,data:pts,type:isBar?'bar':'line',yAxisID:it.axis,
+        borderColor:it.color,backgroundColor:it.color,borderWidth:1.8,
+        pointRadius:0,pointHitRadius:8,tension:0.3,fill:false};
+    });
+    var rtxt=range>0?'近'+range+'月':'全部';
+    footEl.textContent='已叠加 '+sel.length+' 个指标｜区间 '+rtxt+'｜悬停/点击图上任意位置查看数值';
+    if(chart){chart.destroy();chart=null;}
+    if(!datasets.length)return;
+    var hasY2=sel.some(function(k){return BYKEY[k].axis==='y2';});
+    var ycfg={stacked:mode==='stack',position:'left',ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}};
+    var y2cfg={stacked:mode==='stack',position:'right',display:hasY2,ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{drawOnChartArea:false},border:{display:false}};
+    chart=new Chart(document.getElementById('labcanvas'),{data:{datasets:datasets},options:{
+      responsive:true,maintainAspectRatio:false,animation:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'rgba(255,255,255,.95)',borderColor:'#C9C9C9',borderWidth:1,titleColor:'#333',bodyColor:'#333',
+          titleFont:{family:KAI,size:11,weight:'bold'},bodyFont:{family:KAI,size:11},padding:8,
+          callbacks:{title:function(items){if(!items.length)return'';return dstr(items[0].parsed.x);},
+            label:function(it){return ' '+(it.dataset.label||'')+'：'+fmtv(it.parsed.y);}}}},
+      scales:{x:{type:'linear',stacked:mode==='stack',ticks:{maxTicksLimit:9,font:{family:KAI,size:9},callback:function(v){return dstr(v).slice(2);}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}},y:ycfg,y2:y2cfg}
+    }});
+  }
+  render();
 })();
 </script>
 <script>
