@@ -1306,7 +1306,7 @@ body.my .bl{color:#000}
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
   var KAI='KaiTi,"楷体",STKaiti,serif';
-  function dstr(ord){var t=new Date((ord-719163)*864e5);return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}
+  function dstr(ord){var t=new Date(ord*864e5);return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}
   function fmtv(v){return Math.abs(v)>=1000?v.toLocaleString('zh-CN',{maximumFractionDigits:0}):(+v.toFixed(2)).toLocaleString('zh-CN');}
   document.querySelectorAll('.echart').forEach(function(el){
     var d=CHART_DATA[el.getAttribute('data-fn')];
@@ -1402,8 +1402,8 @@ body.my .bl{color:#000}
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
   var KAI='KaiTi,"楷体",STKaiti,serif';
-  function dstr(ord){var t=new Date((ord-719163)*864e5);return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}
-  function ordOf(y,mon,day){return Math.floor(Date.UTC(y,mon-1,day)/864e5)+719163;}
+  function dstr(ord){var t=new Date(ord*864e5);return t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}
+  function ordOf(y,mon,day){return Math.floor(Date.UTC(y,mon-1,day)/864e5);}
   function dim(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
   function fmtv(v){return Math.abs(v)>=1000?v.toLocaleString('zh-CN',{maximumFractionDigits:0}):(+v.toFixed(2)).toLocaleString('zh-CN');}
 
