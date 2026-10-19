@@ -1317,7 +1317,7 @@ body.my .bl{color:#000}
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792389099"></script>
+<script src="charts_full/weekly_inter.js?v=1792391040"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1332,6 +1332,7 @@ body.my .bl{color:#000}
     return out;
   }
   function dateScaleTicks(ax){if(!isFinite(ax.min)||!isFinite(ax.max))return;var t=dtTicks(Math.ceil(ax.min),Math.floor(ax.max));if(t.length>=2)ax.ticks=t.map(function(v){return{value:v};});}
+  function monthFloor(ord){var d=new Date(ord*864e5);return Math.round(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1)/864e5);}
   function fmtv(v){return Math.abs(v)>=1000?v.toLocaleString('zh-CN',{maximumFractionDigits:0}):(+v.toFixed(2)).toLocaleString('zh-CN');}
   document.querySelectorAll('.echart').forEach(function(el){
     var d=CHART_DATA[el.getAttribute('data-fn')];
@@ -1366,7 +1367,7 @@ body.my .bl{color:#000}
         return {type:'line',label:s.name,data:pts,borderColor:s.color,backgroundColor:s.fill?s.color+'4D':s.color,borderWidth:1.8,pointRadius:0,pointHitRadius:8,tension:0.3,fill:!!s.fill,yAxisID:s.axis||'y'};
       });
       var y2s=d.series.some(function(s){return s.axis==='y2';});
-      var scales={x:{type:'linear',min:_ax.length?_ax[0]-_pd:undefined,max:_ax.length?_ax[_ax.length-1]+_pd:undefined,stacked:!!d.stacked,ticks:{autoSkip:false,font:{family:KAI,size:9},callback:function(v){return dstr(v).slice(2,7);}},afterBuildTicks:dateScaleTicks,grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}},
+      var scales={x:{type:'linear',min:_ax.length?monthFloor(_ax[0])-0.6:undefined,max:_ax.length?_ax[_ax.length-1]+_pd:undefined,stacked:!!d.stacked,ticks:{autoSkip:false,font:{family:KAI,size:9},callback:function(v){return dstr(v).slice(2,7);}},afterBuildTicks:dateScaleTicks,grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}},
         y:{position:'left',stacked:!!d.stacked,ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}}};
       if(y2s)scales.y2={position:'right',ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{drawOnChartArea:false},border:{display:false}};
       new Chart(cv,{data:{datasets:datasets},options:{
@@ -1418,7 +1419,7 @@ body.my .bl{color:#000}
       (d.xunit==='week'?
         {type:'linear',min:Math.max(0,Math.floor(_l0)),max:Math.ceil(_l1),ticks:{stepSize:4,font:{family:KAI,size:9},callback:function(v){return(v>=0&&Math.abs(v-Math.round(v))<1e-6)?(Math.round(v)+1)+'周':'';}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}}:
         {type:'linear',min:Math.max(0,Math.floor(_l0)),max:Math.min(12,Math.ceil(_l1)),ticks:{stepSize:1,font:{family:KAI,size:9},callback:function(v){return(v>=0&&v<12&&Math.abs(v-Math.round(v))<1e-6)?(Math.round(v)+1)+'月':'';}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}}):
-      {type:'linear',min:_l0-_lp,max:_l1+_lp,ticks:{autoSkip:false,font:{family:KAI,size:9},callback:function(v){return dstr(v).slice(2,7);}},afterBuildTicks:dateScaleTicks,grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}};
+      {type:'linear',min:monthFloor(_l0)-0.6,max:_l1+_lp,ticks:{autoSkip:false,font:{family:KAI,size:9},callback:function(v){return dstr(v).slice(2,7);}},afterBuildTicks:dateScaleTicks,grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}};
     new Chart(cv,{type:'line',data:{datasets:datasets},options:{
       responsive:true,maintainAspectRatio:false,animation:false,
       interaction:{mode:'index',intersect:false},
