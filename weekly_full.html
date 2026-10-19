@@ -425,7 +425,7 @@ body.my .bl{color:#000}
 </div>
 
 <details class="fold" id="balance">
-  <summary>📊 平衡表：矿端（年/月）· 精炼锡（年）· 锡锭月度供需大表（可编辑·可加/删行列）＋ ITA 季度数据 ＋ 自动更新区（点击展开/折叠）</summary>
+  <summary>📊 平衡表：矿端（年/月）· 精炼锡（年）· 锡锭月度供需大表 ＋ ITA 季度数据 ＋ 自动更新区（点击展开/折叠；展开后直接点单元格即可编辑，表格上方有 ＋行 －行 ＋列 －列 按钮）</summary>
   <div class="foldbody">
     <div class="lead">锡矿矿端平衡表（年度，万吨）（可编辑）</div>
 <table class="bal"><thead><tr><th>指标（万吨）</th><th>2020</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th><th>2026E</th></tr></thead><tbody>
@@ -1315,7 +1315,7 @@ body.my .bl{color:#000}
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792387855"></script>
+<script src="charts_full/weekly_inter.js?v=1792388370"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1654,6 +1654,11 @@ body.my .bl{color:#000}
     tbs.forEach(function(tb){tb.querySelectorAll('td,th').forEach(function(c){c.contentEditable=on?'true':'false';});});
   }
   if(eb)eb.onclick=function(){setEdit(!document.body.classList.contains('editmode'));};
+  // 点击平衡表/ITA 表任意单元格：自动进入编辑模式（无需先点编辑按钮）
+  document.addEventListener('click',function(e){
+    var c=e.target&&e.target.closest?e.target.closest('table.bal td,table.bal th,table.ita td,table.ita th'):null;
+    if(c&&!document.body.classList.contains('editmode'))setEdit(true);
+  });
 })();
 
 (function(){
