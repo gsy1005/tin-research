@@ -189,6 +189,15 @@ html.pgxppt .wrap{width:314.7mm!important;max-width:none!important}
 html.pgxa4 .echart,html.pgxppt .echart{display:none!important}
 html.pgxa4 .cbox.ec img.pimg,html.pgxppt .cbox.ec img.pimg{display:block!important}
 html.pgxa4 .tbar,html.pgxppt .tbar{display:none!important}
+/* 导出时对齐网页的三栏观感，避免 auto-fit 在纸宽下塌成两栏 */
+html.pgxa4 .verdict,html.pgxppt .verdict{grid-template-columns:repeat(3,1fr)!important}
+html.pgxa4 .charts3:not(.fix2):not(.fix3),html.pgxppt .charts3:not(.fix2):not(.fix3){grid-template-columns:repeat(3,1fr)!important}
+html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{grid-template-columns:repeat(2,1fr)!important}
+@media print{
+  .pg .verdict{grid-template-columns:repeat(3,1fr)}
+  .pg .charts3:not(.fix2):not(.fix3){grid-template-columns:repeat(3,1fr)}
+  .pg .charts2,.pg .cols2{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -1341,7 +1350,7 @@ html.pgxa4 .tbar,html.pgxppt .tbar{display:none!important}
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792510897"></script>
+<script src="charts_full/weekly_inter.js?v=1792511950"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1631,13 +1640,7 @@ window.PGX=(function(){
       }
       if(has(el,'pptzone')){collect(el,out,usableH);return;}
       if(tn==='UL'&&has(el,'sq')){qa(el.children).forEach(function(li){out.push({t:'li',el:li,ul:el});});return;}
-      if(tn==='TABLE'){
-        if(mh(el)<=usableH-20){out.push({t:'blk',el:el});return;}
-        var rows=qa(el.querySelectorAll('tbody tr'));
-        if(!rows.length){out.push({t:'blk',el:el});return;}
-        rows.forEach(function(tr){out.push({t:'tr',el:tr,tb:el});});
-        return;
-      }
+      if(tn==='TABLE'){out.push({t:'blk',el:el});return;}
       if(getComputedStyle(el).display==='grid'&&el.children.length>1){
         var rs=[],top=null;
         qa(el.children).forEach(function(k){var t=k.offsetTop;if(top===null||Math.abs(t-top)>3){rs.push([k]);top=t;}else rs[rs.length-1].push(k);});
@@ -1684,9 +1687,26 @@ window.PGX=(function(){
         document.body.appendChild(page);lastUL=lastTB=null;
       }
       function place(u,h,depth){
-        if(h>usableH-10&&u.t!=='tr'&&u.el.children&&u.el.children.length>1&&(depth||0)<3){
-          qa(u.el.children).forEach(function(ch){place({t:'blk',el:ch},mh(ch),(depth||0)+1);});
-          return;
+        if(h>usableH-6){
+          /* 超一页内容：先试整体缩放装进一页（≥55% 才缩，避免字太小） */
+          var s=(usableH-6)/h;
+          if(s>=0.55&&u.t!=='tr'){
+            if(!page||page.children.length)newPage(!!lastHead);
+            var zn=u.clone?u.clone.cloneNode(true):u.el.cloneNode(true);
+            zn.style.zoom=s.toFixed(3);
+            page.appendChild(zn);remain=usableH-h*s-10;
+            lastUL=lastTB=null;
+            if(u.t==='h2'||u.t==='lead'){lastHead=(u.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,42);}
+            return;
+          }
+          if(u.t==='blk'&&u.el.tagName==='TABLE'){
+            qa(u.el.querySelectorAll('tbody tr')).forEach(function(tr){place({t:'tr',el:tr,tb:u.el},mh(tr),0);});
+            return;
+          }
+          if(u.t!=='tr'&&u.el.children&&u.el.children.length>1&&(depth||0)<3){
+            qa(u.el.children).forEach(function(ch){place({t:'blk',el:ch},mh(ch),(depth||0)+1);});
+            return;
+          }
         }
         if(!page)newPage((u.t==='h2'||u.t==='lead')?false:!!lastHead);
         else if(u.t==='h2'){if(page.children.length)newPage(false);}
