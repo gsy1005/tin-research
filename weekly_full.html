@@ -109,7 +109,7 @@ details.fold .foldbody>img{width:100%;display:block;margin-bottom:8px}
 table.bal{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
 table.bal th,table.bal td{border:1px solid var(--line);padding:4px 8px;text-align:right}
 table.bal th:first-child,table.bal td:first-child{text-align:left;font-weight:700}
-table.bal thead th{background:var(--blue);color:#fff;border-color:var(--blue)}
+table.bal thead th{background:var(--thbg);color:var(--ink);border-color:var(--line);font-weight:700}
 table.bal tbody tr:nth-child(even) td{background:var(--soft)}
 table.bal tr.sub td{background:var(--leadbg);font-weight:700}
 table.bal tr.yoy td{color:var(--grey);font-size:12px;background:transparent}
@@ -121,7 +121,8 @@ table.ita{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px;bord
 .mcgrid{display:grid;grid-template-columns:62% 36%;gap:1.5%;align-items:start}
 table.ita th,table.ita td{border:1px solid #2E75B6;padding:3px 6px;text-align:right}
 table.ita th:first-child,table.ita td:first-child{text-align:left}
-table.ita thead th{background:#2E75B6;color:#fff;font-weight:700}
+table.ita thead th{background:#DDEBF7;color:#1a1a1a;font-weight:700}
+body.dark table.ita thead th{background:#232c40;color:#dfe5ee}
 table.ita tr.sub td{background:#DDEBF7;font-weight:700}
 body.dark table.ita,body.dark table.ita th,body.dark table.ita td{border-color:#4a86c8}
 body.dark table.ita tr.sub td{background:rgba(74,134,200,.22)}
@@ -132,7 +133,7 @@ body.editmode .tbar{display:flex}
 .tbar button[data-op="reset"]{border-color:#C00000;color:#C00000;margin-left:10px}
 .tbar button[data-op="reset"]:hover{background:#C00000;color:#fff}
 @page{size:A4 portrait;margin:10mm}
-@page ppt{size:338.7mm 190.5mm;margin:9mm}
+@page ppt{size:338.7mm 190.5mm;margin:0}
 @page cover{size:338.7mm 190.5mm;margin:0}
 .pptzone{page:ppt}
 .fwscale{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;background:#fff;margin-bottom:10px;container-type:inline-size}
@@ -171,8 +172,10 @@ body.my .bl{color:#000}
 .pg::after{content:counter(pgno);position:absolute;right:5mm;bottom:3.2mm;font-size:9.5px;color:#999;font-family:Arial,sans-serif}
 .pg.a4{page:pgf;width:190mm;height:277mm}
 .pg.pptm{page:pptm;width:314.7mm;height:172.5mm}
-.pg.slide{page:ppt;width:320.7mm;height:172.5mm}
-.pg.slide .fwscale{width:94%;margin:0 auto}
+.pg.slide{page:ppt;width:338.7mm;height:190.5mm}
+.pg.slide .fwscale{width:100%;margin:0}
+.pg.slide.s_a4{page:pgf;width:190mm;height:277mm}
+.pg.slide.s_a4 .fwscale{width:100%;margin:0}
 .pg.cover0{counter-increment:none;page-break-after:auto;break-after:auto}
 .pg.cover0::after{display:none}
 @page pgf{size:A4 portrait;margin:10mm}
@@ -1350,7 +1353,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792511950"></script>
+<script src="charts_full/weekly_inter.js?v=1792518331"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1632,6 +1635,7 @@ window.PGX=(function(){
       if(has(el,'fwscale')){out.push({t:'slide',el:el});return;}
       if(tn==='H2'){out.push({t:'h2',el:el});return;}
       if(has(el,'lead')){out.push({t:'lead',el:el});return;}
+      if(has(el,'cap')){out.push({t:'cap',el:el});return;}
       if(tn==='DETAILS'){
         qa(el.children).forEach(function(ch){
           if(ch.tagName==='SUMMARY'){var d=document.createElement('div');d.className='lead';d.textContent=ch.textContent.replace(/\s+/g,' ');out.push({t:'lead',el:ch,clone:d});}
@@ -1691,10 +1695,24 @@ window.PGX=(function(){
           /* 超一页内容：先试整体缩放装进一页（≥55% 才缩，避免字太小） */
           var s=(usableH-6)/h;
           if(s>=0.55&&u.t!=='tr'){
-            if(!page||page.children.length)newPage(!!lastHead);
+            /* 若当前页只有标题/导语，标题随迁到新页，避免"光有标题的空页" */
+            var moved=null;
+            if(page&&page.children.length){
+              var onlyHead=true;
+              qa(page.children).forEach(function(c){
+                var tg=c.tagName;
+                if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyHead=false;
+              });
+              if(onlyHead){
+                moved=qa(page.children).filter(function(c){return !c.classList.contains('pgc');});
+                page.remove();page=null;
+              }
+            }
+            if(!page||page.children.length)newPage(moved?false:!!lastHead);
+            if(moved)moved.forEach(function(m){page.appendChild(m);remain-=mh(m);});
             var zn=u.clone?u.clone.cloneNode(true):u.el.cloneNode(true);
             zn.style.zoom=s.toFixed(3);
-            page.appendChild(zn);remain=usableH-h*s-10;
+            page.appendChild(zn);remain-=h*s+10;
             lastUL=lastTB=null;
             if(u.t==='h2'||u.t==='lead'){lastHead=(u.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,42);}
             return;
@@ -1709,8 +1727,30 @@ window.PGX=(function(){
           }
         }
         if(!page)newPage((u.t==='h2'||u.t==='lead')?false:!!lastHead);
-        else if(u.t==='h2'){if(page.children.length)newPage(false);}
-        else if(h>remain)newPage(true);
+        else if(u.t==='h2'){
+          /* 连续标题不重复分页：当前页只有标题/导语时，标题直接跟上 */
+          if(page.children.length){
+            var onlyH=true;
+            qa(page.children).forEach(function(c){
+              var tg=c.tagName;
+              if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyH=false;
+            });
+            if(!onlyH)newPage(false);
+          }
+        }
+        else if(h>remain){
+          /* 标题/图表题孤立保护：当前页只有标题族时，整体随迁到新页 */
+          var onlyHd=page.children.length>0;
+          qa(page.children).forEach(function(c){
+            var tg=c.tagName;
+            if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyHd=false;
+          });
+          if(onlyHd){
+            var mv=qa(page.children).filter(function(c){return !c.classList.contains('pgc');});
+            page.remove();newPage(false);
+            mv.forEach(function(m){page.appendChild(m);remain-=mh(m);});
+          }else newPage(true);
+        }
         if(u.t==='li'){
           if(!lastUL){lastUL=document.createElement('ul');lastUL.className=u.ul.className;page.appendChild(lastUL);}
           lastUL.appendChild(u.el.cloneNode(true));
@@ -1732,16 +1772,31 @@ window.PGX=(function(){
         remain-=h;
         if(u.t==='h2'||u.t==='lead'){lastHead=(u.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,42);}
       }
-      units.forEach(function(u){
+      for(var ui=0;ui<units.length;ui++){
+        var u=units[ui];
         if(u.t==='slide'||u.t==='cover'){
-          var sp=document.createElement('div');sp.className=(u.t==='cover')?'pg slide cover0':'pg slide';
+          var sp=document.createElement('div');
+          sp.className=((u.t==='cover')?'pg slide cover0':'pg slide')+(ppt?'':' s_a4');
           sp.appendChild(u.el.cloneNode(true));
           document.body.appendChild(sp);
           page=null;lastUL=lastTB=null;
-          return;
+          continue;
         }
-        place(u,unitH(u),0);
-      });
+        var uh=unitH(u);
+        /* 标题孤立保护：标题（含连续标题）下方至少带一块内容，放不下则整组先换页 */
+        if((u.t==='h2'||u.t==='lead'||u.t==='cap')&&page&&page.children.length){
+          var need=uh,got=false;
+          for(var uj=ui+1;uj<units.length;uj++){
+            var v=units[uj];
+            if(v.t==='slide'||v.t==='cover')break;
+            var vh=unitH(v);
+            if(v.t==='h2'||v.t==='lead'||v.t==='cap'){need+=vh;continue;}
+            need+=Math.min(vh,usableH*0.55);got=true;break;
+          }
+          if(got&&need>remain)newPage(false);
+        }
+        place(u,uh,0);
+      }
       if(page&&!page.children.length){page.remove();page=null;}
       var done=false;
       function cleanup(){if(done)return;done=true;document.documentElement.classList.remove('pgxa4','pgxppt');qa(document.querySelectorAll('.pg')).forEach(function(r){r.remove();});window.removeEventListener('afterprint',cleanup);}
