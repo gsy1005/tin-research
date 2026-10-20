@@ -142,7 +142,8 @@ body.editmode .tbar{display:flex}
 .fwtxt span{font-family:"KaiTi","楷体","STKaiti",serif}
 .printcover{display:none}
 @media print{
-  .printcover{display:block;page:cover;page-break-after:always;width:338.7mm;height:190.5mm}
+  .printcover{display:none!important}
+  .roll{display:none}
   .printcover .fwscale{border:none;margin:0}
   .roll{display:none}
   .meta{display:none}
@@ -165,6 +166,29 @@ body.my .bl{color:#000}
   details.fold>*:not(summary){display:block !important}
   details.fold>summary{border:none;background:none;padding:4px 0}
 }
+/* ===== 分页导出引擎（A4 饱满版 / PPT 16:9 版共用） ===== */
+.pg{display:none;position:relative;overflow:hidden;page-break-after:always;break-after:page;background:#fff;color:#1a1a1a;counter-increment:pgno}
+.pg::after{content:counter(pgno);position:absolute;right:5mm;bottom:3.2mm;font-size:9.5px;color:#999;font-family:Arial,sans-serif}
+.pg.a4{page:pgf;width:190mm;height:277mm}
+.pg.pptm{page:pptm;width:314.7mm;height:172.5mm}
+.pg.slide{page:ppt;width:320.7mm;height:172.5mm}
+.pg.slide .fwscale{width:94%;margin:0 auto}
+.pg.cover0{counter-increment:none;page-break-after:auto;break-after:auto}
+.pg.cover0::after{display:none}
+@page pgf{size:A4 portrait;margin:10mm}
+@page pptm{size:338.7mm 190.5mm;margin:9mm 12mm}
+.pgc{font-size:12px;color:#777;border-bottom:1px solid #D9D9D9;padding-bottom:1.5mm;margin-bottom:2.5mm;letter-spacing:1px}
+@media print{
+  body{counter-reset:pgno}
+  .wrap{display:none!important}
+  .pg{display:block}
+  .pg.slide{display:flex;align-items:center;justify-content:center}
+}
+html.pgxa4 .wrap{width:186mm!important;max-width:none!important}
+html.pgxppt .wrap{width:314.7mm!important;max-width:none!important}
+html.pgxa4 .echart,html.pgxppt .echart{display:none!important}
+html.pgxa4 .cbox.ec img.pimg,html.pgxppt .cbox.ec img.pimg{display:block!important}
+html.pgxa4 .tbar,html.pgxppt .tbar{display:none!important}
 </style>
 </head>
 <body>
@@ -187,7 +211,7 @@ body.my .bl{color:#000}
   <span>口径：Mysteel / SMM 周度＋日度</span>
   <button class="thbtn2" id="mybtn" type="button" style="margin-left:8px;font-size:12px;padding:3px 12px;border:1px solid #000;color:#000;background:#fff;border-radius:4px;cursor:pointer">◼ 钢联风</button>
   <button class="editbtn" id="editbtn" type="button">✏️ 编辑文字</button>
-  <button class="editbtn" id="pdfbtn" type="button" onclick="document.querySelectorAll('details.fold').forEach(function(d){d.open=true});window.print()">🖨 导出PDF</button>
+  <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button>
 </div>
 <nav class="toc" id="toc">
   <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a>
@@ -1317,7 +1341,7 @@ body.my .bl{color:#000}
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792395354"></script>
+<script src="charts_full/weekly_inter.js?v=1792503091"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1580,6 +1604,134 @@ body.my .bl{color:#000}
   var saved=null;try{saved=localStorage.getItem('wk41-theme');}catch(e){}
   apply(saved==='dark');
   b.onclick=function(){var d=!document.body.classList.contains('dark');apply(d);try{localStorage.setItem('wk41-theme',d?'dark':'light');}catch(e){}};
+})();
+</script>
+<script>
+/* 分页导出引擎：把正文按目标纸宽重新测量、顺序打包进固定高度的页面，
+   图表按网格行拆分、表格按行拆分（跨页自动带表头），同一节跨页自动加「（续）」标题。
+   PPT 图表幻灯片（.fwscale）始终独占 16:9 页。 */
+window.PGX=(function(){
+  var MM=96/25.4;
+  function qa(x){return Array.prototype.slice.call(x||[]);}
+  function has(el,c){return el.classList&&el.classList.contains(c);}
+  function mh(el){var cs=getComputedStyle(el),r=el.getBoundingClientRect();return r.height+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0);}
+  function collect(box,out){
+    qa(box.children).forEach(function(el){
+      var tn=el.tagName;
+      if(tn==='SCRIPT'||tn==='STYLE'||tn==='NAV'||tn==='BUTTON')return;
+      if(el.id==='lab'||has(el,'toc')||has(el,'roll')||has(el,'meta')||has(el,'tbar')||has(el,'labwrap')||has(el,'printcover'))return;
+      if(has(el,'fwscale')){out.push({t:'slide',el:el});return;}
+      if(tn==='H2'){out.push({t:'h2',el:el});return;}
+      if(has(el,'lead')){out.push({t:'lead',el:el});return;}
+      if(tn==='DETAILS'){
+        qa(el.children).forEach(function(ch){
+          if(ch.tagName==='SUMMARY'){var d=document.createElement('div');d.className='lead';d.textContent=ch.textContent.replace(/\s+/g,' ');out.push({t:'lead',el:ch,clone:d});}
+          else collect(ch,out);
+        });return;
+      }
+      if(has(el,'pptzone')){collect(el,out);return;}
+      if(tn==='UL'&&has(el,'sq')){qa(el.children).forEach(function(li){out.push({t:'li',el:li,ul:el});});return;}
+      if(tn==='TABLE'){
+        var rows=qa(el.querySelectorAll('tbody tr'));
+        if(!rows.length){out.push({t:'blk',el:el});return;}
+        rows.forEach(function(tr){out.push({t:'tr',el:tr,tb:el});});
+        return;
+      }
+      if(getComputedStyle(el).display==='grid'&&el.children.length>1){
+        var rs=[],top=null;
+        qa(el.children).forEach(function(k){var t=k.offsetTop;if(top===null||Math.abs(t-top)>3){rs.push([k]);top=t;}else rs[rs.length-1].push(k);});
+        rs.forEach(function(r){out.push({t:'row',el:el,kids:r});});
+        return;
+      }
+      out.push({t:'blk',el:el});
+    });
+  }
+  function unitH(u){
+    if(u.t==='row'){var m=0;u.kids.forEach(function(k){var r=k.getBoundingClientRect();if(r.height>m)m=r.height;});var cs=getComputedStyle(u.el);return m+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0)+8;}
+    return mh(u.el);
+  }
+  function go(mode){
+    try{
+      var ppt=(mode==='ppt');
+      qa(document.querySelectorAll('details.fold')).forEach(function(d){d.open=true;});
+      document.documentElement.classList.add(ppt?'pgxppt':'pgxa4');
+      var wrap=document.querySelector('.wrap');
+      var waits=qa(wrap.querySelectorAll('img.pimg')).map(function(im){
+        return (im.complete&&im.naturalHeight)?null:new Promise(function(r){im.onload=im.onerror=r;});
+      }).filter(Boolean);
+      if(document.fonts&&document.fonts.ready)waits.push(document.fonts.ready);
+      Promise.all(waits).then(function(){setTimeout(function(){build(ppt,wrap);},80);});
+    }catch(e){document.documentElement.classList.remove('pgxa4','pgxppt');window.print();}
+  }
+  function build(ppt,wrap){
+    try{
+      var usableH=(ppt?172.5:273)*MM-12;
+      var units=[];collect(wrap,units);
+      var covEl=document.querySelector('.printcover .fwscale');
+      if(covEl)units.unshift({t:'cover',el:covEl});
+      /* 首页充实化：把「本周定调」提到 h1 之后，避免标题页过空 */
+      var ti=-1,hi=-1;
+      units.forEach(function(u,i){if(ti<0&&has(u.el,'tone'))ti=i;if(hi<0&&u.el.tagName==='H1')hi=i;});
+      if(ti>0&&hi>=0&&ti!==hi+1){var tu=units.splice(ti,1)[0];units.splice(hi+1,0,tu);}
+      var old=qa(document.querySelectorAll('.pg'));old.forEach(function(o){o.remove();});
+      var page=null,remain=0,lastHead='',lastUL=null,lastTB=null;
+      function newPage(cont){
+        page=document.createElement('div');
+        page.className='pg '+(ppt?'pptm':'a4');
+        remain=usableH;
+        if(cont&&lastHead){var c=document.createElement('div');c.className='pgc';c.textContent=lastHead+'（续）';page.appendChild(c);remain-=34;}
+        document.body.appendChild(page);lastUL=lastTB=null;
+      }
+      function place(u,h,depth){
+        if(h>usableH-10&&u.t!=='tr'&&u.el.children&&u.el.children.length>1&&(depth||0)<3){
+          qa(u.el.children).forEach(function(ch){place({t:'blk',el:ch},mh(ch),(depth||0)+1);});
+          return;
+        }
+        if(!page)newPage((u.t==='h2'||u.t==='lead')?false:!!lastHead);
+        else if(h>remain||(u.t==='h2'&&remain<h+90))newPage(!(u.t==='h2'||u.t==='lead'));
+        if(u.t==='li'){
+          if(!lastUL){lastUL=document.createElement('ul');lastUL.className=u.ul.className;page.appendChild(lastUL);}
+          lastUL.appendChild(u.el.cloneNode(true));
+        }else if(u.t==='tr'){
+          if(!lastTB){
+            lastTB=document.createElement('table');lastTB.className=u.tb.className;
+            var th=u.tb.querySelector('thead');if(th){lastTB.appendChild(th.cloneNode(true));remain-=mh(th);}
+            lastTB.appendChild(document.createElement('tbody'));
+            page.appendChild(lastTB);
+          }
+          lastTB.querySelector('tbody').appendChild(u.el.cloneNode(true));
+        }else if(u.t==='row'){
+          var g=document.createElement('div');g.className=u.el.className;g.style.cssText=u.el.style.cssText;
+          u.kids.forEach(function(k){g.appendChild(k.cloneNode(true));});
+          page.appendChild(g);
+        }else{
+          page.appendChild(u.clone?u.clone.cloneNode(true):u.el.cloneNode(true));
+        }
+        remain-=h;
+        if(u.t==='h2'||u.t==='lead'){lastHead=(u.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,42);}
+      }
+      units.forEach(function(u){
+        if(u.t==='slide'||u.t==='cover'){
+          var sp=document.createElement('div');sp.className=(u.t==='cover')?'pg slide cover0':'pg slide';
+          sp.appendChild(u.el.cloneNode(true));
+          document.body.appendChild(sp);
+          page=null;lastUL=lastTB=null;
+          return;
+        }
+        place(u,unitH(u),0);
+      });
+      if(page&&!page.children.length){page.remove();page=null;}
+      var done=false;
+      function cleanup(){if(done)return;done=true;document.documentElement.classList.remove('pgxa4','pgxppt');qa(document.querySelectorAll('.pg')).forEach(function(r){r.remove();});window.removeEventListener('afterprint',cleanup);}
+      window.addEventListener('afterprint',cleanup);
+      setTimeout(function(){window.print();},50);
+    }catch(e){
+      document.documentElement.classList.remove('pgxa4','pgxppt');
+      qa(document.querySelectorAll('.pg')).forEach(function(r){r.remove();});
+      window.print();
+    }
+  }
+  return {go:go};
 })();
 </script>
 <script>
