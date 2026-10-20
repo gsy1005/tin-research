@@ -177,7 +177,7 @@ body.my .bl{color:#000}
 .pg.cover0::after{display:none}
 @page pgf{size:A4 portrait;margin:10mm}
 @page pptm{size:338.7mm 190.5mm;margin:9mm 12mm}
-.pgc{font-size:12px;color:#777;border-bottom:1px solid #D9D9D9;padding-bottom:1.5mm;margin-bottom:2.5mm;letter-spacing:1px}
+.pgc{font-size:15px;font-weight:700;color:#1a1a1a;background:#EEF3FA;border-left:4px solid #1F4E79;padding:4px 10px;margin-bottom:3mm;letter-spacing:.5px}
 @media print{
   body{counter-reset:pgno}
   .wrap{display:none!important}
@@ -1341,7 +1341,7 @@ html.pgxa4 .tbar,html.pgxppt .tbar{display:none!important}
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792503091"></script>
+<script src="charts_full/weekly_inter.js?v=1792510897"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1615,7 +1615,7 @@ window.PGX=(function(){
   function qa(x){return Array.prototype.slice.call(x||[]);}
   function has(el,c){return el.classList&&el.classList.contains(c);}
   function mh(el){var cs=getComputedStyle(el),r=el.getBoundingClientRect();return r.height+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0);}
-  function collect(box,out){
+  function collect(box,out,usableH){
     qa(box.children).forEach(function(el){
       var tn=el.tagName;
       if(tn==='SCRIPT'||tn==='STYLE'||tn==='NAV'||tn==='BUTTON')return;
@@ -1626,12 +1626,13 @@ window.PGX=(function(){
       if(tn==='DETAILS'){
         qa(el.children).forEach(function(ch){
           if(ch.tagName==='SUMMARY'){var d=document.createElement('div');d.className='lead';d.textContent=ch.textContent.replace(/\s+/g,' ');out.push({t:'lead',el:ch,clone:d});}
-          else collect(ch,out);
+          else collect(ch,out,usableH);
         });return;
       }
-      if(has(el,'pptzone')){collect(el,out);return;}
+      if(has(el,'pptzone')){collect(el,out,usableH);return;}
       if(tn==='UL'&&has(el,'sq')){qa(el.children).forEach(function(li){out.push({t:'li',el:li,ul:el});});return;}
       if(tn==='TABLE'){
+        if(mh(el)<=usableH-20){out.push({t:'blk',el:el});return;}
         var rows=qa(el.querySelectorAll('tbody tr'));
         if(!rows.length){out.push({t:'blk',el:el});return;}
         rows.forEach(function(tr){out.push({t:'tr',el:tr,tb:el});});
@@ -1647,7 +1648,7 @@ window.PGX=(function(){
     });
   }
   function unitH(u){
-    if(u.t==='row'){var m=0;u.kids.forEach(function(k){var r=k.getBoundingClientRect();if(r.height>m)m=r.height;});var cs=getComputedStyle(u.el);return m+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0)+8;}
+    if(u.t==='row'){var m=0;u.kids.forEach(function(k){var r=k.getBoundingClientRect();if(r.height>m)m=r.height;});var cs=getComputedStyle(u.el);return m+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0)+2;}
     return mh(u.el);
   }
   function go(mode){
@@ -1665,8 +1666,8 @@ window.PGX=(function(){
   }
   function build(ppt,wrap){
     try{
-      var usableH=(ppt?172.5:273)*MM-12;
-      var units=[];collect(wrap,units);
+      var usableH=(ppt?172.5:277)*MM-8;
+      var units=[];collect(wrap,units,usableH);
       var covEl=document.querySelector('.printcover .fwscale');
       if(covEl)units.unshift({t:'cover',el:covEl});
       /* 首页充实化：把「本周定调」提到 h1 之后，避免标题页过空 */
@@ -1688,7 +1689,8 @@ window.PGX=(function(){
           return;
         }
         if(!page)newPage((u.t==='h2'||u.t==='lead')?false:!!lastHead);
-        else if(h>remain||(u.t==='h2'&&remain<h+90))newPage(!(u.t==='h2'||u.t==='lead'));
+        else if(u.t==='h2'){if(page.children.length)newPage(false);}
+        else if(h>remain)newPage(true);
         if(u.t==='li'){
           if(!lastUL){lastUL=document.createElement('ul');lastUL.className=u.ul.className;page.appendChild(lastUL);}
           lastUL.appendChild(u.el.cloneNode(true));
