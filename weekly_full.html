@@ -171,16 +171,23 @@ body.my .bl{color:#000}
 .pg{display:none;position:relative;overflow:hidden;page-break-after:always;break-after:page;background:#fff;color:#1a1a1a;counter-increment:pgno}
 .pg::after{content:counter(pgno);position:absolute;right:5mm;bottom:3.2mm;font-size:9.5px;color:#999;font-family:Arial,sans-serif}
 .pg.a4{page:pgf;width:190mm;height:277mm}
-.pg.pptm{page:pptm;width:314.7mm;height:172.5mm}
+.pg.pptm{page:pptm;width:318.7mm;height:174.5mm}
 .pg.slide{page:ppt;width:338.7mm;height:190.5mm}
 .pg.slide .fwscale{width:100%;margin:0}
 .pg.slide.s_a4{page:pgf;width:190mm;height:277mm}
 .pg.slide.s_a4 .fwscale{width:100%;margin:0}
+.pg.slide.hashead{flex-direction:column;align-items:stretch;justify-content:flex-start}
+.pg.slide.hashead .fwscale{flex:1;min-height:0;aspect-ratio:auto}
+.slhead{font-size:15px;font-weight:700;color:#1a1a1a;padding:3mm 6mm 1mm;border-left:4px solid #1F4E79;margin:2mm 4mm 0;line-height:1.4}
 .pg.cover0{counter-increment:none;page-break-after:auto;break-after:auto}
 .pg.cover0::after{display:none}
 @page pgf{size:A4 portrait;margin:10mm}
-@page pptm{size:338.7mm 190.5mm;margin:9mm 12mm}
+@page pptm{size:338.7mm 190.5mm;margin:8mm 10mm}
 .pgc{font-size:15px;font-weight:700;color:#1a1a1a;background:#EEF3FA;border-left:4px solid #1F4E79;padding:4px 10px;margin-bottom:3mm;letter-spacing:.5px}
+.pglogo{position:absolute;top:4mm;right:9mm;height:7mm;z-index:5;opacity:.95}
+.titcap{font-size:14px;font-weight:700;color:#1a1a1a;margin:8px 0 4px;line-height:1.4}
+html.pgxmeasure .pg{display:block!important;position:absolute!important;left:-20000px!important;top:0!important}
+html.pgxmeasure .echart{display:none!important}
 @media print{
   body{counter-reset:pgno}
   .wrap{display:none!important}
@@ -188,9 +195,12 @@ body.my .bl{color:#000}
   .pg.slide{display:flex;align-items:center;justify-content:center}
 }
 html.pgxa4 .wrap{width:186mm!important;max-width:none!important}
-html.pgxppt .wrap{width:314.7mm!important;max-width:none!important}
+html.pgxppt .wrap{width:318.7mm!important;max-width:none!important}
 html.pgxa4 .echart,html.pgxppt .echart{display:none!important}
 html.pgxa4 .cbox.ec img.pimg,html.pgxppt .cbox.ec img.pimg{display:block!important}
+html.pgxlong .echart{display:none!important}
+html.pgxlong .cbox.ec img.pimg{display:block!important}
+html.pgxlong .pptzone{page:auto!important}
 html.pgxa4 .tbar,html.pgxppt .tbar{display:none!important}
 /* 导出时对齐网页的三栏观感，避免 auto-fit 在纸宽下塌成两栏 */
 html.pgxa4 .verdict,html.pgxppt .verdict{grid-template-columns:repeat(3,1fr)!important}
@@ -210,7 +220,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="fwshape" style="left:0;top:61%;width:14%;height:1.2%;background:#D5B076;z-index:3"></div>
 <div class="fwshape" style="left:4%;top:27%;width:70%;height:12%;z-index:3"><div class="fwtxt" style="justify-content:center"><div style="text-align:left;line-height:1.2"><span style="font-size:56px;font-size:4.4cqw;font-weight:700;color:#ffffff;font-family:'KaiTi','楷体',serif">锡产业周度报告</span></div></div></div>
 <div class="fwshape" style="left:4%;top:41%;width:70%;height:8%;z-index:3"><div class="fwtxt" style="justify-content:center"><div style="text-align:left"><span style="font-size:22px;font-size:1.72cqw;color:#D5B076;letter-spacing:6px">TIN INDUSTRY WEEKLY REPORT</span></div></div></div>
-<div class="fwshape" style="left:56%;top:66%;width:40%;height:16%;background:rgba(213,176,118,.28);border-left:3px solid #D5B076;z-index:3"><div class="fwtxt" style="justify-content:center"><div style="text-align:left;padding-left:1.2em;line-height:1.7"><span style="font-size:21.3px;font-size:1.667cqw;color:#1a1a1a">汇报人：甘思雨　　日期：2026.10.18</span></div></div></div>
+<div class="fwshape" style="left:56%;top:66%;width:40%;height:16%;background:rgba(213,176,118,.28);border-left:3px solid #D5B076;z-index:3"><div class="fwtxt" style="justify-content:center"><div style="text-align:left;padding-left:1.2em;line-height:1.7"><span style="font-size:21.3px;font-size:1.667cqw;color:#1a1a1a">汇报人：甘思雨　　日期：<span id="covdate">2026.10.18</span></span></div></div></div>
 <div class="fwshape" style="left:0;top:90.5%;width:100%;height:9.5%;background:#1E4A86;z-index:2"></div>
 <div class="fwshape" style="left:4%;top:92.8%;width:92%;height:5%;z-index:3"><div class="fwtxt" style="justify-content:center"><div style="text-align:left"><span style="font-size:13px;font-size:1.02cqw;color:#D5B076;letter-spacing:3px">锡研究工作台 · 中哲集团　｜　Mysteel / SMM 数据口径　｜　内部研究材料</span></div></div></div>
 </div></div></div>
@@ -223,7 +233,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <span>口径：Mysteel / SMM 周度＋日度</span>
   <button class="thbtn2" id="mybtn" type="button" style="margin-left:8px;font-size:12px;padding:3px 12px;border:1px solid #000;color:#000;background:#fff;border-radius:4px;cursor:pointer">◼ 钢联风</button>
   <button class="editbtn" id="editbtn" type="button">✏️ 编辑文字</button>
-  <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button>
+  <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button><button class="editbtn" id="longbtn" type="button" onclick="PGX.go('long')" style="background:#0F7B6C;color:#fff;border-color:#0F7B6C">📜 长页版</button>
 </div>
 <nav class="toc" id="toc">
   <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a>
@@ -1353,7 +1363,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792518331"></script>
+<script src="charts_full/weekly_inter.js?v=1792540537"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1634,7 +1644,15 @@ window.PGX=(function(){
       if(el.id==='lab'||has(el,'toc')||has(el,'roll')||has(el,'meta')||has(el,'tbar')||has(el,'labwrap')||has(el,'printcover'))return;
       if(has(el,'fwscale')){out.push({t:'slide',el:el});return;}
       if(tn==='H2'){out.push({t:'h2',el:el});return;}
-      if(has(el,'lead')){out.push({t:'lead',el:el});return;}
+      if(has(el,'lead')){
+        /* 表格/图标题（“表 X”“图 X”开头）降级为单行小字标题 titcap，不用蓝条大标题 */
+        var lt=(el.textContent||'').replace(/\s+/g,' ').trim();
+        if(/^[表图]\s*\d/.test(lt)){
+          var tc=document.createElement('div');tc.className='titcap';tc.textContent=lt;
+          out.push({t:'cap',el:el,clone:tc});
+        }else out.push({t:'lead',el:el});
+        return;
+      }
       if(has(el,'cap')){out.push({t:'cap',el:el});return;}
       if(tn==='DETAILS'){
         qa(el.children).forEach(function(ch){
@@ -1643,12 +1661,23 @@ window.PGX=(function(){
         });return;
       }
       if(has(el,'pptzone')){collect(el,out,usableH);return;}
+      /* 空容器（无文字无图表）直接跳过，避免占位造成半空页 */
+      if(!(el.textContent||'').trim()&&!el.querySelector('img,table,ul,video'))return;
       if(tn==='UL'&&has(el,'sq')){qa(el.children).forEach(function(li){out.push({t:'li',el:li,ul:el});});return;}
       if(tn==='TABLE'){out.push({t:'blk',el:el});return;}
       if(getComputedStyle(el).display==='grid'&&el.children.length>1){
-        var rs=[],top=null;
-        qa(el.children).forEach(function(k){var t=k.offsetTop;if(top===null||Math.abs(t-top)>3){rs.push([k]);top=t;}else rs[rs.length-1].push(k);});
-        rs.forEach(function(r){out.push({t:'row',el:el,kids:r});});
+        /* 网格里的 lead 小标题抽成独立单元（走标题分页规则），其余按视觉行分组 */
+        var buf=[],top=null;
+        function flushRow(){
+          if(buf.length){out.push({t:'row',el:el,kids:buf});buf=[];top=null;}
+        }
+        qa(el.children).forEach(function(k){
+          if(k.classList&&k.classList.contains('lead')){flushRow();out.push({t:'lead',el:k});return;}
+          var t=k.offsetTop;
+          if(top===null||Math.abs(t-top)>3){flushRow();buf=[k];top=t;}
+          else buf.push(k);
+        });
+        flushRow();
         return;
       }
       out.push({t:'blk',el:el});
@@ -1658,8 +1687,15 @@ window.PGX=(function(){
     if(u.t==='row'){var m=0;u.kids.forEach(function(k){var r=k.getBoundingClientRect();if(r.height>m)m=r.height;});var cs=getComputedStyle(u.el);return m+parseFloat(cs.marginTop||0)+parseFloat(cs.marginBottom||0)+2;}
     return mh(u.el);
   }
+  function covDate(){
+    var d=document.getElementById('covdate');if(!d)return;
+    var n=new Date();
+    d.textContent=n.getFullYear()+'.'+(n.getMonth()+1)+'.'+n.getDate();
+  }
   function go(mode){
     try{
+      covDate();
+      if(mode==='long'){goLong();return;}
       var ppt=(mode==='ppt');
       qa(document.querySelectorAll('details.fold')).forEach(function(d){d.open=true;});
       document.documentElement.classList.add(ppt?'pgxppt':'pgxa4');
@@ -1671,9 +1707,80 @@ window.PGX=(function(){
       Promise.all(waits).then(function(){setTimeout(function(){build(ppt,wrap);},80);});
     }catch(e){document.documentElement.classList.remove('pgxa4','pgxppt');window.print();}
   }
+  /* 长页版：不分页，按网页原始宽度整张导出（过高时按块切成几段长页） */
+  function goLong(){
+    try{
+      qa(document.querySelectorAll('details.fold')).forEach(function(d){d.open=true;});
+      document.documentElement.classList.add('pgxlong');
+      var wrap=document.querySelector('.wrap');
+      var waits=qa(wrap.querySelectorAll('img.pimg')).map(function(im){
+        return (im.complete&&im.naturalHeight)?null:new Promise(function(r){im.onload=im.onerror=r;});
+      }).filter(Boolean);
+      if(document.fonts&&document.fonts.ready)waits.push(document.fonts.ready);
+      Promise.all(waits).then(function(){setTimeout(function(){
+        var wPx=wrap.scrollWidth||1200;
+        var kids=qa(wrap.children);
+        /* 超大容器（如 pptzone）展开到子级，再按 ≤3800px 切段 */
+        var MAXH=3800,units=[];
+        (function expand(list,depth){
+          list.forEach(function(k){
+            if(k.tagName==='SCRIPT'||k.tagName==='STYLE'||k.tagName==='NAV'||k.tagName==='BUTTON')return;
+            if(k.classList&&(k.classList.contains('toc')||k.classList.contains('tbar')||k.classList.contains('roll')||k.classList.contains('labwrap')))return;
+            if(k.id==='lab')return;
+            var h=k.getBoundingClientRect().height||0;
+            if(h>MAXH&&k.children&&k.children.length>1&&depth<3){expand(qa(k.children),depth+1);return;}
+            units.push({el:k,h:h});
+          });
+        })(kids,0);
+        var segs=[],cur=[],curH=0;
+        function isHeadEl(el){
+          if(!el||!el.tagName)return false;
+          var t=el.tagName;
+          return t==='H1'||t==='H2'||el.classList&&(el.classList.contains('lead')||el.classList.contains('cap'));
+        }
+        units.forEach(function(u){
+          if(cur.length&&curH+u.h>MAXH){
+            /* 段尾若是标题族，挪到下一段，避免标题独占一页 */
+            var tail=[];
+            while(cur.length&&isHeadEl(cur[cur.length-1].el)){tail.unshift(cur.pop());}
+            if(tail.length){var th=0;tail.forEach(function(x){th+=x.h;});curH-=th;}
+            if(cur.length)segs.push(cur);
+            cur=tail;curH=th||0;
+          }
+          cur.push(u);curH+=u.h;
+        });
+        if(cur.length)segs.push(cur);
+        var holder=document.createElement('div');holder.className='pgxlonghost';
+        var wMm=(wPx/MM).toFixed(1);
+        var pgs=[];
+        segs.forEach(function(seg,i){
+          var pg=document.createElement('div');pg.className='lgpg';
+          pg.style.cssText='width:'+wMm+'mm;overflow:hidden;background:#fff';
+          seg.forEach(function(u){pg.appendChild(u.el.cloneNode(true));});
+          holder.appendChild(pg);pgs.push(pg);
+        });
+        document.body.appendChild(holder);
+        /* 实测每段真实渲染高度（此时 echart 已隐藏、pimg 已显示），再定每页尺寸 */
+        var css='@media print{html.pgxlong body>*:not(.pgxlonghost){display:none!important}html.pgxlong .pgxlonghost{display:block!important}}';
+        pgs.forEach(function(pg,i){
+          var hMm=(pg.getBoundingClientRect().height/MM+3).toFixed(1);
+          pg.style.page='longpg'+i;
+          pg.style.pageBreakAfter='always';pg.style.breakAfter='page';
+          css+='@page longpg'+i+'{size:'+wMm+'mm '+hMm+'mm;margin:0}';
+        });
+        var st=document.createElement('style');st.id='pgxlongcss';
+        st.textContent=css;
+        document.head.appendChild(st);
+        var done=false;
+        function cleanup(){if(done)return;done=true;document.documentElement.classList.remove('pgxlong');holder.remove();st.remove();window.removeEventListener('afterprint',cleanup);}
+        window.addEventListener('afterprint',cleanup);
+        window.print();
+      },200);});
+    }catch(e){document.documentElement.classList.remove('pgxlong');window.print();}
+  }
   function build(ppt,wrap){
     try{
-      var usableH=(ppt?172.5:277)*MM-8;
+      var usableH=(ppt?174.5:277)*MM-8;
       var units=[];collect(wrap,units,usableH);
       var covEl=document.querySelector('.printcover .fwscale');
       if(covEl)units.unshift({t:'cover',el:covEl});
@@ -1701,7 +1808,7 @@ window.PGX=(function(){
               var onlyHead=true;
               qa(page.children).forEach(function(c){
                 var tg=c.tagName;
-                if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyHead=false;
+                if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('titcap')||c.classList.contains('pgc')))onlyHead=false;
               });
               if(onlyHead){
                 moved=qa(page.children).filter(function(c){return !c.classList.contains('pgc');});
@@ -1727,13 +1834,13 @@ window.PGX=(function(){
           }
         }
         if(!page)newPage((u.t==='h2'||u.t==='lead')?false:!!lastHead);
-        else if(u.t==='h2'){
+        else if(u.t==='h2'||(ppt&&u.t==='lead')){
           /* 连续标题不重复分页：当前页只有标题/导语时，标题直接跟上 */
           if(page.children.length){
             var onlyH=true;
             qa(page.children).forEach(function(c){
               var tg=c.tagName;
-              if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyH=false;
+              if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('titcap')||c.classList.contains('pgc')))onlyH=false;
             });
             if(!onlyH)newPage(false);
           }
@@ -1743,7 +1850,7 @@ window.PGX=(function(){
           var onlyHd=page.children.length>0;
           qa(page.children).forEach(function(c){
             var tg=c.tagName;
-            if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('pgc')))onlyHd=false;
+            if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('titcap')||c.classList.contains('pgc')))onlyHd=false;
           });
           if(onlyHd){
             var mv=qa(page.children).filter(function(c){return !c.classList.contains('pgc');});
@@ -1772,17 +1879,49 @@ window.PGX=(function(){
         remain-=h;
         if(u.t==='h2'||u.t==='lead'){lastHead=(u.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,42);}
       }
+      var pendingHead=[];
       for(var ui=0;ui<units.length;ui++){
         var u=units[ui];
         if(u.t==='slide'||u.t==='cover'){
           var sp=document.createElement('div');
           sp.className=((u.t==='cover')?'pg slide cover0':'pg slide')+(ppt?'':' s_a4');
+          /* 标题贴到首张幻灯片页顶部，避免标题独占一页 */
+          if(pendingHead.length&&u.t==='slide'){
+            sp.classList.add('hashead');
+            pendingHead.forEach(function(ph){
+              var hh=ph.clone?ph.clone.cloneNode(true):ph.el.cloneNode(true);
+              hh.classList.add('slhead');
+              sp.appendChild(hh);
+            });
+          }
+          pendingHead=[];
           sp.appendChild(u.el.cloneNode(true));
           document.body.appendChild(sp);
           page=null;lastUL=lastTB=null;
           continue;
         }
         var uh=unitH(u);
+        /* 下一单元是幻灯片：标题暂存，贴到幻灯片页；若当前页只剩标题族则一并随迁 */
+        if((u.t==='h2'||u.t==='lead')&&ui+1<units.length&&(units[ui+1].t==='slide'||units[ui+1].t==='cover')){
+          pendingHead.push(u);
+          if(page&&page.children.length){
+            var phOnly=true;
+            qa(page.children).forEach(function(c){
+              var tg=c.tagName;
+              var empty=!((c.textContent||'').trim()||c.querySelector&&c.querySelector('img,table,ul'));
+              if(empty)return;
+              if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('titcap')||c.classList.contains('pgc')))phOnly=false;
+            });
+            if(phOnly){
+              qa(page.children).forEach(function(c){
+                if(c.classList.contains('pgc'))return;
+                pendingHead.push({t:u.t,el:c,clone:null,__move:true});
+              });
+              page.remove();page=null;
+            }
+          }
+          continue;
+        }
         /* 标题孤立保护：标题（含连续标题）下方至少带一块内容，放不下则整组先换页 */
         if((u.t==='h2'||u.t==='lead'||u.t==='cap')&&page&&page.children.length){
           var need=uh,got=false;
@@ -1798,8 +1937,77 @@ window.PGX=(function(){
         place(u,uh,0);
       }
       if(page&&!page.children.length){page.remove();page=null;}
+      /* 兜底：只有标题族元素的空页，整体并入下一页（幻灯片页则贴到其顶部） */
+      (function(){
+        var pgs=qa(document.querySelectorAll('.pg'));
+        for(var pi=0;pi<pgs.length-1;pi++){
+          var pg0=pgs[pi];
+          if(pg0.classList.contains('slide')||!pg0.children.length)continue;
+          var onlyT=true;
+          qa(pg0.children).forEach(function(c){
+            var tg=c.tagName;
+            var empty=!((c.textContent||'').trim()||c.querySelector&&c.querySelector('img,table,ul'));
+            if(empty)return;
+            if(!(tg==='H1'||tg==='H2'||c.classList.contains('lead')||c.classList.contains('cap')||c.classList.contains('titcap')||c.classList.contains('pgc')))onlyT=false;
+          });
+          if(!onlyT)continue;
+          var nxt=pgs[pi+1];
+          var heads=qa(pg0.children).filter(function(c){return !c.classList.contains('pgc');});
+          if(nxt.classList.contains('slide')){
+            if(nxt.classList.contains('cover0'))continue;
+            nxt.classList.add('hashead');
+            var ref0=nxt.firstChild;
+            heads.forEach(function(h){h.classList.add('slhead');nxt.insertBefore(h,ref0);});
+          }else{
+            var bar=null;
+            qa(nxt.children).forEach(function(c){if(!bar&&c.classList.contains('pgc'))bar=c;});
+            if(bar)bar.remove();
+            var ref=nxt.firstChild;
+            heads.forEach(function(h){nxt.insertBefore(h,ref);});
+          }
+          pg0.remove();
+        }
+      })();
+      /* PPT 模式后处理：①图表沉底 ②内容整体放大塞满页高 ③右上角中哲 logo */
+      if(ppt){
+        document.documentElement.classList.add('pgxmeasure');
+        qa(document.querySelectorAll('.pg.pptm')).forEach(function(pg){
+          var kids=qa(pg.children);if(!kids.length)return;
+          /* ① 图表沉底：一段文字+若干图时，图排在文字后面（保持各自内部顺序） */
+          function isChartEl(el){
+            if(!el||!el.tagName)return false;
+            if(el.tagName==='IMG')return true;
+            if(el.classList&&(el.classList.contains('cbox')||el.classList.contains('charts3')||el.classList.contains('charts2')))return true;
+            return !!(el.querySelector&&el.querySelector('img.pimg,.echart'));
+          }
+          var hasChart=kids.some(isChartEl),hasText=kids.some(function(k){return !isChartEl(k)&&k.tagName!=='H2'&&!k.classList.contains('pgc');});
+          if(hasChart&&hasText){
+            var heads=kids.filter(function(k){return k.tagName==='H2'||k.classList.contains('pgc')||k.classList.contains('titcap');});
+            var texts=kids.filter(function(k){return heads.indexOf(k)<0&&!isChartEl(k);});
+            var charts=kids.filter(isChartEl);
+            heads.concat(texts).concat(charts).forEach(function(k){pg.appendChild(k);});
+            kids=heads.concat(texts).concat(charts);
+          }
+          /* ② 塞满：内容总高不足页高时整体放大（上限 1.9 倍） */
+          var used=0;kids.forEach(function(k){used+=mh(k);});
+          var ph=pg.getBoundingClientRect().height;
+          if(used>0&&used<ph-4){
+            var z=Math.min(ph/used,1.9);
+            if(z>1.02){
+              var wr=document.createElement('div');wr.className='pgfill';
+              kids.forEach(function(k){wr.appendChild(k);});
+              pg.appendChild(wr);
+              wr.style.zoom=z.toFixed(3);
+            }
+          }
+          /* ③ 右上角 logo */
+          var lg=document.createElement('img');lg.className='pglogo';lg.src='charts_full/logo.png';lg.alt='中哲集团';
+          pg.appendChild(lg);
+        });
+        document.documentElement.classList.remove('pgxmeasure');
+      }
       var done=false;
-      function cleanup(){if(done)return;done=true;document.documentElement.classList.remove('pgxa4','pgxppt');qa(document.querySelectorAll('.pg')).forEach(function(r){r.remove();});window.removeEventListener('afterprint',cleanup);}
+      function cleanup(){if(done)return;done=true;document.documentElement.classList.remove('pgxa4','pgxppt','pgxmeasure');qa(document.querySelectorAll('.pg')).forEach(function(r){r.remove();});window.removeEventListener('afterprint',cleanup);}
       window.addEventListener('afterprint',cleanup);
       setTimeout(function(){window.print();},50);
     }catch(e){
