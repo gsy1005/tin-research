@@ -27,6 +27,9 @@ except ImportError:
     sys.exit("需要 openpyxl：pip install openpyxl")
 
 TIN_KEYS = {
+    "d65":  "锡锭：升贴水：中国：云锡",
+    "d66":  "锡锭：升贴水：中国：云字",
+    "d67":  "锡锭：升贴水：中国：小牌",
     "d71":  "锡锭同业贸易商成交合计",
     "d72":  "锡锭下游成交合计",
     "d194": "锡精矿：40%Sn：加工费：云南",
@@ -38,6 +41,8 @@ TIN_KEYS = {
     "d330": "SMM: 锡锭社会库存: 苏州: 周度",
     "d331": "SMM: 锡锭社会库存: 广东: 周度",
     "d332": "SMM: 锡锭社会库存: 总库存: 周度",
+    "d339": "SHFE: 锡: 仓单日报: 本周库存期货: 日度",
+    "d340": "SHFE: 锡: 仓单日报: 库存增减期货: 日度",
     "d351": "全球显性库存·2026年",
     "d397": "上海钢联有色市场",
     "d398": "LME升贴水",
@@ -78,6 +83,16 @@ def ex_trader(wb):
         if num(r[1]) and num(r[2]):
             out["d71"].append((ds, float(r[1])))
             out["d72"].append((ds, float(r[2])))
+    return out
+
+
+def ex_premium(wb):
+    """升贴水: date, 云锡, 云字, 小牌 -> d65/d66/d67"""
+    out = {"d65": [], "d66": [], "d67": []}
+    for ds, r in rows_as_dicts(wb["升贴水"], min_row=2):
+        for i, key in enumerate(("d65", "d66", "d67"), start=1):
+            if len(r) > i and num(r[i]):
+                out[key].append((ds, float(r[i])))
     return out
 
 
@@ -167,6 +182,17 @@ def ex_smm_inv(wb):
     return out
 
 
+def ex_shfe_daily(wb):
+    """库存（日）: date, colC SHFE仓单, colD 日增减 -> d339/d340"""
+    out = {"d339": [], "d340": []}
+    for ds, r in rows_as_dicts(wb["库存（日）"], min_row=2):
+        if len(r) > 2 and num(r[2]):
+            out["d339"].append((ds, float(r[2])))
+        if len(r) > 3 and num(r[3]):
+            out["d340"].append((ds, float(r[3])))
+    return out
+
+
 def ex_lme_daily(wb):
     """lme+全球显性库存: colA date, colB LME日度 -> dict date:value"""
     out = {}
@@ -251,13 +277,13 @@ def main():
     lme_daily = None
 
     if my_wb:
-        for ex in (ex_trader, ex_tc, ex_mysoc, ex_pnl):
+        for ex in (ex_trader, ex_premium, ex_tc, ex_mysoc, ex_pnl):
             for k, pts in ex(my_wb).items():
                 additions.setdefault(k, []).extend(pts)
         # 全球显性 = 钢联社库总计 + LME
         additions["_soc_total_for_visible"] = additions.get("d739", [])
     if smm_wb:
-        for ex in (ex_indonesia, ex_weekly_ops, ex_smm_inv):
+        for ex in (ex_indonesia, ex_weekly_ops, ex_smm_inv, ex_shfe_daily):
             for k, pts in ex(smm_wb).items():
                 additions.setdefault(k, []).extend(pts)
         lme_daily = ex_lme_daily(smm_wb)
