@@ -74,7 +74,7 @@ def ensure_sheet_customs():
     src = open(path, encoding="utf-8").read()
     if 'src="sheet_customs.js' in src:
         return
-    tag = '<script src="sheet_customs.js?v=202610270130"></script>'
+    tag = '<script src="sheet_customs.js?v=202610270148"></script>'
     out, count = re.subn(
         r'(<script src="sheet\.js\?v=[^"]+"></script>)',
         r"\1\n" + tag,

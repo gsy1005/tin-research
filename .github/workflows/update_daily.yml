@@ -11,11 +11,17 @@ on:
       trt:
         description: '今日同业成交（吨）★必填'
         required: true
+      yx:
+        description: '今日云锡品牌升贴水（元/吨）★必填'
+        required: true
+      idn:
+        description: '今日印尼交易所成交量（吨；无成交填0）★必填'
+        required: true
       px:
         description: '价格：开 高 低 收 量（空格分隔）或只填收盘价；留空=自动抓取'
         required: false
       opt:
-        description: '可选：长江现货 LME3M LME库存 升贴水三档（空格分隔，可留空）'
+        description: '可选：长江现货 LME3M LME库存（空格分隔，可留空）'
         required: false
 
 permissions:
@@ -43,6 +49,12 @@ jobs:
           IN_OPT: ${{ github.event.inputs.opt }}
           IFIND_KEY: ${{ secrets.IFIND_KEY }}
         run: python .gen/auto_daily.py --ci
+      - name: 应用云锡升水与印尼成交并刷新分析
+        env:
+          IN_DATE: ${{ github.event.inputs.date }}
+          IN_YX: ${{ github.event.inputs.yx }}
+          IN_IDN: ${{ github.event.inputs.idn }}
+        run: python tools/apply_manual_inputs.py
       - name: 补回跨品种比价序列
         run: python tools/gen_ratio_series.py
       - name: 补回铜库存序列

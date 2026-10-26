@@ -90,6 +90,41 @@
       { key: 'd137', label: '锡矿砂及精矿进口', color: BLUE, fill: true }
     ]);
   }
+  function addIndonesiaChart() {
+    if (!window.Chart) return;
+    var pts = recent('d480', '2026-01-01');
+    if (!pts.length) return;
+    var cumulative = {};
+    series('d481').forEach(function (p) { cumulative[p[0]] = p[1]; });
+    var box = document.createElement('div');
+    box.className = 'cbox customs-chart indonesia-chart';
+    box.innerHTML = '<div class="ct"><span>印尼交易所成交（吨｜日成交＋月累计）</span></div><div class="cc"><canvas></canvas></div>';
+    var host = document.getElementById('charts');
+    var customs = host.querySelectorAll('.customs-chart');
+    host.insertBefore(box, customs.length ? customs[customs.length - 1].nextSibling : host.firstChild);
+    new window.Chart(box.querySelector('canvas').getContext('2d'), {
+      data: {
+        labels: pts.map(function (p) { return p[0]; }),
+        datasets: [
+          { type: 'bar', label: '当日成交', data: pts.map(function (p) { return p[1]; }), backgroundColor: RED + 'bb', borderWidth: 0, yAxisID: 'y' },
+          { type: 'line', label: '月累计成交', data: pts.map(function (p) { return cumulative[p[0]]; }), borderColor: BLUE, backgroundColor: BLUE, borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, tension: 0.15, yAxisID: 'y1' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { position: 'top', labels: { boxWidth: 12, boxHeight: 8, font: { size: 11 } } },
+          tooltip: { callbacks: { label: function (ctx) { return ctx.dataset.label + '：' + Number(ctx.parsed.y).toLocaleString('zh-CN') + ' 吨'; } } }
+        },
+        scales: {
+          x: { ticks: { maxTicksLimit: 10, maxRotation: 0 }, grid: { display: false } },
+          y: { beginAtZero: true, position: 'left', title: { display: true, text: '日成交' } },
+          y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: '月累计' } }
+        }
+      }
+    });
+  }
   function tunePremiumChart() {
     document.querySelectorAll('#charts .cbox').forEach(function (box) {
       if (!/三档升贴水/.test(titleOf(box))) return;
@@ -132,5 +167,6 @@
   }
   removeCopperChart();
   addCustomsCharts();
+  addIndonesiaChart();
   tunePremiumChart();
 })();
