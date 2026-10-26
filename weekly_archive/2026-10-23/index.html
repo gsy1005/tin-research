@@ -800,9 +800,11 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p5s1c6.png"></div><img class="pimg" src="charts_full/px/p5s1c6.png" alt="浮法玻璃：产量：中国（吨/周）"><div class="cap">浮法玻璃：产量：中国（吨/周）</div><div class="stats">最新 1,002,155（10/22）｜环比 +4,350（+0.4%）｜同比 -123,830（-11.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c8.png"></div><img class="pimg" src="charts_full/px/p5s1c8.png" alt="PVC＋浮法玻璃耗锡量拟合"><div class="cap">PVC＋浮法玻璃耗锡量拟合</div><div class="stats">最新 984.9（10/22）｜环比 -41（-4.0%）｜同比 -238（-19.5%）</div></div>
 </div>
-<div class="lead">铅蓄电池：出口左轴 · 进口右轴</div>
+<div class="lead">铅蓄电池：整体开工率 · 年度产量 · 进出口双轴</div>
 <ul class="sq"><li>最新月出口 <b>20,658,680 个</b>，进口 <b>485,796 个</b>；进口量级较小，单独置于右轴，避免贴线误读。</li></ul>
 <div class="charts3">
+  <div class="cbox"><div class="echart" data-fn="px/p5s3c3.png"></div><img class="pimg" src="charts_full/px/p5s3c3.png" alt="铅蓄电池企业整体开工率（%）"><div class="cap">铅蓄电池企业整体开工率（%）</div><div class="stats">最新 75.75（9/30）｜环比 +5.38（+7.6%）｜同比 +1.55（+2.1%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s3c1.png"></div><img class="pimg" src="charts_full/px/p5s3c1.png" alt="铅酸蓄电池年度产量"><div class="cap">铅酸蓄电池年度产量</div><div class="stats">2026E 26,460 万kVAh（原报告预测口径）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c9.png"></div><img class="pimg" src="charts_full/px/p5s3c9.png" alt="铅蓄电池进出口（双轴）"><div class="cap">铅蓄电池进出口（双轴）</div><div class="stats">最新 20,658,680（9/30）｜环比 +1,092,863（+5.6%）｜同比 +3,574,444（+20.9%）</div></div>
 </div>
 <div class="lead">三大白电：计划产量</div>
@@ -1369,7 +1371,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792976266"></script>
+<script src="charts_full/weekly_inter.js?v=1792977275"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
@@ -1440,9 +1442,13 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
     if(d.type==='cat'&&d.labels){
       var cv=document.createElement('canvas');el.appendChild(cv);
       var datasets=d.series.map(function(s){
-        if(s.kind==='bar')return {type:'bar',label:s.name,data:s.values,backgroundColor:s.color,borderColor:s.color,borderWidth:0};
-        return {type:'line',label:s.name,data:s.values,borderColor:s.color,backgroundColor:s.color,borderWidth:1.8,pointRadius:1.5,pointHitRadius:8,tension:0.3,fill:false};
+        if(s.kind==='bar')return {type:'bar',label:s.name,data:s.values,backgroundColor:s.color,borderColor:s.color,borderWidth:0,yAxisID:s.axis||'y'};
+        return {type:'line',label:s.name,data:s.values,borderColor:s.color,backgroundColor:s.color,borderWidth:1.8,pointRadius:1.5,pointHitRadius:8,tension:0.3,fill:false,yAxisID:s.axis||'y'};
       });
+      var catY2=d.series.some(function(s){return s.axis==='y2';});
+      var catScales={x:{stacked:!!d.stacked,ticks:{maxTicksLimit:10,autoSkip:true,maxRotation:40,font:{family:KAI,size:8}},grid:{display:false},border:{display:false}},
+        y:{stacked:!!d.stacked,ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}}};
+      if(catY2)catScales.y2={position:'right',ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{drawOnChartArea:false},border:{display:false}};
       new Chart(cv,{data:{labels:d.labels,datasets:datasets},options:{
         responsive:true,maintainAspectRatio:false,animation:false,
         interaction:{mode:'index',intersect:false},
@@ -1450,8 +1456,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
           tooltip:{backgroundColor:'rgba(255,255,255,.95)',borderColor:'#C9C9C9',borderWidth:1,titleColor:'#333',bodyColor:'#333',
             titleFont:{family:KAI,size:11,weight:'bold'},bodyFont:{family:KAI,size:11},padding:8,
             callbacks:{label:function(it){return ' '+(it.dataset.label||'')+'：'+fmtv(it.parsed.y);}}}},
-        scales:{x:{stacked:!!d.stacked,ticks:{maxTicksLimit:10,autoSkip:true,maxRotation:40,font:{family:KAI,size:8}},grid:{display:false},border:{display:false}},
-          y:{stacked:!!d.stacked,ticks:{font:{family:KAI,size:9},callback:function(v){return fmtv(v);}},grid:{color:'#E3E3E3',borderDash:[4,4]},border:{display:false}}}
+        scales:catScales
       }});
       var cb=el.closest('.cbox');if(cb)cb.classList.add('ec');
       return;
