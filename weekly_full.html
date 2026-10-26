@@ -239,7 +239,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button><button class="editbtn" id="longbtn" type="button" onclick="PGX.go('long')" style="background:#0F7B6C;color:#fff;border-color:#0F7B6C">📜 长页版</button><a class="editbtn" href="weekly_archive.html" style="text-decoration:none;line-height:1.8">🗂 周报留档</a>
 </div>
 <nav class="toc" id="toc">
-  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a>
+  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a><a href="#ai-detail">详细AI</a>
 </nav>
 <details class="fold" id="framework">
   <summary>📖 锡产业研究框架（基础认知 · 供给×需求×工艺×单耗，点击展开/折叠）</summary>
@@ -422,76 +422,25 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 </ul>
 <div class="charts3">
   <div class="cbox"><div class="echart" data-fn="c_cpi.png"></div><img class="pimg" src="charts_full/c_cpi.png" alt="核心CPI同比"><div class="cap">核心CPI同比</div><div class="stats">最新 2.57（9/1）｜环比 +0.12（+4.9%）｜同比 -0.45（-14.9%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="c_us10y.png"></div><img class="pimg" src="charts_full/c_us10y.png" alt="美债10Y"><div class="cap">美债10Y</div><div class="stats">最新 5.10（10/15）｜环比 -0.09（-1.7%）｜同比 +1.05（+25.9%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="c_us10y.png"></div><img class="pimg" src="charts_full/c_us10y.png" alt="美债10Y"><div class="cap">美债10Y</div><div class="stats">最新 5.1（10/15）｜环比 -0.09（-1.7%）｜同比 +1.05（+25.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="c_dxy.png"></div><img class="pimg" src="charts_full/c_dxy.png" alt="美元指数"><div class="cap">美元指数</div><div class="stats">最新 121.6（10/9）｜环比 +0.16（+0.1%）｜同比 +0.51（+0.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="c_wti.png"></div><img class="pimg" src="charts_full/c_wti.png" alt="WTI原油"><div class="cap">WTI原油</div><div class="stats">最新 101.9（10/14）｜环比 +1.05（+1.0%）｜同比 +42（+71.2%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="c_cusn.png"></div><img class="pimg" src="charts_full/c_cusn.png" alt="铜锡比"><div class="cap">铜锡比</div><div class="stats">最新 0.86（10/23）｜环比 +0.01（+0.7%）｜同比 -0.06（-6.4%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="c_agsn.png"></div><img class="pimg" src="charts_full/c_agsn.png" alt="银锡比"><div class="cap">银锡比</div><div class="stats">最新 1.05（10/23）｜环比 -0.03（-2.9%）｜同比 -0.16（-13.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="c_cusn.png"></div><img class="pimg" src="charts_full/c_cusn.png" alt="铜锡比"><div class="cap">铜锡比</div><div class="stats">最新 0.8572（10/23）｜环比 +0.01（+0.7%）｜同比 -0.06（-6.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="c_agsn.png"></div><img class="pimg" src="charts_full/c_agsn.png" alt="银锡比"><div class="cap">银锡比</div><div class="stats">最新 1.0508（10/23）｜环比 -0.03（-2.9%）｜同比 -0.16（-13.4%）</div></div>
 </div>
 
-<h2 id="ai">AI：半导体高频验证与 PCB 投产耗锡<span class="en">AI &amp; SEMICONDUCTOR</span></h2>
-<div class="lead">韩国 AI 半导体：前 20 日出口维持高增</div>
+<h2 id="ai">AI：本周高频验证<span class="en">AI &amp; SEMICONDUCTOR</span></h2>
+<div class="lead">重点跟踪：韩国半导体出口 · DRAM 现货价 · LLM Token 价格</div>
 <ul class="sq">
-  <li><b>最新高频数据</b>：2026 年 10 月前 20 日韩国半导体出口同比 <span class="rd">+222.5%</span>，计算机设备出口同比 <span class="rd">+424.1%</span>，半导体设备进口同比 <span class="rd">+93.4%</span>，算力硬件与扩产链景气仍强。</li>
-  <li><b>对锡的映射</b>：半导体与计算机设备出口是 AI 硬件需求的高频验证指标，但出口金额同比同时受价格和产品结构影响，不能直接等同于实际耗锡量同幅增长，仍需结合出货量、PCB 投产和焊料订单交叉验证。</li>
+  <li><b>韩国半导体出口</b>：2026 年 10 月前 20 日同比 <span class="rd">+222.5%</span>，AI 硬件需求仍强；出口金额同时受价格和产品结构影响，仍需与出货量、PCB 投产及焊料订单交叉验证。</li>
+  <li><b>DRAM 现货</b>：DDR3 4Gb 10/23 为 <b>1.357 美元</b>，用于观察存储链价格变化；NAND Flash 数据及月度产业链指标放在详细 AI，不在重点关注重复展示。</li>
+  <li><b>LLM Token 价格</b>：SDLLMTK 10/23 为 <b>0.9348 美元/百万 tokens</b>。该指标衡量市场实际支付的推理 token 价格，不直接代表 AI 总支出或锡需求，需与硬件出货和营收指标配合解读。</li>
 </ul>
 <div class="charts3">
   <div class="cbox"><div class="echart" data-fn="a_kr_semi_exp.png"></div><img class="pimg" src="charts_full/a_kr_semi_exp.png" alt="韩国半导体出口"><div class="cap">韩国半导体出口</div><div class="stats">最新 222.5（10/20）｜环比 -37（-14.2%）｜同比 +202（+1001.5%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kr_computer_exp.png"></div><img class="pimg" src="charts_full/a_kr_computer_exp.png" alt="韩国计算机设备出口"><div class="cap">韩国计算机设备出口</div><div class="stats">最新 424.1（10/20）｜环比 +236（+125.9%）｜同比 +433</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kr_semi_equip_imp.png"></div><img class="pimg" src="charts_full/a_kr_semi_equip_imp.png" alt="韩国半导体设备进口"><div class="cap">韩国半导体设备进口</div><div class="stats">最新 93.40（10/20）｜环比 +38（+68.0%）｜同比 +109</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_soxsn.png"></div><img class="pimg" src="charts_full/a_soxsn.png" alt="SOX×沪锡主力"><div class="cap">SOX×沪锡主力</div><div class="stats">最新 10,779（10/23）｜环比 +47（+0.4%）｜同比 +3,932（+57.4%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kospi.png"></div><img class="pimg" src="charts_full/a_kospi.png" alt="KOSPI指数"><div class="cap">KOSPI指数</div><div class="stats">最新 5,595（10/18）｜环比 -73（-1.3%）｜同比 +1,780（+46.7%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_nasdaq.png"></div><img class="pimg" src="charts_full/a_nasdaq.png" alt="纳斯达克指数"><div class="cap">纳斯达克指数</div><div class="stats">最新 26,713（10/15）｜环比 +20（+0.1%）｜同比 +4,043（+17.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_dram.png"></div><img class="pimg" src="charts_full/a_dram.png" alt="DRAM DDR3现货价"><div class="cap">DRAM DDR3现货价</div><div class="stats">最新 1.357（10/23）｜环比 -0.01（-0.4%）｜同比 +0.63（+85.9%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_llm_token.png"></div><img class="pimg" src="charts_full/a_llm_token.png" alt="LLM Token价格指数"><div class="cap">LLM Token价格指数</div><div class="stats">最新 0.9348（10/23）｜环比 -0.01（-1.4%）</div></div>
 </div>
-<div class="lead">美股财报：进入盈利兑现验证期</div>
-<ul class="sq">
-  <li>下周科技财报密集：周三海力士电话会；周四谷歌、微软业绩与三星电话会；周五亚马逊、英特尔业绩。SOX 本周高波动，说明市场对算力链盈利持续性的分歧仍然较大。</li>
-  <li><b>云厂商</b>：沿用“订单—资本开支—收入—利润—现金流”的验证链条，重点看 AI 订单和资本开支能否转化为收入、利润与经营现金流，而不仅是继续上调投入。如果收入兑现，算力链估值获得支撑；若现金流和盈利无法匹配投入，估值仍可能下修。</li>
-  <li><b>存储与硬件</b>：三星、SK 海力士需要验证 HBM 增长能否兑现为利润，英特尔等则提供硬件链需求与盈利的另一侧证据。对锡而言，这决定 AI 焊料预期是获得现实支撑，还是继续回吐溢价。</li>
-  <li><b>美股定价与锡的映射</b>：财报不仅决定科技指数方向，也会通过风险偏好和实际利率预期影响有色估值。业绩超预期且盈利质量改善，才有利于锡的算力链需求预期；若仅资本开支上升而收入、现金流不跟进，需防估值压缩与需求预期下修共振。</li>
-  <li><b>交易含义</b>：财报超预期与低库存共振时，近月反弹和逼仓风险会加大；财报不及预期且中东升级时，单边空配更占优。财报公布前不宜把单一方向仓位打满。</li>
-</ul>
-<div class="lead">PCB 集中投产：采购前置，2026H2—2027 是耗锡拉动强窗口</div>
-<ul class="sq">
-  <li><b>投产节奏</b>：2025 年公告的新建项目集中在 2026 年下半年投产，2026Q3 是设备进厂与试产的重要节点；2026 年新公告的高端 HLC/HDI 项目主要在 2027—2028 年释放，形成 2026H2—2028 的产能集中释放期。</li>
-  <li><b>需求前置</b>：PCB 产线通常在投产前 1—2 个季度锁定锡膏和镀锡化学品，试产、打样和铺底库存也会提前耗锡。中性测算下，采购高峰落在 <b>2026H2—2027H1</b>，早于产能达产高峰。</li>
-  <li><b>旗舰项目下限</b>：9 个披露面积产能的头部项目合计 468 万㎡/年，按 318g 锡/㎡测算，满产年化耗锡约 <b>1,489 吨</b>；2026、2027 年新增耗锡分别约 <b>575 吨、429 吨</b>。未披露面积产能的项目及存量产线利用率提升未计入，因此该结果是下限而非行业总增量。</li>
-  <li><b>行业总量与单耗</b>：全球 PCB 环节耗锡量预计由 2026 年 16.3 万吨增至 2030 年 21.2 万吨，累计增加 4.9 万吨；AI 服务器 PCB 面积、层数与单机耗锡均高于传统服务器，是总量扩张之外的核心弹性。</li>
-  <li><b>扩展情景</b>：将仅披露投资额的大陆项目按投资额折算产能，中性情景下本轮扩产满产年化耗锡约 2,900 吨，2030 年测算约 2,919 吨；折算系数差异较大，应理解为量级估计。</li>
-  <li><b>风险与验证</b>：若 AI 服务器出货放缓、PCB 产能集中释放引发价格竞争，或高锡价继续抑制焊料采购，实际增量可能低于测算。后续重点跟踪设备进厂、试产、稼动率及锡膏采购，而不是只看投产公告。</li>
-</ul>
-<div class="charts3">
-  <div class="cbox"><img class="pimg" src="charts_full/pcb_capacity_timeline.png" alt="PCB 扩产项目全景时间轴"><div class="cap">PCB 扩产项目全景时间轴</div></div>
-  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_demand.png" alt="全球 PCB 环节耗锡量测算"><div class="cap">全球 PCB 环节耗锡量测算</div></div>
-  <div class="cbox"><img class="pimg" src="charts_full/ai_server_tin.png" alt="AI 服务器耗锡量与单耗弹性"><div class="cap">AI 服务器耗锡量与单耗弹性</div></div>
-  <div class="cbox"><img class="pimg" src="charts_full/pcb_ramp_tin_bottomup.png" alt="头部 PCB 项目新增耗锡量（9 项下限）"><div class="cap">头部 PCB 项目新增耗锡量（9 项下限）</div></div>
-  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_scenarios.png" alt="PCB 扩产耗锡三情景测算"><div class="cap">PCB 扩产耗锡三情景测算</div></div>
-  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_frontload.png" alt="PCB 投产的锡需求前置效应"><div class="cap">PCB 投产的锡需求前置效应</div></div>
-</div>
-<details class="fold" id="pcb-tables">
-  <summary>PCB 投产批次与耗锡测算表（点击展开；表格可编辑）</summary>
-  <div class="foldbody">
-    <div class="lead">投产批次</div>
-    <table class="sum bal"><thead><tr><th>项目启动批次</th><th>代表事件</th><th>产能释放时间</th></tr></thead><tbody>
-      <tr><td>2024 年公告/启动</td><td>胜宏泰国/越南、沪电昆山 43 亿、景旺珠海</td><td>2025 年底—2026 年初陆续释放</td></tr>
-      <tr><td>2025 年公告</td><td>景旺、鹏鼎、生益电子、东山精密、方正、广合等</td><td><b>2026 年下半年集中投产，9—10 月为设备进厂/试产高峰</b></td></tr>
-      <tr><td>2026 年公告</td><td>沪电 33 亿+55 亿、深南无锡 46 亿、广合 26 亿等</td><td>2027—2028 年逐步释放</td></tr>
-    </tbody></table>
-    <div class="lead">9 个旗舰项目：自下而上测算</div>
-    <table class="sum bal"><thead><tr><th>年份</th><th>有效新增产能（万㎡/年）</th><th>对应年化耗锡（吨）</th><th>当年新增耗锡（吨）</th></tr></thead><tbody>
-      <tr><td>2025</td><td>53.8</td><td>171</td><td>+171</td></tr><tr><td>2026</td><td>234.4</td><td>746</td><td><b>+575</b></td></tr>
-      <tr><td>2027</td><td>369.3</td><td>1,174</td><td><b>+429</b></td></tr><tr><td>2028</td><td>436.4</td><td>1,388</td><td>+213</td></tr>
-      <tr><td>2029</td><td>454.5</td><td>1,445</td><td>+57</td></tr><tr><td>2030</td><td>468.2</td><td>1,489</td><td>+44</td></tr>
-    </tbody></table>
-    <div class="lead">中性情景：采购前置与消耗口径</div>
-    <table class="sum bal"><thead><tr><th>年份</th><th>消耗口径（吨）</th><th>采购口径（吨）</th><th>前置量（吨）</th></tr></thead><tbody>
-      <tr><td>2025</td><td>167</td><td>369</td><td><b>+202</b></td></tr><tr><td>2026</td><td>894</td><td>1,279</td><td><b>+385</b></td></tr>
-      <tr><td>2027</td><td>1,929</td><td>2,211</td><td><b>+282</b></td></tr><tr><td>2028</td><td>2,611</td><td>2,726</td><td>+115</td></tr>
-      <tr><td>2029</td><td>2,864</td><td>2,892</td><td>+28</td></tr>
-    </tbody></table>
-    <p class="note">资料与测算截至 2026-10-18。单耗按电镀+SMT 合计约 318g/㎡；投资额折算及爬坡曲线均为情景假设，并非企业产量指引。</p>
-  </div>
-</details>
 
 <div class="lead" id="invsec">显性库存：全球显性库存（社库＋LME）11,148（-880，-7.3%） 吨——社库 7,103（-865，-10.9%） 吨（周）、SHFE 仓单 2,136（-227，-9.6%） 吨（日）、LME 4,045（-50，-1.2%） 吨（日）；两口径社库与仓单共同去化，可交割货源收紧，预计本周延续去库并需防范近月逼仓</div>
 <ul class="sq">
@@ -786,7 +735,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="charts3">
   <div class="cbox"><div class="echart" data-fn="b_ingotbal.png"></div><img class="pimg" src="charts_full/b_ingotbal.png" alt="冶炼企业厂库(月)"><div class="cap">冶炼企业厂库(月)</div><div class="stats">最新 5,650（8/1）｜环比 +610（+12.1%）｜同比 +1,600（+39.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="b_minebal.png"></div><img class="pimg" src="charts_full/b_minebal.png" alt="矿端月度平衡值"><div class="cap">矿端月度平衡值</div><div class="stats">最新 -1,073（8/1）｜环比 -1,340（-501.9%）｜同比 +420</div></div>
-  <div class="cbox"><div class="echart" data-fn="b_mybal.png"></div><img class="pimg" src="charts_full/b_mybal.png" alt="锡市月度平衡值"><div class="cap">锡市月度平衡值</div><div class="stats">最新 0.50（11/30）｜环比 +1.00｜同比 +0.23（+83.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="b_mybal.png"></div><img class="pimg" src="charts_full/b_mybal.png" alt="锡市月度平衡值"><div class="cap">锡市月度平衡值</div><div class="stats">最新 0.5（11/30）｜环比 +1.00｜同比 +0.23（+83.8%）</div></div>
   <div class="cbox"><div class="echart" data-fn="m_wbms.png"></div><img class="pimg" src="charts_full/m_wbms.png" alt="WBMS全球平衡"><div class="cap">WBMS全球平衡</div><div class="stats">最新 -2.75（8/31）｜环比 +0.01｜同比 +0.09</div></div>
 </div>
   </div>
@@ -829,12 +778,12 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <li>后续核心验证下游终端订单能否接续，并观察订单能否转化为持续开工、排产和采购。若订单没有跟进，低价补库和库存去化的持续性将受限，不能直接把去库等同于终端需求转强。</li>
 </ul>
 <div class="charts3">
-  <div class="cbox"><div class="echart" data-fn="d_smmsolder.png"></div><img class="pimg" src="charts_full/d_smmsolder.png" alt="SMM焊料开工率"><div class="cap">SMM焊料开工率</div><div class="stats">最新 79.10（9/30）｜环比 +6.30（+8.7%）｜同比 +4.30（+5.7%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="d_smmsolder.png"></div><img class="pimg" src="charts_full/d_smmsolder.png" alt="SMM焊料开工率"><div class="cap">SMM焊料开工率</div><div class="stats">最新 79.1（9/30）｜环比 +6.30（+8.7%）｜同比 +4.30（+5.7%）</div></div>
 </div>
 <div class="lead">锡化工：PVC 周产 · 浮法玻璃周产 · 合计耗锡</div>
 <ul class="sq"><li>最新周 PVC 产量 <b>37.39 万吨</b>，浮法玻璃产量 <b>1,002,155 吨</b>；两项合计耗锡拟合 <b>984.92 吨/周</b>。</li><li>周度高频用于观察锡化工刚需变化，月度糊树脂、农药与进出口数据统一放在详细周报。</li></ul>
 <div class="charts3">
-  <div class="cbox"><div class="echart" data-fn="px/p5s1c3.png"></div><img class="pimg" src="charts_full/px/p5s1c3.png" alt="PVC：产量：中国（万吨/周）"><div class="cap">PVC：产量：中国（万吨/周）</div><div class="stats">最新 37.39（10/22）｜环比 -1.65（-4.2%）｜同比 -9.27（-19.9%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s1c3.png"></div><img class="pimg" src="charts_full/px/p5s1c3.png" alt="PVC：产量：中国（万吨/周）"><div class="cap">PVC：产量：中国（万吨/周）</div><div class="stats">最新 37.3923（10/22）｜环比 -1.65（-4.2%）｜同比 -9.27（-19.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c6.png"></div><img class="pimg" src="charts_full/px/p5s1c6.png" alt="浮法玻璃：产量：中国（吨/周）"><div class="cap">浮法玻璃：产量：中国（吨/周）</div><div class="stats">最新 1,002,155（10/22）｜环比 +4,350（+0.4%）｜同比 -123,830（-11.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c8.png"></div><img class="pimg" src="charts_full/px/p5s1c8.png" alt="PVC＋浮法玻璃耗锡量拟合"><div class="cap">PVC＋浮法玻璃耗锡量拟合</div><div class="stats">最新 984.9（10/22）｜环比 -41（-4.0%）｜同比 -238（-19.5%）</div></div>
 </div>
@@ -931,6 +880,78 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
     <div class="labfoot" id="labfoot"></div>
   </div>
 </div>
+
+<h2 id="ai-detail">详细周报 · AI：半导体、存储、PCB 与美股验证<span class="en">AI DETAIL</span></h2>
+<div class="lead">AI 产业链扩展数据：贸易、指数、存储与月度营收</div>
+<ul class="sq">
+  <li>韩国计算机设备出口与半导体设备进口、SOX、KOSPI、纳斯达克及 NAND Flash 均保留在此；月度序列另包含台积电营收、台湾电子 PMI 新订单、韩国半导体出口、日本与北美 PCB，以及台股 PCB 制造、原料和铜箔基板营收。</li>
+  <li>NAND Flash 64Gb 最近有效数据为 10/12 的 <b>42.337 美元</b>；之后的 <b>#N/A</b> 均保留为缺数，不按零值处理。韩国半导体月度出口的单位严格沿用原表“百万美元”。</li>
+</ul>
+<div class="charts3">
+  <div class="cbox"><div class="echart" data-fn="a_kr_computer_exp.png"></div><img class="pimg" src="charts_full/a_kr_computer_exp.png" alt="韩国计算机设备出口"><div class="cap">韩国计算机设备出口</div><div class="stats">最新 424.1（10/20）｜环比 +236（+125.9%）｜同比 +433</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kr_semi_equip_imp.png"></div><img class="pimg" src="charts_full/a_kr_semi_equip_imp.png" alt="韩国半导体设备进口"><div class="cap">韩国半导体设备进口</div><div class="stats">最新 93.4（10/20）｜环比 +38（+68.0%）｜同比 +109</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_soxsn.png"></div><img class="pimg" src="charts_full/a_soxsn.png" alt="SOX×沪锡主力"><div class="cap">SOX×沪锡主力</div><div class="stats">最新 10,779（10/23）｜环比 +47（+0.4%）｜同比 +3,932（+57.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kospi.png"></div><img class="pimg" src="charts_full/a_kospi.png" alt="KOSPI指数"><div class="cap">KOSPI指数</div><div class="stats">最新 5,595（10/18）｜环比 -73（-1.3%）｜同比 +1,780（+46.7%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_nasdaq.png"></div><img class="pimg" src="charts_full/a_nasdaq.png" alt="纳斯达克指数"><div class="cap">纳斯达克指数</div><div class="stats">最新 26,713（10/15）｜环比 +20（+0.1%）｜同比 +4,043（+17.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_nand.png"></div><img class="pimg" src="charts_full/a_nand.png" alt="NAND Flash现货价"><div class="cap">NAND Flash现货价</div><div class="stats">最新 42.337（10/12）｜环比 +0.25（+0.6%）｜同比 +36（+571.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tsmc_rev.png"></div><img class="pimg" src="charts_full/a_tsmc_rev.png" alt="台积电营收"><div class="cap">台积电营收</div><div class="stats">最新 5,119（9/30）｜环比 -29（-0.6%）｜同比 +1,809（+54.6%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pmi_orders.png"></div><img class="pimg" src="charts_full/a_tw_pmi_orders.png" alt="台湾电子PMI新订单"><div class="cap">台湾电子PMI新订单</div><div class="stats">最新 56.7（9/30）｜环比 -11（-16.0%）｜同比 +11（+24.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kr_semi_monthly.png"></div><img class="pimg" src="charts_full/a_kr_semi_monthly.png" alt="韩国半导体月度出口"><div class="cap">韩国半导体月度出口</div><div class="stats">最新 60,295（9/30）｜环比 +13,642（+29.2%）｜同比 +43,674（+262.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_jp_pcb_output.png"></div><img class="pimg" src="charts_full/a_jp_pcb_output.png" alt="日本PCB产量"><div class="cap">日本PCB产量</div><div class="stats">最新 647.6（8/31）｜环比 -165（-20.3%）｜同比 +33（+5.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_na_pcb_yoy.png"></div><img class="pimg" src="charts_full/a_na_pcb_yoy.png" alt="北美PCB订单同比"><div class="cap">北美PCB订单同比</div><div class="stats">最新 -35（8/31）｜环比 -97（-156.5%）｜同比 -31</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_rev.png" alt="台股PCB制造营收"><div class="cap">台股PCB制造营收</div><div class="stats">最新 1,140（9/30）｜环比 +94（+9.0%）｜同比 +313（+37.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_material_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_material_rev.png" alt="台股PCB原料营收"><div class="cap">台股PCB原料营收</div><div class="stats">最新 773.5（9/30）｜环比 +67（+9.5%）｜同比 +344（+80.0%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_ccl_rev.png"></div><img class="pimg" src="charts_full/a_tw_ccl_rev.png" alt="台股铜箔基板营收"><div class="cap">台股铜箔基板营收</div><div class="stats">最新 687.2（9/30）｜环比 +62（+9.8%）｜同比 +321（+87.8%）</div></div>
+</div>
+<div class="lead">美股财报：进入盈利兑现验证期</div>
+<ul class="sq">
+  <li>下周科技财报密集：周三海力士电话会；周四谷歌、微软业绩与三星电话会；周五亚马逊、英特尔业绩。SOX 本周高波动，说明市场对算力链盈利持续性的分歧仍然较大。</li>
+  <li><b>云厂商</b>：沿用“订单—资本开支—收入—利润—现金流”的验证链条，重点看 AI 订单和资本开支能否转化为收入、利润与经营现金流，而不仅是继续上调投入。</li>
+  <li><b>存储与硬件</b>：三星、SK 海力士需要验证 HBM 增长能否兑现为利润，英特尔等则提供硬件链需求与盈利的另一侧证据。对锡而言，这决定 AI 焊料预期是获得现实支撑，还是继续回吐溢价。</li>
+  <li><b>美股定价与锡的映射</b>：财报不仅决定科技指数方向，也会通过风险偏好和实际利率预期影响有色估值。业绩超预期且盈利质量改善，才有利于锡的算力链需求预期；若仅资本开支上升而收入、现金流不跟进，需防估值压缩与需求预期下修共振。</li>
+  <li><b>交易含义</b>：财报超预期与低库存共振时，近月反弹和逼仓风险会加大；财报不及预期且中东升级时，单边空配更占优。财报公布前不宜把单一方向仓位打满。</li>
+</ul>
+<div class="lead">PCB 集中投产：采购前置，2026H2—2027 是耗锡拉动强窗口</div>
+<ul class="sq">
+  <li><b>投产节奏</b>：2025 年公告的新建项目集中在 2026 年下半年投产，2026Q3 是设备进厂与试产的重要节点；2026 年新公告的高端 HLC/HDI 项目主要在 2027—2028 年释放，形成 2026H2—2028 的产能集中释放期。</li>
+  <li><b>需求前置</b>：PCB 产线通常在投产前 1—2 个季度锁定锡膏和镀锡化学品，试产、打样和铺底库存也会提前耗锡。中性测算下，采购高峰落在 <b>2026H2—2027H1</b>，早于产能达产高峰。</li>
+  <li><b>旗舰项目下限</b>：9 个披露面积产能的头部项目合计 468 万㎡/年，按 318g 锡/㎡测算，满产年化耗锡约 <b>1,489 吨</b>；2026、2027 年新增耗锡分别约 <b>575 吨、429 吨</b>。未披露面积产能的项目及存量产线利用率提升未计入，因此该结果是下限而非行业总增量。</li>
+  <li><b>行业总量与单耗</b>：全球 PCB 环节耗锡量预计由 2026 年 16.3 万吨增至 2030 年 21.2 万吨，累计增加 4.9 万吨；AI 服务器 PCB 面积、层数与单机耗锡均高于传统服务器，是总量扩张之外的核心弹性。</li>
+  <li><b>扩展情景</b>：将仅披露投资额的大陆项目按投资额折算产能，中性情景下本轮扩产满产年化耗锡约 2,900 吨，2030 年测算约 2,919 吨；折算系数差异较大，应理解为量级估计。</li>
+  <li><b>风险与验证</b>：若 AI 服务器出货放缓、PCB 产能集中释放引发价格竞争，或高锡价继续抑制焊料采购，实际增量可能低于测算。后续重点跟踪设备进厂、试产、稼动率及锡膏采购，而不是只看投产公告。</li>
+</ul>
+<div class="charts3">
+  <div class="cbox"><img class="pimg" src="charts_full/pcb_capacity_timeline.png" alt="PCB 扩产项目全景时间轴"><div class="cap">PCB 扩产项目全景时间轴</div></div>
+  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_demand.png" alt="全球 PCB 环节耗锡量测算"><div class="cap">全球 PCB 环节耗锡量测算</div></div>
+  <div class="cbox"><img class="pimg" src="charts_full/ai_server_tin.png" alt="AI 服务器耗锡量与单耗弹性"><div class="cap">AI 服务器耗锡量与单耗弹性</div></div>
+  <div class="cbox"><img class="pimg" src="charts_full/pcb_ramp_tin_bottomup.png" alt="头部 PCB 项目新增耗锡量（9 项下限）"><div class="cap">头部 PCB 项目新增耗锡量（9 项下限）</div></div>
+  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_scenarios.png" alt="PCB 扩产耗锡三情景测算"><div class="cap">PCB 扩产耗锡三情景测算</div></div>
+  <div class="cbox"><img class="pimg" src="charts_full/pcb_tin_frontload.png" alt="PCB 投产的锡需求前置效应"><div class="cap">PCB 投产的锡需求前置效应</div></div>
+</div>
+<details class="fold" id="pcb-tables">
+  <summary>PCB 投产批次与耗锡测算表（点击展开；表格可编辑）</summary>
+  <div class="foldbody">
+    <div class="lead">投产批次</div>
+    <table class="sum bal"><thead><tr><th>项目启动批次</th><th>代表事件</th><th>产能释放时间</th></tr></thead><tbody>
+      <tr><td>2024 年公告/启动</td><td>胜宏泰国/越南、沪电昆山 43 亿、景旺珠海</td><td>2025 年底—2026 年初陆续释放</td></tr>
+      <tr><td>2025 年公告</td><td>景旺、鹏鼎、生益电子、东山精密、方正、广合等</td><td><b>2026 年下半年集中投产，9—10 月为设备进厂/试产高峰</b></td></tr>
+      <tr><td>2026 年公告</td><td>沪电 33 亿+55 亿、深南无锡 46 亿、广合 26 亿等</td><td>2027—2028 年逐步释放</td></tr>
+    </tbody></table>
+    <div class="lead">9 个旗舰项目：自下而上测算</div>
+    <table class="sum bal"><thead><tr><th>年份</th><th>有效新增产能（万㎡/年）</th><th>对应年化耗锡（吨）</th><th>当年新增耗锡（吨）</th></tr></thead><tbody>
+      <tr><td>2025</td><td>53.8</td><td>171</td><td>+171</td></tr><tr><td>2026</td><td>234.4</td><td>746</td><td><b>+575</b></td></tr>
+      <tr><td>2027</td><td>369.3</td><td>1,174</td><td><b>+429</b></td></tr><tr><td>2028</td><td>436.4</td><td>1,388</td><td>+213</td></tr>
+      <tr><td>2029</td><td>454.5</td><td>1,445</td><td>+57</td></tr><tr><td>2030</td><td>468.2</td><td>1,489</td><td>+44</td></tr>
+    </tbody></table>
+    <div class="lead">中性情景：采购前置与消耗口径</div>
+    <table class="sum bal"><thead><tr><th>年份</th><th>消耗口径（吨）</th><th>采购口径（吨）</th><th>前置量（吨）</th></tr></thead><tbody>
+      <tr><td>2025</td><td>167</td><td>369</td><td><b>+202</b></td></tr><tr><td>2026</td><td>894</td><td>1,279</td><td><b>+385</b></td></tr>
+      <tr><td>2027</td><td>1,929</td><td>2,211</td><td><b>+282</b></td></tr><tr><td>2028</td><td>2,611</td><td>2,726</td><td>+115</td></tr>
+      <tr><td>2029</td><td>2,864</td><td>2,892</td><td>+28</td></tr>
+    </tbody></table>
+    <p class="note">资料与测算截至 2026-10-18。单耗按电镀+SMT 合计约 318g/㎡；投资额折算及爬坡曲线均为情景假设，并非企业产量指引。</p>
+  </div>
+</details>
 
 
 <!-- ============ 详细周报（PPT 1-7 按序全量收录） ============ -->
@@ -1065,7 +1086,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p2s5c1.png"></div><img class="pimg" src="charts_full/px/p2s5c1.png" alt="2026年9月中国精锡产量分地区占比"><div class="cap">2026年9月中国精锡产量分地区占比</div><div class="stats">云南 10,130（62.5%）｜前三合计 94.3%</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s5c2.png"></div><img class="pimg" src="charts_full/px/p2s5c2.png" alt="国内精炼锡产能（吨/月）"><div class="cap">国内精炼锡产能（吨/月）</div><div class="stats">最新 324,000（9/30）｜环比 +0.00（+0.0%）｜同比 +35,000（+12.1%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p2s5c3.png"></div><img class="pimg" src="charts_full/px/p2s5c3.png" alt="冶炼厂开工率（%）"><div class="cap">冶炼厂开工率（%）</div><div class="stats">最新 56.77（1/31）｜环比 -5.97（-9.5%）｜同比 -2.18（-3.7%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p2s5c3.png"></div><img class="pimg" src="charts_full/px/p2s5c3.png" alt="冶炼厂开工率（%）"><div class="cap">冶炼厂开工率（%）</div><div class="stats">最新 56.7711（1/31）｜环比 -5.97（-9.5%）｜同比 -2.18（-3.7%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s5c4.png"></div><img class="pimg" src="charts_full/px/p2s5c4.png" alt="国内精炼锡产量（吨/月）"><div class="cap">国内精炼锡产量（吨/月）</div><div class="stats">最新 14,950（8/31）｜环比 +3,460（+30.1%）｜同比 -330（-2.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s5c5.png"></div><img class="pimg" src="charts_full/px/p2s5c5.png" alt="国内精炼锡再生产量（吨/月）"><div class="cap">国内精炼锡再生产量（吨/月）</div><div class="stats">最新 2,950（8/31）｜环比 +1,180（+66.7%）｜同比 -990（-25.1%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s5c6.png"></div><img class="pimg" src="charts_full/px/p2s5c6.png" alt="云南精炼锡冶炼成本&利润测算（40%）"><div class="cap">云南精炼锡冶炼成本&利润测算（40%）</div><div class="stats">成本 372,296 元/吨｜毛利 -296 元/吨（10/23）</div></div>
@@ -1078,7 +1099,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p2s6c3.png"></div><img class="pimg" src="charts_full/px/p2s6c3.png" alt="精炼锡·两省合计产量（吨/周）"><div class="cap">精炼锡·两省合计产量（吨/周）</div><div class="stats">最新 27.11（10/23）｜环比 -2.25（-7.7%）｜同比 -44（-62.1%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s6c4.png"></div><img class="pimg" src="charts_full/px/p2s6c4.png" alt="精炼锡·云南开工率（%/周）"><div class="cap">精炼锡·云南开工率（%/周）</div><div class="stats">最新 0.08（10/23）｜环比 -0.01（-11.1%）｜同比 -0.19（-70.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p2s6c5.png"></div><img class="pimg" src="charts_full/px/p2s6c5.png" alt="精炼锡·江西开工率（%/周）"><div class="cap">精炼锡·江西开工率（%/周）</div><div class="stats">最新 0.06（10/23）｜环比 -0.01（-14.3%）｜同比 -0.01（-14.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p2s6c6.png"></div><img class="pimg" src="charts_full/px/p2s6c6.png" alt="精炼锡·两省合计开工率（%/周）"><div class="cap">精炼锡·两省合计开工率（%/周）</div><div class="stats">最新 0.14（10/23）｜环比 -0.01（-7.7%）｜同比 -0.20（-58.5%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p2s6c6.png"></div><img class="pimg" src="charts_full/px/p2s6c6.png" alt="精炼锡·两省合计开工率（%/周）"><div class="cap">精炼锡·两省合计开工率（%/周）</div><div class="stats">最新 0.144（10/23）｜环比 -0.01（-7.7%）｜同比 -0.20（-58.5%）</div></div>
 </div>
 
 <div class="lead">锡锭进口：来源 · 盈亏 · 成交 · 进口量</div>
@@ -1115,7 +1136,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="lead">锡材与锡焊料：产量 · 开工 · 表观消费</div>
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p3s3c1.png"></div><img class="pimg" src="charts_full/px/p3s3c1.png" alt="锡材：产量：中国（吨/月）"><div class="cap">锡材：产量：中国（吨/月）</div><div class="stats">最新 6,741（6/30）｜环比 +91（+1.4%）｜同比 +422（+6.7%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p3s3c2.png"></div><img class="pimg" src="charts_full/px/p3s3c2.png" alt="锡焊料开工率（%，月度）"><div class="cap">锡焊料开工率（%，月度）</div><div class="stats">最新 79.10（9/30）｜环比 +6.30（+8.7%）｜同比 +4.30（+5.7%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p3s3c2.png"></div><img class="pimg" src="charts_full/px/p3s3c2.png" alt="锡焊料开工率（%，月度）"><div class="cap">锡焊料开工率（%，月度）</div><div class="stats">最新 79.1（9/30）｜环比 +6.30（+8.7%）｜同比 +4.30（+5.7%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p3s3c3.png"></div><img class="pimg" src="charts_full/px/p3s3c3.png" alt="锡：加工企业：开工率：中国（%/月）"><div class="cap">锡：加工企业：开工率：中国（%/月）</div><div class="stats">最新 69.69（6/30）｜环比 -0.42（-0.6%）｜同比 +2.16（+3.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p3s3c4.png"></div><img class="pimg" src="charts_full/px/p3s3c4.png" alt="焊料厂月度产量（吨）"><div class="cap">焊料厂月度产量（吨）</div><div class="stats">最新 7,402（9/30）｜环比 +578（+8.5%）｜同比 -76（-1.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p3s3c5.png"></div><img class="pimg" src="charts_full/px/p3s3c5.png" alt="国内锡表观消费量（吨/月）"><div class="cap">国内锡表观消费量（吨/月）</div><div class="stats">最新 14,044（8/31）｜环比 -3,143（-18.3%）｜同比 -3,066（-17.9%）</div></div>
@@ -1185,7 +1206,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 
 <div class="lead">电子产品② 耗锡量：手机 · PC · 集成电路 · PCB</div>
 <div class="charts3 fix3">
-  <div class="cbox"><div class="echart" data-fn="px/p4s2c4.png"></div><img class="pimg" src="charts_full/px/p4s2c4.png" alt="中国智能手机耗锡量（吨/月）"><div class="cap">中国智能手机耗锡量（吨/月）</div><div class="stats">最新 60.13（9/1）｜环比 +8.58（+16.6%）｜同比 -20（-24.6%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p4s2c4.png"></div><img class="pimg" src="charts_full/px/p4s2c4.png" alt="中国智能手机耗锡量（吨/月）"><div class="cap">中国智能手机耗锡量（吨/月）</div><div class="stats">最新 60.1348（9/1）｜环比 +8.58（+16.6%）｜同比 -20（-24.6%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s2c5.png"></div><img class="pimg" src="charts_full/px/p4s2c5.png" alt="中国手机耗锡量（吨/月）"><div class="cap">中国手机耗锡量（吨/月）</div><div class="stats">最新 452.3（9/1）｜环比 +32（+7.6%）｜同比 -167（-26.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s2c6.png"></div><img class="pimg" src="charts_full/px/p4s2c6.png" alt="中国PC耗锡量（吨/月）"><div class="cap">中国PC耗锡量（吨/月）</div><div class="stats">最新 362.3（9/1）｜环比 +71（+24.3%）｜同比 -75（-17.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s3c3.png"></div><img class="pimg" src="charts_full/px/p4s3c3.png" alt="中国集成电路耗锡量（吨/月）"><div class="cap">中国集成电路耗锡量（吨/月）</div><div class="stats">最新 10,887（9/1）｜环比 +275（+2.6%）｜同比 +1,926（+21.5%）</div></div>
@@ -1198,8 +1219,8 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p4s3c4.png"></div><img class="pimg" src="charts_full/px/p4s3c4.png" alt="中国集成电路出口数量（亿个）"><div class="cap">中国集成电路出口数量（亿个）</div><div class="stats">最新 326.0（9/30）｜环比 +19（+6.2%）｜同比 +3.00（+0.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s3c5.png"></div><img class="pimg" src="charts_full/px/p4s3c5.png" alt="中国集成电路进口数量（亿个）"><div class="cap">中国集成电路进口数量（亿个）</div><div class="stats">最新 565.0（9/30）｜环比 +22（+4.1%）｜同比 +10（+1.8%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s3c6.png"></div><img class="pimg" src="charts_full/px/p4s3c6.png" alt="中国平板电脑出口数量（万台）"><div class="cap">中国平板电脑出口数量（万台）</div><div class="stats">最新 755.0（9/30）｜环比 +50（+7.1%）｜同比 -261（-25.7%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p4s4c1.png"></div><img class="pimg" src="charts_full/px/p4s4c1.png" alt="中国印刷电路出口数量（亿块）"><div class="cap">中国印刷电路出口数量（亿块）</div><div class="stats">最新 58.00（9/30）｜环比 +0.00（+0.0%）｜同比 +3.00（+5.5%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p4s4c2.png"></div><img class="pimg" src="charts_full/px/p4s4c2.png" alt="中国印刷电路进口数量（亿块）"><div class="cap">中国印刷电路进口数量（亿块）</div><div class="stats">最新 24.00（9/30）｜环比 +0.00（+0.0%）｜同比 -4.00（-14.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p4s4c1.png"></div><img class="pimg" src="charts_full/px/p4s4c1.png" alt="中国印刷电路出口数量（亿块）"><div class="cap">中国印刷电路出口数量（亿块）</div><div class="stats">最新 58（9/30）｜环比 +0.00（+0.0%）｜同比 +3.00（+5.5%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p4s4c2.png"></div><img class="pimg" src="charts_full/px/p4s4c2.png" alt="中国印刷电路进口数量（亿块）"><div class="cap">中国印刷电路进口数量（亿块）</div><div class="stats">最新 24（9/30）｜环比 +0.00（+0.0%）｜同比 -4.00（-14.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s6c3.png"></div><img class="pimg" src="charts_full/px/p5s6c3.png" alt="中国智能手机出口数量（台）"><div class="cap">中国智能手机出口数量（台）</div><div class="stats">最新 47,939,678（9/30）｜环比 +14,005,306（+41.3%）｜同比 -11,981,217（-20.0%）</div></div>
 </div>
 
@@ -1214,7 +1235,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="lead">电子产品⑤ 全球出货量</div>
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p5s5c1.png"></div><img class="pimg" src="charts_full/px/p5s5c1.png" alt="全球电子产品季度出货量（万台）"><div class="cap">全球电子产品季度出货量（万台）</div><div class="stats">最新 7,590（9/30）｜环比 +750（+11.0%）｜同比 +710（+10.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s5c2.png"></div><img class="pimg" src="charts_full/px/p5s5c2.png" alt="全球智能手机出货量（亿台，季度）"><div class="cap">全球智能手机出货量（亿台，季度）</div><div class="stats">最新 2.85（6/30）｜环比 -0.04（-1.4%）｜同比 +0.20（+7.6%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s5c2.png"></div><img class="pimg" src="charts_full/px/p5s5c2.png" alt="全球智能手机出货量（亿台，季度）"><div class="cap">全球智能手机出货量（亿台，季度）</div><div class="stats">最新 2.854（6/30）｜环比 -0.04（-1.4%）｜同比 +0.20（+7.6%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s5c3.png"></div><img class="pimg" src="charts_full/px/p5s5c3.png" alt="全球智能手机出货量（亿台）"><div class="cap">全球智能手机出货量（亿台）</div><div class="stats">最新 6（2026(Q1-2)）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s5c4.png"></div><img class="pimg" src="charts_full/px/p5s5c4.png" alt="全球PC出货量（万台）"><div class="cap">全球PC出货量（万台）</div><div class="stats">最新 20,750（2025(Q1-3)）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s5c5.png"></div><img class="pimg" src="charts_full/px/p5s5c5.png" alt="全球平板电脑出货量（万台）"><div class="cap">全球平板电脑出货量（万台）</div><div class="stats">最新 7,340（2025(Q1-2)）</div></div>
@@ -1227,7 +1248,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p5s4c2.png"></div><img class="pimg" src="charts_full/px/p5s4c2.png" alt="全球半导体销售额（十亿美元）及同比（%）"><div class="cap">全球半导体销售额（十亿美元）及同比（%）</div><div class="stats">最新 159.7（8/31）｜环比 +13（+8.8%）｜同比 +95（+146.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s4c3.png"></div><img class="pimg" src="charts_full/px/p5s4c3.png" alt="中国台湾电子指数：半导体"><div class="cap">中国台湾电子指数：半导体</div><div class="stats">最新 1,558（9/11）｜环比 -32（-2.0%）｜同比 +821（+111.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s4c4.png"></div><img class="pimg" src="charts_full/px/p5s4c4.png" alt="全球半导体行业销售额（十亿美元/月）"><div class="cap">全球半导体行业销售额（十亿美元/月）</div><div class="stats">最新 159.7（8/31）｜环比 +13（+8.8%）｜同比 +95（+146.2%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s4c5.png"></div><img class="pimg" src="charts_full/px/p5s4c5.png" alt="日本集成电路库存与半导体销售额对比"><div class="cap">日本集成电路库存与半导体销售额对比</div><div class="stats">最新 85.50（8/31）｜环比 +1.30（+1.5%）｜同比 -8.70（-9.2%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s4c5.png"></div><img class="pimg" src="charts_full/px/p5s4c5.png" alt="日本集成电路库存与半导体销售额对比"><div class="cap">日本集成电路库存与半导体销售额对比</div><div class="stats">最新 85.5（8/31）｜环比 +1.30（+1.5%）｜同比 -8.70（-9.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s4c6.png"></div><img class="pimg" src="charts_full/px/p5s4c6.png" alt="中国半导体行业销售额（十亿美元/月）"><div class="cap">中国半导体行业销售额（十亿美元/月）</div><div class="stats">最新 17.02（7/31）｜环比 -0.22（-1.3%）｜同比 +1.79（+11.8%）</div></div>
 </div>
 
@@ -1235,7 +1256,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p4s5c1.png"></div><img class="pimg" src="charts_full/px/p4s5c1.png" alt="中国发电设备新增装机容量（万千瓦）"><div class="cap">中国发电设备新增装机容量（万千瓦）</div><div class="stats">最新 9,719（8/31）｜环比 +1,104（+12.8%）｜同比 -13,342（-57.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s5c2.png"></div><img class="pimg" src="charts_full/px/p4s5c2.png" alt="国内光伏组件产量（GW）及产能利用率（%）"><div class="cap">国内光伏组件产量（GW）及产能利用率（%）</div><div class="stats">最新 39.82（9/30）｜环比 -1.92（-4.6%）｜同比 -6.09（-13.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p4s5c3.png"></div><img class="pimg" src="charts_full/px/p4s5c3.png" alt="SMM：组件总产量（GW/月）"><div class="cap">SMM：组件总产量（GW/月）</div><div class="stats">最新 44.00（10/1）｜环比 +2.50（+6.0%）｜同比 -4.10（-8.5%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p4s5c3.png"></div><img class="pimg" src="charts_full/px/p4s5c3.png" alt="SMM：组件总产量（GW/月）"><div class="cap">SMM：组件总产量（GW/月）</div><div class="stats">最新 44（10/1）｜环比 +2.50（+6.0%）｜同比 -4.10（-8.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p4s5c4.png"></div><img class="pimg" src="charts_full/px/p4s5c4.png" alt="光伏耗锡量拟合（吨/月）"><div class="cap">光伏耗锡量拟合（吨/月）</div><div class="stats">最新 4,180（10/1）｜环比 +238（+6.0%）｜同比 -390（-8.5%）</div></div>
 </div>
 
@@ -1253,9 +1274,9 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <h2>详细周报 · 需求篇三：锡化工 · 浮法玻璃 · 铅蓄电池<span class="en">DECK 5</span></h2>
 <div class="lead">锡化工：PVC · 浮法玻璃耗锡 · 化学农药</div>
 <div class="charts3 fix3">
-  <div class="cbox"><div class="echart" data-fn="px/p5s1c1.png"></div><img class="pimg" src="charts_full/px/p5s1c1.png" alt="PVC糊树脂月度产量（万吨）"><div class="cap">PVC糊树脂月度产量（万吨）</div><div class="stats">最新 11.04（9/30）｜环比 +0.20（+1.8%）｜同比 +0.56（+5.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s1c1.png"></div><img class="pimg" src="charts_full/px/p5s1c1.png" alt="PVC糊树脂月度产量（万吨）"><div class="cap">PVC糊树脂月度产量（万吨）</div><div class="stats">最新 11.0423（9/30）｜环比 +0.20（+1.8%）｜同比 +0.56（+5.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c2.png"></div><img class="pimg" src="charts_full/px/p5s1c2.png" alt="PVC耗锡量拟合（吨/周）"><div class="cap">PVC耗锡量拟合（吨/周）</div><div class="stats">最新 934.8（10/22）｜环比 -41（-4.2%）｜同比 -232（-19.9%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s1c3.png"></div><img class="pimg" src="charts_full/px/p5s1c3.png" alt="PVC：产量：中国（万吨/周）"><div class="cap">PVC：产量：中国（万吨/周）</div><div class="stats">最新 37.39（10/22）｜环比 -1.65（-4.2%）｜同比 -9.27（-19.9%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s1c3.png"></div><img class="pimg" src="charts_full/px/p5s1c3.png" alt="PVC：产量：中国（万吨/周）"><div class="cap">PVC：产量：中国（万吨/周）</div><div class="stats">最新 37.3923（10/22）｜环比 -1.65（-4.2%）｜同比 -9.27（-19.9%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c7.png"></div><img class="pimg" src="charts_full/px/p5s1c7.png" alt="化学农药耗锡量（吨/月）"><div class="cap">化学农药耗锡量（吨/月）</div><div class="stats">最新 262.0（6/1）｜环比 -14（-4.9%）｜同比 +12（+4.6%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c8.png"></div><img class="pimg" src="charts_full/px/p5s1c8.png" alt="PVC＋浮法玻璃耗锡量拟合（吨/周）"><div class="cap">PVC＋浮法玻璃耗锡量拟合（吨/周）</div><div class="stats">最新 984.9（10/22）｜环比 -41（-4.0%）｜同比 -238（-19.5%）</div></div>
 </div>
@@ -1263,12 +1284,12 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="lead">浮法玻璃：产量 · 开工 · 库存 · 消费 · 进出口</div>
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p5s1c4.png"></div><img class="pimg" src="charts_full/px/p5s1c4.png" alt="浮法玻璃产线开工条数（条）"><div class="cap">浮法玻璃产线开工条数（条）</div><div class="stats">最新 196.0（10/23）｜环比 -1.00（-0.5%）｜同比 -28（-12.5%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s1c5.png"></div><img class="pimg" src="charts_full/px/p5s1c5.png" alt="浮法玻璃耗锡量拟合（吨/周）"><div class="cap">浮法玻璃耗锡量拟合（吨/周）</div><div class="stats">最新 50.11（10/22）｜环比 +0.22（+0.4%）｜同比 -6.19（-11.0%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s1c5.png"></div><img class="pimg" src="charts_full/px/p5s1c5.png" alt="浮法玻璃耗锡量拟合（吨/周）"><div class="cap">浮法玻璃耗锡量拟合（吨/周）</div><div class="stats">最新 50.1078（10/22）｜环比 +0.22（+0.4%）｜同比 -6.19（-11.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s1c6.png"></div><img class="pimg" src="charts_full/px/p5s1c6.png" alt="浮法玻璃：产量：中国（吨/周）"><div class="cap">浮法玻璃：产量：中国（吨/周）</div><div class="stats">最新 1,002,155（10/22）｜环比 +4,350（+0.4%）｜同比 -123,830（-11.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c1.png"></div><img class="pimg" src="charts_full/px/p5s2c1.png" alt="浮法玻璃月度理论消费量（万吨）"><div class="cap">浮法玻璃月度理论消费量（万吨）</div><div class="stats">最新 443.5（9/30）｜环比 -7.81（-1.7%）｜同比 -46（-9.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c2.png"></div><img class="pimg" src="charts_full/px/p5s2c2.png" alt="浮法玻璃出口数量（吨）"><div class="cap">浮法玻璃出口数量（吨）</div><div class="stats">最新 83,166（9/30）｜环比 +5,011（+6.4%）｜同比 -37,427（-31.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c3.png"></div><img class="pimg" src="charts_full/px/p5s2c3.png" alt="浮法玻璃进口数量（吨）"><div class="cap">浮法玻璃进口数量（吨）</div><div class="stats">最新 16,997（9/30）｜环比 +4,533（+36.4%）｜同比 -1,628（-8.7%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s2c4.png"></div><img class="pimg" src="charts_full/px/p5s2c4.png" alt="浮法玻璃月度开工率（%）"><div class="cap">浮法玻璃月度开工率（%）</div><div class="stats">最新 67.11（9/30）｜环比 +0.37（+0.6%）｜同比 -8.57（-11.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s2c4.png"></div><img class="pimg" src="charts_full/px/p5s2c4.png" alt="浮法玻璃月度开工率（%）"><div class="cap">浮法玻璃月度开工率（%）</div><div class="stats">最新 67.111（9/30）｜环比 +0.37（+0.6%）｜同比 -8.57（-11.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c5.png"></div><img class="pimg" src="charts_full/px/p5s2c5.png" alt="浮法玻璃周度库存（万重量箱）"><div class="cap">浮法玻璃周度库存（万重量箱）</div><div class="stats">最新 7,103（10/23）｜环比 -76（-1.1%）｜同比 +442（+6.6%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c6.png"></div><img class="pimg" src="charts_full/px/p5s2c6.png" alt="浮法玻璃月度产量（吨）"><div class="cap">浮法玻璃月度产量（吨）</div><div class="stats">最新 4,268,150（9/30）｜环比 -140,515（-3.2%）｜同比 -547,400（-11.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s2c7.png"></div><img class="pimg" src="charts_full/px/p5s2c7.png" alt="浮法玻璃月度表观消费量（万吨）"><div class="cap">浮法玻璃月度表观消费量（万吨）</div><div class="stats">最新 420.2（9/30）｜环比 -14（-3.2%）｜同比 -51（-10.8%）</div></div>
@@ -1279,7 +1300,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p5s3c1.png"></div><img class="pimg" src="charts_full/px/p5s3c1.png" alt="铅酸蓄电池年度产量"><div class="cap">铅酸蓄电池年度产量</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c6.png"></div><img class="pimg" src="charts_full/px/p5s3c6.png" alt="铅蓄电池耗锡量拟合"><div class="cap">铅蓄电池耗锡量拟合</div><div class="stats">2026 最新 71.1（5/31）｜同比 +4（+5.8%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c3.png"></div><img class="pimg" src="charts_full/px/p5s3c3.png" alt="铅蓄电池企业整体开工率（%）"><div class="cap">铅蓄电池企业整体开工率（%）</div><div class="stats">最新 75.75（9/30）｜环比 +5.38（+7.6%）｜同比 +1.55（+2.1%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p5s3c4.png"></div><img class="pimg" src="charts_full/px/p5s3c4.png" alt="动力型铅蓄电池开工率（%）"><div class="cap">动力型铅蓄电池开工率（%）</div><div class="stats">最新 75.20（9/30）｜环比 +5.50（+7.9%）｜同比 +1.70（+2.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p5s3c4.png"></div><img class="pimg" src="charts_full/px/p5s3c4.png" alt="动力型铅蓄电池开工率（%）"><div class="cap">动力型铅蓄电池开工率（%）</div><div class="stats">最新 75.2（9/30）｜环比 +5.50（+7.9%）｜同比 +1.70（+2.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c5.png"></div><img class="pimg" src="charts_full/px/p5s3c5.png" alt="固定型铅蓄电池开工率（%）"><div class="cap">固定型铅蓄电池开工率（%）</div><div class="stats">最新 80.35（9/30）｜环比 +3.27（+4.2%）｜同比 +2.75（+3.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c7.png"></div><img class="pimg" src="charts_full/px/p5s3c7.png" alt="启动型铅蓄电池开工率（%）"><div class="cap">启动型铅蓄电池开工率（%）</div><div class="stats">最新 71.69（9/30）｜环比 +7.36（+11.4%）｜同比 +0.19（+0.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p5s3c9.png"></div><img class="pimg" src="charts_full/px/p5s3c9.png" alt="铅蓄电池进出口数量（个/月）"><div class="cap">铅蓄电池进出口数量（个/月）</div><div class="stats">最新 20,658,680（9/30）｜环比 +1,092,863（+5.6%）｜同比 +3,574,444（+20.9%）</div></div>
@@ -1301,9 +1322,12 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p6s4c3.png"></div><img class="pimg" src="charts_full/px/p6s4c3.png" alt="锡锭品牌价差（元/吨）"><div class="cap">锡锭品牌价差（元/吨）</div><div class="stats">最新 500.0（10/23）｜环比 +0.00（+0.0%）｜同比 +100（+25.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p6s4c4.png"></div><img class="pimg" src="charts_full/px/p6s4c4.png" alt="锡锭升贴水走势（元/吨）"><div class="cap">锡锭升贴水走势（元/吨）</div><div class="stats">最新 3,500（10/23）｜环比 +500（+16.7%）｜同比 +2,700（+337.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p6s4c5.png"></div><img class="pimg" src="charts_full/px/p6s4c5.png" alt="现货成交指数"><div class="cap">现货成交指数</div><div class="stats">最新 2.32（7/10）｜环比 -0（-1.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p6s4c6.png"></div><img class="pimg" src="charts_full/px/p6s4c6.png" alt="锡锭日度成交量统计（吨）"><div class="cap">锡锭日度成交量统计（吨）</div><div class="stats">最新 49.00（7/10）｜环比 -33（-40.2%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p6s4c6.png"></div><img class="pimg" src="charts_full/px/p6s4c6.png" alt="锡锭日度成交量统计（吨）"><div class="cap">锡锭日度成交量统计（吨）</div><div class="stats">最新 49（7/10）｜环比 -33（-40.2%）</div></div>
 </div>
 
+<div class="lead">LME 锡持仓（日度，非 AI 指标）</div><div class="charts3">
+  <div class="cbox"><div class="echart" data-fn="p_lme_oi.png"></div><img class="pimg" src="charts_full/p_lme_oi.png" alt="LME锡持仓量"><div class="cap">LME锡持仓量</div><div class="stats">最新 20,366（10/22）｜环比 -300（-1.5%）｜同比 -812（-3.8%）</div></div>
+</div>
 <div class="lead">全球地区锡锭升水</div>
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p6s5c1.png"></div><img class="pimg" src="charts_full/px/p6s5c1.png" alt="99.85%巴尔的摩仓库锡锭升水（美元/吨）"><div class="cap">99.85%巴尔的摩仓库锡锭升水（美元/吨）</div><div class="stats">最新 1,325（10/19）｜环比 +0.00（+0.0%）｜同比 +75（+6.0%）</div></div>
@@ -1332,7 +1356,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p7s1c3.png"></div><img class="pimg" src="charts_full/px/p7s1c3.png" alt="中国汽车销量（辆/月，中汽协）"><div class="cap">中国汽车销量（辆/月，中汽协）</div><div class="stats">最新 2,711,714（8/31）｜环比 +127,296（+4.9%）｜同比 -144,876（-5.1%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s1c4.png"></div><img class="pimg" src="charts_full/px/p7s1c4.png" alt="汽车耗锡量（吨/月）"><div class="cap">汽车耗锡量（吨/月）</div><div class="stats">最新 1,272（8/31）｜环比 +134（+11.8%）｜同比 +149（+13.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s1c5.png"></div><img class="pimg" src="charts_full/px/p7s1c5.png" alt="新能源汽车耗锡量拟合（吨/月）"><div class="cap">新能源汽车耗锡量拟合（吨/月）</div><div class="stats">最新 999.2（8/31）｜环比 +60（+6.4%）｜同比 +161（+19.2%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p7s1c6.png"></div><img class="pimg" src="charts_full/px/p7s1c6.png" alt="中国汽车经销商库存预警指数（%）"><div class="cap">中国汽车经销商库存预警指数（%）</div><div class="stats">最新 62.30（8/31）｜环比 +1.20（+2.0%）｜同比 +5.30（+9.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p7s1c6.png"></div><img class="pimg" src="charts_full/px/p7s1c6.png" alt="中国汽车经销商库存预警指数（%）"><div class="cap">中国汽车经销商库存预警指数（%）</div><div class="stats">最新 62.3（8/31）｜环比 +1.20（+2.0%）｜同比 +5.30（+9.3%）</div></div>
 </div>
 
 <div class="lead">平衡图表：矿端 · 中国精锡 · WBMS</div>
@@ -1342,7 +1366,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p7s2c3.png"></div><img class="pimg" src="charts_full/px/p7s2c3.png" alt="中国年度精锡表观消费量（吨）"><div class="cap">中国年度精锡表观消费量（吨）</div><div class="stats">最新 119,041（2026年）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s2c4.png"></div><img class="pimg" src="charts_full/px/p7s2c4.png" alt="国内冶炼企业厂库库存（吨/月）"><div class="cap">国内冶炼企业厂库库存（吨/月）</div><div class="stats">最新 5,650（8/31）｜环比 +610（+12.1%）｜同比 +1,600（+39.5%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s2c5.png"></div><img class="pimg" src="charts_full/px/p7s2c5.png" alt="国内锡表观消费量（吨/月）"><div class="cap">国内锡表观消费量（吨/月）</div><div class="stats">最新 14,044（8/31）｜环比 -3,143（-18.3%）｜同比 -3,066（-17.9%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p7s2c6.png"></div><img class="pimg" src="charts_full/px/p7s2c6.png" alt="WBMS全球锡平衡（万吨/月）"><div class="cap">WBMS全球锡平衡（万吨/月）</div><div class="stats">最新 -0.20（8/31）｜环比 -0.18｜同比 +0.29</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p7s2c6.png"></div><img class="pimg" src="charts_full/px/p7s2c6.png" alt="WBMS全球锡平衡（万吨/月）"><div class="cap">WBMS全球锡平衡（万吨/月）</div><div class="stats">最新 -0.2（8/31）｜环比 -0.18｜同比 +0.29</div></div>
 </div>
 
 <div class="lead">进出口盈亏：汇率 · 比值 · 升贴水</div>
@@ -1350,7 +1374,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <div class="cbox"><div class="echart" data-fn="px/p7s4c1.png"></div><img class="pimg" src="charts_full/px/p7s4c1.png" alt="银行拆借利率走势（%）"><div class="cap">银行拆借利率走势（%）</div><div class="stats">最新 4.16（10/23）｜环比 +0.00（+0.0%）｜同比 +0.13（+3.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s4c2.png"></div><img class="pimg" src="charts_full/px/p7s4c2.png" alt="现货进口盈亏（元/吨）"><div class="cap">现货进口盈亏（元/吨）</div><div class="stats">最新 -252.8（10/23）｜环比 +2,220｜同比 +10,226</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s4c3.png"></div><img class="pimg" src="charts_full/px/p7s4c3.png" alt="进口盈亏走势（元/吨）"><div class="cap">进口盈亏走势（元/吨）</div><div class="stats">最新 2,264（10/23）｜环比 +2,007（+781.1%）｜同比 +8,886</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p7s4c4.png"></div><img class="pimg" src="charts_full/px/p7s4c4.png" alt="现货均衡比"><div class="cap">现货均衡比</div><div class="stats">最新 7.58（10/23）｜环比 +0.04（+0.6%）｜同比 -0.26（-3.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p7s4c4.png"></div><img class="pimg" src="charts_full/px/p7s4c4.png" alt="现货均衡比"><div class="cap">现货均衡比</div><div class="stats">最新 7.5842（10/23）｜环比 +0.04（+0.6%）｜同比 -0.26（-3.3%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s4c5.png"></div><img class="pimg" src="charts_full/px/p7s4c5.png" alt="锡价进出口盈亏（元/吨）"><div class="cap">锡价进出口盈亏（元/吨）</div><div class="stats">最新 -252.8（10/23）｜环比 +2,220｜同比 +10,226</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s4c6.png"></div><img class="pimg" src="charts_full/px/p7s4c6.png" alt="LME升贴水（美元/吨）"><div class="cap">LME升贴水（美元/吨）</div><div class="stats">最新 115.3（10/23）｜环比 -86（-42.7%）｜同比 +60（+109.6%）</div></div>
 </div>
@@ -1368,7 +1392,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p7s6c1.png"></div><img class="pimg" src="charts_full/px/p7s6c1.png" alt="中国内地→日本精锡数量（吨/月）"><div class="cap">中国内地→日本精锡数量（吨/月）</div><div class="stats">最新 279.2（8/31）｜环比 +18（+7.1%）｜同比 -18（-6.2%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s6c2.png"></div><img class="pimg" src="charts_full/px/p7s6c2.png" alt="印尼→日本精锡数量（吨/月）"><div class="cap">印尼→日本精锡数量（吨/月）</div><div class="stats">最新 255.1（8/31）｜环比 -375（-59.5%）｜同比 +24（+10.4%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p7s6c3.png"></div><img class="pimg" src="charts_full/px/p7s6c3.png" alt="泰国→日本精锡数量（吨/月）"><div class="cap">泰国→日本精锡数量（吨/月）</div><div class="stats">最新 69.03（8/31）｜环比 -126（-64.6%）｜同比 -50（-42.0%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p7s6c3.png"></div><img class="pimg" src="charts_full/px/p7s6c3.png" alt="泰国→日本精锡数量（吨/月）"><div class="cap">泰国→日本精锡数量（吨/月）</div><div class="stats">最新 69.033（8/31）｜环比 -126（-64.6%）｜同比 -50（-42.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s6c4.png"></div><img class="pimg" src="charts_full/px/p7s6c4.png" alt="马来西亚→日本精锡数量（吨/月）"><div class="cap">马来西亚→日本精锡数量（吨/月）</div><div class="stats">最新 230.0（8/31）｜环比 +38（+20.0%）｜同比 -160（-41.0%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s6c5.png"></div><img class="pimg" src="charts_full/px/p7s6c5.png" alt="泰国月度锡矿进口数量（吨）"><div class="cap">泰国月度锡矿进口数量（吨）</div><div class="stats">最新 948.5（8/31）｜环比 +35（+3.9%）｜同比 +3.58（+0.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s6c6.png"></div><img class="pimg" src="charts_full/px/p7s6c6.png" alt="泰国月度锡矿出口数量（吨）"><div class="cap">泰国月度锡矿出口数量（吨）</div><div class="stats">最新 237.0（8/31）｜环比 +136（+133.9%）｜同比 -268（-53.1%）</div></div>
@@ -1378,7 +1402,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="charts3 fix3">
   <div class="cbox"><div class="echart" data-fn="px/p7s7c1.png"></div><img class="pimg" src="charts_full/px/p7s7c1.png" alt="泰国精锡月度进口量（吨）"><div class="cap">泰国精锡月度进口量（吨）</div><div class="stats">最新 220.0（8/31）｜环比 -72（-24.6%）｜同比 -85（-27.8%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s7c2.png"></div><img class="pimg" src="charts_full/px/p7s7c2.png" alt="泰国精锡月度出口量（吨）"><div class="cap">泰国精锡月度出口量（吨）</div><div class="stats">最新 366.5（8/31）｜环比 +24（+7.1%）｜同比 +7.37（+2.1%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="px/p7s7c3.png"></div><img class="pimg" src="charts_full/px/p7s7c3.png" alt="泰国锡废料月度出口量（吨）"><div class="cap">泰国锡废料月度出口量（吨）</div><div class="stats">最新 1.41（8/31）｜环比 +1.30（+1119.0%）｜同比 -24（-94.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="px/p7s7c3.png"></div><img class="pimg" src="charts_full/px/p7s7c3.png" alt="泰国锡废料月度出口量（吨）"><div class="cap">泰国锡废料月度出口量（吨）</div><div class="stats">最新 1.414（8/31）｜环比 +1.30（+1119.0%）｜同比 -24（-94.4%）</div></div>
   <div class="cbox"><div class="echart" data-fn="px/p7s7c4.png"></div><img class="pimg" src="charts_full/px/p7s7c4.png" alt="泰国锡废料月度进口量（吨）"><div class="cap">泰国锡废料月度进口量（吨）</div><div class="stats">最新 65.24（7/31）｜环比 +31（+89.0%）</div></div>
 </div>
 
@@ -1396,6 +1420,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
       <li><b>B01–B11 海外矿山与 ITA</b>：印尼精锡出口分国别、天马/明苏尔/Alphamin/雷尼森/UIS 等公司产量与成本、玻利维亚月度矿产量；ITA 仍为 2026 年 8 月版。</li>
       <li><b>C01–C08 下游与海外现货</b>：铅酸蓄电池年度产量、铅蓄电池耗锡量拟合、镀锡板耗锡成本测算，以及巴尔的摩/美国中西部/鹿特丹/东南亚五组海外升水。</li>
       <li><b>D01–D06 静态结构图</b>：全球及中国需求结构、消费区域、铅酸用途、光伏焊带市占率、锡化工市场规模；有新年度或新口径时再更新，不要求周更。</li>
+      <li><b>AI 原表口径</b>：H/I 列有效序列按公式识别为 SDLLMTK（LLM Token 价格指数）；P 列的 CRWV CDS 公式返回 #N/A，因此未生成 CDS 图，也未与 Token 指数混用。</li>
       <li><b>定位方式</b>：完整字段清单见 <a href="W43_待定位数据清单.md">W43_待定位数据清单</a>。按“编号＋sheet＋列或单元格区域＋单位＋频率”确认后，即将映射固定进生成器，以后每周按同口径更新。</li>
     </ul>
   </div>
@@ -1407,7 +1432,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=1792986210"></script>
+<script src="charts_full/weekly_inter.js?v=1792989204"></script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
