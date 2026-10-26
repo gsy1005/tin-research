@@ -74,7 +74,7 @@
     });
   }
   seg.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.v);});
-  var m=/[?&]v=(daily|sheet|weekly|weekly2|archive|news|metals|db|bal|cu|cudb|lab)/.exec(location.search);
+  var m=/[?&]v=(weekly2|daily|sheet|weekly|archive|news|metals|db|bal|cu|cudb|lab)(?:&|$)/.exec(location.search);
   if(m) show(m[1]);
 })();
 </script>
