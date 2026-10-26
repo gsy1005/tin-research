@@ -66,7 +66,29 @@ def clean(path):
     return False
 
 
+def ensure_sheet_customs():
+    """日报生成后补上海关图与升贴水坐标脚本，重复运行不重复插入。"""
+    path = "sheet.html"
+    if not glob.glob(path):
+        return
+    src = open(path, encoding="utf-8").read()
+    if 'src="sheet_customs.js' in src:
+        return
+    tag = '<script src="sheet_customs.js?v=202610270130"></script>'
+    out, count = re.subn(
+        r'(<script src="sheet\.js\?v=[^"]+"></script>)',
+        r"\1\n" + tag,
+        src,
+        count=1,
+    )
+    if count != 1:
+        raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入海关图")
+    open(path, "w", encoding="utf-8").write(out)
+    print("已接入 sheet_customs.js")
+
+
 def main():
+    ensure_sheet_customs()
     files = sorted(glob.glob("daily_*.html"))
     if not files:
         print("未找到 daily_*.html")
