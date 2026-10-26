@@ -117,10 +117,28 @@
   <div id="wsgrid"></div>
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="db_data.js?v=202610261259"></script>
-<script src="summary_note.js?v=202610261259"></script>
+<script src="db_data.js?v=202610262046"></script>
+<script src="summary_note.js?v=202610262046"></script>
 <script src="tech.js?v=202610261259"></script>
 <script src="sheet.js?v=202610261259"></script>
+<script>
+/* 日报顶部只保留三段简短结论；切换天数或刷新数据后仍保持简洁。 */
+(function(){
+  function applySimpleSummary(){
+    var n=window.TIN_SUMMARY_NOTE||{};
+    [['sumA','A'],['sumB','B'],['sumC','C']].forEach(function(x){
+      var el=document.getElementById(x[0]);
+      if(el&&n[x[1]]&&el.textContent!==n[x[1]])el.textContent=n[x[1]];
+    });
+  }
+  window.TIN_SIMPLE_SUMMARY=applySimpleSummary;
+  applySimpleSummary();
+  if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
+    var render=window.TIN_SHEET.render;
+    window.TIN_SHEET.render=function(){var out=render.apply(this,arguments);applySimpleSummary();return out;};
+  }
+})();
+</script>
 <script>
 /* 无图表时工作区收成一条，点击标题展开操作条；有图表后操作条常显 */
 (function(){
