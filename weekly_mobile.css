@@ -1,0 +1,16 @@
+/* 周报版本二 · 手机 PDF 阅读模式 */
+.mobilepdf-open{font-size:12px;padding:3px 12px;border:1px solid #1F4E79;color:#fff;background:#1F4E79;border-radius:4px;cursor:pointer;line-height:1.6;white-space:nowrap}
+html.pgxmobile,html.pgxmobile body{width:100%;max-width:100%;overflow-x:hidden!important}
+html.pgxmobile body{padding:58px 8px 26px!important;background:#e8ebef!important;color:#1a1a1a;counter-reset:pgno}
+html.pgxmobile body>*:not(.mpg):not(.pgxmobilebar){display:none!important}
+html.pgxmobile .mpg{position:relative;margin:0 auto 16px;background:#fff;overflow:hidden;box-shadow:0 2px 12px rgba(20,35,55,.18);border-radius:2px}
+html.pgxmobile .mpg:last-of-type{margin-bottom:0}
+html.pgxmobile .pg{display:block!important;position:absolute!important;left:0!important;top:0!important;margin:0!important;transform-origin:top left;box-shadow:none;page-break-after:auto;break-after:auto}
+html.pgxmobile .pg.slide{display:flex!important;align-items:center;justify-content:center}
+html.pgxmobile .pg::after{display:block}
+html.pgxmobile .pgxmobilebar{position:fixed;z-index:10000;left:0;right:0;top:0;min-height:46px;display:flex;align-items:center;gap:10px;padding:7px 10px;background:rgba(20,31,45,.97);color:#fff;font-family:"Microsoft YaHei","微软雅黑",sans-serif;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+html.pgxmobile .pgxmobilebar .mtitle{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+html.pgxmobile .pgxmobilebar .mcount{font-variant-numeric:tabular-nums;color:#d5b076;white-space:nowrap}
+html.pgxmobile .pgxmobilebar button{border:1px solid rgba(255,255,255,.48);border-radius:4px;background:transparent;color:#fff;padding:4px 9px;font:12px/1.4 "Microsoft YaHei","微软雅黑",sans-serif;cursor:pointer;white-space:nowrap}
+@media(max-width:760px){.mobilepdf-open{display:none}.meta{gap:6px 12px}}
+@media print{.mobilepdf-open,html.pgxmobile .pgxmobilebar{display:none!important}}
