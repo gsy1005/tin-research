@@ -34,25 +34,26 @@ html.pgxmobileweb body{background:var(--bg)}
   .tablewrap{margin-bottom:14px;border:1px solid var(--line);-webkit-overflow-scrolling:touch}
   .tablewrap table.bal{min-width:760px}
   table.bal{font-size:12.5px}
-  /* 周度供需表：每环节一张卡片，表格本身不再横向滚动。 */
-  #sumsec table.sum{display:block;margin-top:12px;font-size:14px;background:transparent}
+  /* 周度供需表：紧凑卡片，保留 PDF 的分区感，不挤压成五列。 */
+  #sumsec table.sum{display:block;margin-top:10px;font-size:12.5px;background:transparent}
   #sumsec table.sum thead{display:none}
   #sumsec table.sum tbody{display:block}
-  #sumsec table.sum tr{display:block;margin:0 0 12px;border:1px solid var(--line);background:var(--cardbg);box-shadow:0 2px 7px rgba(20,35,55,.06);overflow:hidden}
-  #sumsec table.sum td{display:block;width:auto!important;padding:9px 11px;border:0;border-bottom:1px solid var(--line);line-height:1.65;white-space:normal}
-  #sumsec table.sum td:last-child{border-bottom:0;text-align:right}
-  html.pgxmobileweb #sumsec table.sum td.c{background:var(--blue);color:#fff;font-size:15px;text-align:left;padding:6px 11px}
-  #sumsec table.sum td.daily{background:var(--soft);font-size:13.5px}
-  #sumsec table.sum td::before{display:block;margin-bottom:3px;color:var(--faint);font-size:11px;font-weight:400;letter-spacing:1px}
+  #sumsec table.sum tr{position:relative;display:block;margin:0 0 9px;border:1px solid var(--line);background:var(--cardbg);box-shadow:0 1px 4px rgba(20,35,55,.05);overflow:hidden}
+  #sumsec table.sum td{display:block;width:auto!important;padding:7px 10px;border:0;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.55;white-space:normal}
+  html.pgxmobileweb #sumsec table.sum td.c{background:var(--blue);color:#fff;font-size:13.5px;line-height:1.4;text-align:left;padding:6px 76px 6px 10px}
+  #sumsec table.sum td.daily{background:var(--soft);font-size:12px}
+  #sumsec table.sum td::before{display:block;margin-bottom:2px;color:var(--faint);font-size:9.5px;font-weight:400;letter-spacing:.8px}
   #sumsec table.sum td:nth-child(2)::before{content:"相关数据"}
   #sumsec table.sum td:nth-child(3)::before{content:"日度变化"}
   #sumsec table.sum td:nth-child(4)::before{content:"结论"}
-  #sumsec table.sum td:nth-child(5)::before{content:"多空";text-align:right}
   #sumsec table.sum td[colspan]::before{content:"本周结论"}
+  #sumsec table.sum td:last-child{position:absolute;top:0;right:0;border:0;padding:6px 9px;text-align:right;line-height:1.4}
+  #sumsec table.sum td:last-child::before{content:none}
+  #sumsec table.sum td:last-child .dir{background:#fff;font-size:10.5px;padding:1px 7px;white-space:nowrap}
   #sumsec table.sum tr.final{border:1.5px solid var(--red)}
   #sumsec table.sum tr.final td{border:0;border-bottom:1px solid var(--line)}
   #sumsec table.sum tr.final td:last-child{border-bottom:0}
-  .dir{font-size:12px;padding:1px 9px}
+  .dir{font-size:11px;padding:1px 8px}
   .labwrap{grid-template-columns:minmax(0,1fr);width:100%;min-width:0}
   .labside{max-height:240px;min-width:0;max-width:100%}
   .labchart{height:320px;min-width:0;max-width:100%;overflow:hidden}
