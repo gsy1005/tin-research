@@ -34,12 +34,12 @@
   function dayLabel(day){var p=day.split('-');return Number(p[1])+'/'+Number(p[2]);}
   function changeText(cur,pre,unit){if(!cur||!pre)return '暂无可比值';var d=cur[1]-pre[1];return '较'+(pre[0].slice(5).replace('-','/'))+(d===0?'持平':(d>0?'增加 ':'减少 ')+fmt(Math.abs(d))+(unit||''));}
   function context(){
-    var wh=last('d339'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557');
-    var day=(wh&&wh[0])||(down&&down[0])||(price&&price[0])||'';
-    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pSox=prev('d557');
+    var wh=last('d339'),lme=last('d334'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557');
+    var day=(wh&&wh[0])||(down&&down[0])||(price&&price[0])||(lme&&lme[0])||'';
+    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pLme=prev('d334'),pSox=prev('d557');
     var total=down&&trade?down[1]+trade[1]:null;
     var oldTotal=pDown&&pTrade?pDown[1]+pTrade[1]:null;
-    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,sox:sox,pSox:pSox,total:total,oldTotal:oldTotal};
+    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,lme:lme,pLme:pLme,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,sox:sox,pSox:pSox,total:total,oldTotal:oldTotal};
   }
   function dailyText(key,c){
     var d=c.label;
@@ -58,7 +58,7 @@
       var a=last('d63'),b=last('d62');
       return a&&b&&a[0]===c.day&&b[0]===c.day?d+' 连一－连二 '+fmt(a[1]-b[1])+' 元/吨；对照正套参考区间 1,000–2,000 元/吨':d+' 价差以盘中连一－连二为准；正套等待 1,000–2,000 元/吨参考区间';
     }
-    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨，'+changeText(c.wh,c.pWh,' 吨')+'；周频社库不变';
+    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨，'+changeText(c.wh,c.pWh,' 吨')+'；LME 仓单 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'），'+changeText(c.lme,c.pLme,' 吨'):'')+'；周频社库不变';
     if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
     return '';
   }
@@ -66,6 +66,7 @@
     var totalDown=c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal;
     var downDown=c.down&&c.pDown&&c.down[1]<c.pDown[1];
     var whDown=c.wh&&c.pWh&&c.wh[1]<c.pWh[1];
+    var lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
     var premUp=c.prem&&c.pPrem&&c.prem[1]>c.pPrem[1];
     if(key==='price')return {text:c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，宏观无额外利好时可短空，但低库存下不宜追空':'价格尚未站稳 39 万元/吨，单边不追涨；宏观无额外利好时，反弹至 39 万附近可短空',signal:'偏空'};
     if(key==='macro')return {text:'宏观仍决定单边方向，继续跟踪中东、海外利率与美股财报；没有额外利好时，39 万元/吨附近可短空',signal:'偏空'};
@@ -75,15 +76,17 @@
     if(key==='demand')return {text:downDown?'下游成交继续缩量，高价采购偏弱；月度销量相对稳定，终端订单尚不足以承接明显供应增量':'下游成交边际改善，但仍需终端订单和月度销量验证持续性',signal:downDown?'偏空':'中性'};
     if(key==='spot')return {text:premUp&&totalDown?'云锡升水上调反映品牌现货仍紧，但总成交缩量显示高价抑制采购，紧现货与弱需求并存':totalDown?'成交缩量，现货承接偏弱，继续结合升贴水验证真实紧张程度':'成交有所承接，结合升贴水继续验证现货强度',signal:premUp&&!totalDown?'利多':'双向'};
     if(key==='spread')return {text:'近月低库存仍支持正套，但价差已高于 1,000–2,000 元/吨参考区间，等待回落再择机入场',signal:'利多'};
-    if(key==='inventory')return {text:whDown?'仓单继续去化，可交割货源仍紧，近月支撑和逼仓风险尚未解除；但云锡复产的后续影响需持续跟踪':'仓单未继续去化，近月紧张程度需结合社库和复产进度重新验证',signal:whDown?'利多':'中性'};
+    if(key==='inventory')return {text:whDown&&lmeDown?'SHFE 与 LME 仓单同步去化，海内外可交割货源均偏紧，近月支撑和逼仓风险尚未解除；但云锡复产的后续影响需持续跟踪':whDown||lmeDown?'SHFE 与 LME 仓单变化分化，单一市场去库仍提供支撑，但需结合另一市场库存、社库和云锡复产进度验证':'SHFE 与 LME 仓单均未继续去化，库存支撑边际减弱，需结合社库和云锡复产进度重新验证',signal:whDown&&lmeDown?'利多':(whDown||lmeDown?'双向':'偏空')};
     if(key==='risk')return {text:'云锡复产带来供应恢复预期，仓单下降又支撑近月，月度销量相对稳定，双向波动风险仍高',signal:'双向'};
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
-    var structure=c.wh&&c.pWh&&c.wh[1]<c.pWh[1]?'仓单继续去化，近月供应支撑仍在':'仓单未继续去化，近月支撑需要进一步验证';
+    var whDown=c.wh&&c.pWh&&c.wh[1]<c.pWh[1],lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
+    var structure=whDown&&lmeDown?'SHFE 与 LME 仓单同步去化，海内外供应支撑仍在':(whDown||lmeDown?'SHFE 与 LME 仓单未同步去化，内外库存出现分化':'SHFE 与 LME 仓单均未继续去化，库存支撑需要进一步验证');
+    var lmeText=c.lme?'LME 仓单 '+fmt(c.lme[1])+' 吨（'+dayLabel(c.lme[0])+'，'+changeText(c.lme,c.pLme,' 吨')+'）':'LME 仓单暂无读数';
     var demand=c.total!==null&&c.oldTotal!==null?(c.total<c.oldTotal?'成交较前日缩量，高价下采购偏谨慎':'成交较前日放量，需求承接有所改善'):'成交可比数据不足';
     var price=c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，可短空，但仍须防近月逼仓':'价格未进入或尚未站稳 39 万元/吨参考区，单边不追涨杀跌；宏观无额外利好时，39 万元/吨附近可短空';
-    return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。云锡点火后产量恢复预期增强，而下游月度销量相对稳定，若稳定产出兑现，供需边际将转松。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
+    return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+lmeText+'；'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。云锡点火后产量恢复预期增强，而下游月度销量相对稳定，若稳定产出兑现，供需边际将转松。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
   }
   function saveWeekly(){
     var values={};

@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "daily_archive"
-KEYS = ("d0", "d71", "d72", "d65", "d339", "d340", "d62", "d63", "d480", "d557")
+KEYS = ("d0", "d71", "d72", "d65", "d334", "d339", "d340", "d62", "d63", "d480", "d557")
 KEY_MAP = {
     "价格": "price", "宏观": "macro", "美股·半导体 AI": "ai",
     "供给·矿端": "mine", "供给·冶炼端": "smelt", "需求·焊料": "demand",
@@ -83,6 +83,7 @@ def data_table(db: list, archive_date: str) -> str:
         ("云锡升贴水（元/吨）", lambda d: value("d65", d)),
         ("SHFE 仓单（吨）", lambda d: value("d339", d)),
         ("SHFE 仓单增减（吨）", lambda d: value("d340", d)),
+        ("LME 仓单（吨）", lambda d: value("d334", d)),
         ("印尼交易所成交（吨）", lambda d: value("d480", d)),
         ("SOX（点）", lambda d: value("d557", d)),
         ("连一－连二（元/吨）", lambda d: (value("d63", d) - value("d62", d))
@@ -121,7 +122,7 @@ def archive_html(archive_date: str, summary: dict, table: str, has_research: boo
 <div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>当周结论 · 只读</span></h3><div id="weeklyStrategyText" contenteditable="false"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>当天生成 · 只读</span></h3><div id="dailyStrategyText" contenteditable="false"></div></div></div></section>
 <section class="archive-data"><h2>日度数据快照<span>最近 7 个有数据日期 · 与当天日报口径一致</span></h2><div class="data-scroll">{table}</div></section>
 <footer class="archive-foot">本页为 {archive_date} 独立快照，后续 Excel、周报或日度数据更新不会改写本页。{research}</footer></main>
-<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610271900"></script></body></html>"""
+<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610271915"></script></body></html>"""
 
 
 INDEX_CSS = r"""

@@ -79,7 +79,7 @@ def ensure_sheet_customs():
     if 'src="sheet_customs.js' not in out:
         tags.append('<script src="sheet_customs.js?v=202610270148"></script>')
     if 'src="daily_strategy.js' not in out:
-        tags.append('<script src="daily_strategy.js?v=202610271900"></script>')
+        tags.append('<script src="daily_strategy.js?v=202610271915"></script>')
     if tags:
         out, count = re.subn(
             r'(<script src="sheet\.js\?v=[^"]+"></script>)',
@@ -90,7 +90,7 @@ def ensure_sheet_customs():
         if count != 1:
             raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入自定义模块")
     out = re.sub(r'daily_strategy\.css\?v=[^"]+', 'daily_strategy.css?v=202610271745', out)
-    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271900', out)
+    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271915', out)
     out = out.replace(
         '<button onclick="TIN_DAILY_STRATEGY.exportPNG()">供需策略 PNG</button>',
         '<button onclick="location.href=\'strategy.html\'">供需策略</button>',
