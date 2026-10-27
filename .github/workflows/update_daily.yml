@@ -61,12 +61,16 @@ jobs:
         run: python tools/gen_cu_inventory.py
       - name: 日报去机构名
         run: python tools/sanitize_daily.py
+      - name: 冻结日报与日度变化留档
+        env:
+          IN_DATE: ${{ github.event.inputs.date }}
+        run: python tools/archive_daily.py
       - name: 提交并推送网站
         run: |
           base64 -w0 .gen/cfg_daily.py > gen_cfg.b64
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data.js db_data.js index.html sheet.html summary_note.js gen_cfg.b64 daily_*.html
+          git add data.js db_data.js index.html sheet.html summary_note.js gen_cfg.b64 daily_*.html daily_archive.html daily_archive/
           if git diff --cached --quiet; then
             echo "数据无变化"
           else

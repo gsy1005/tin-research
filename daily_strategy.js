@@ -5,6 +5,7 @@
   var STORE_DAY='TIN_DAILY_DAY_EDITS_V1';
   var STORE_WS='TIN_DAILY_WEEKLY_STRATEGY_V1';
   var STORE_DS='TIN_DAILY_DAILY_STRATEGY_V1';
+  var archive=window.DAILY_ARCHIVE||null;
   var keyMap={'价格':'price','宏观':'macro','美股·半导体 AI':'ai','供给·矿端':'mine','供给·冶炼端':'smelt','需求·焊料':'demand','现货·贸易':'spot','月差结构':'spread','库存':'inventory','风险点':'risk'};
   var fallback={
     rows:[
@@ -22,8 +23,8 @@
     final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可作为空配，但不宜在低库存环境中追空。'
   };
   var source=fallback,stamp='',dayStamp='';
-  function readStore(key){try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
-  function writeStore(key,value){try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}}
+  function readStore(key){if(archive)return null;try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
+  function writeStore(key,value){if(archive)return;try{localStorage.setItem(key,JSON.stringify(value));}catch(e){}}
   function hash(text){var h=5381;for(var i=0;i<text.length;i++)h=((h<<5)+h)^text.charCodeAt(i);return (h>>>0).toString(36);}
   function series(key){var x=(window.DB_DATA||[]).find(function(x){return x.k===key;});return x?x.s.filter(function(p){return typeof p[1]==='number';}):[];}
   function last(key){var s=series(key);return s.length?s[s.length-1]:null;}
@@ -92,14 +93,16 @@
     source.rows.forEach(function(row){
       var tr=document.createElement('tr');
       [['cat','wcat'],['related',''],['conclusion',''],['signal','wsignal']].forEach(function(part){
-        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable='true';td.textContent=values[row.key+'|'+part[0]]||row[part[0]];tr.appendChild(td);
+        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';td.textContent=values[row.key+'|'+part[0]]||row[part[0]];tr.appendChild(td);
         if(part[0]==='conclusion'){
-          var daily=document.createElement('td');daily.className='wdaily';daily.dataset.dailyKey=row.key;daily.contentEditable='true';tr.insertBefore(daily,td);
+          var daily=document.createElement('td');daily.className='wdaily';daily.dataset.dailyKey=row.key;daily.contentEditable=archive?'false':'true';tr.insertBefore(daily,td);
         }
       });
       body.appendChild(tr);
     });
-    var ws=readStore(STORE_WS);document.getElementById('weeklyStrategyText').textContent=ws&&ws.stamp===stamp&&ws.text?ws.text:source.final;
+    var ws=readStore(STORE_WS),weeklyEl=document.getElementById('weeklyStrategyText');
+    weeklyEl.textContent=ws&&ws.stamp===stamp&&ws.text?ws.text:source.final;
+    if(archive)document.querySelectorAll('#dailyStrategyBlock [contenteditable]').forEach(function(el){el.contentEditable='false';});
     updateDaily();
   }
   function fetchWeekly(){
@@ -114,25 +117,59 @@
       if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
   }
+  function exportStrategyPNG(){
+    try{
+      var original=document.getElementById('dailyStrategyBlock');if(!original)return;
+      var sheet=document.getElementById('sheet');
+      var width=Math.max(1120,Math.min(1460,(sheet?sheet.clientWidth:1460)-12));
+      var clone=original.cloneNode(true);
+      clone.style.width=width+'px';clone.style.margin='0';clone.style.background='#fff';
+      clone.querySelectorAll('[contenteditable]').forEach(function(el){el.removeAttribute('contenteditable');});
+      var wrap=clone.querySelector('.strategy-tablewrap');if(wrap)wrap.style.overflow='visible';
+      var table=clone.querySelector('table.weeksum');if(table)table.style.minWidth='0';
+      var css='*{box-sizing:border-box;margin:0;padding:0}body{background:#fff}.strategy-block{border:1px solid #d9d9d9;background:#fff;color:#1a1a1a;font-family:KaiTi,STKaiti,"Noto Serif CJK SC",serif}.strategy-head{display:flex;align-items:baseline;gap:12px;padding:10px 14px;background:#EEF3FA;border-left:5px solid #1F4E79}.strategy-head h2{font-size:19px;letter-spacing:1.5px}.strategy-head span{font-size:13px;color:#666}table.weeksum{table-layout:fixed;border-collapse:collapse;width:100%;font-size:14px}table.weeksum th{background:#1F4E79;color:#fff;border:1px solid #527a9e;padding:6px 8px;font-size:14px;font-weight:400;line-height:1.35;text-align:center}table.weeksum td{border:1px solid #d9d9d9;padding:6px 8px;text-align:left;vertical-align:top;white-space:normal;line-height:1.5;font-size:14px}table.weeksum td.wcat{background:#EEF3FA;color:#1F4E79;text-align:center;font-weight:700}table.weeksum td.wdaily{background:#FDF6F6}table.weeksum td.wsignal{text-align:center;vertical-align:middle;font-weight:700}.strategy-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #d9d9d9}.strategy-card{padding:11px 14px;min-width:0;line-height:1.65;font-size:15px}.strategy-card.weekly{background:#F4F7FB;border-right:1px solid #d9d9d9}.strategy-card.daily{background:#FFF8F8}.strategy-card h3{font-size:15px;margin-bottom:5px;color:#1F4E79;letter-spacing:1px}.strategy-card.daily h3{color:#C00000}';
+      var measure=document.createElement('div');
+      measure.style.cssText='position:fixed;left:-100000px;top:0;width:'+width+'px;background:#fff;visibility:hidden;';
+      var exportStyle=document.createElement('style');exportStyle.textContent=css;
+      measure.appendChild(exportStyle);measure.appendChild(clone);document.body.appendChild(measure);
+      var height=Math.ceil(clone.getBoundingClientRect().height)+2;
+      var markup=new XMLSerializer().serializeToString(clone);measure.parentNode.removeChild(measure);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>'+css+'</style>'+markup+'</div></foreignObject></svg>';
+      var img=new Image();
+      img.onload=function(){
+        var canvas=document.createElement('canvas');canvas.width=width*2;canvas.height=height*2;
+        var ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        var name='供需策略_'+(dayStamp||(archive&&archive.date)||'')+'.png';
+        var a=document.createElement('a');a.download=name;document.body.appendChild(a);
+        function clickUrl(url){a.href=url;a.click();a.parentNode.removeChild(a);}
+        if(canvas.toBlob)canvas.toBlob(function(blob){if(!blob)return;var url=URL.createObjectURL(blob);clickUrl(url);setTimeout(function(){URL.revokeObjectURL(url);},30000);},'image/png');
+        else clickUrl(canvas.toDataURL('image/png'));
+      };
+      img.onerror=function(){alert('供需策略图片导出失败，请刷新后重试。');};
+      img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+    }catch(e){alert('供需策略图片导出失败，请刷新后重试。');}
+  }
   var block=document.getElementById('dailyStrategyBlock');
   if(!block){
-    var charts=document.getElementById('charts');if(!charts)return;
+    var anchor=document.querySelector('#sheet .main')||document.getElementById('charts');if(!anchor)return;
     block=document.createElement('section');block.id='dailyStrategyBlock';block.className='strategy-block';
     block.innerHTML='<div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>周度内容与周报联动；日度变化按最新数据更新，表格和策略均可点击编辑</span></div>'+
       '<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:7%"><col style="width:35%"><col style="width:21%"><col style="width:29%"><col style="width:8%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>周度结论</th><th>多空</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>'+
       '<div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>周报结论 · 可编辑</span></h3><div id="weeklyStrategyText" contenteditable="true"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>按日度数据生成 · 可编辑</span></h3><div id="dailyStrategyText" contenteditable="true"></div></div></div>';
-    charts.parentNode.insertBefore(block,charts);
+    anchor.parentNode.insertBefore(block,anchor);
   }
+  if(archive){block.classList.add('is-archive');var headNote=block.querySelector('.strategy-head span');if(headNote)headNote.textContent='历史快照 · 只读；冻结当天的周度内容、日度变化和两种策略';}
   block.addEventListener('input',function(e){
+    if(archive)return;
     var t=e.target;
     if(t.matches('#weeksumBody [data-daily-key]'))saveDailyCells();
     else if(t.matches('#weeksumBody [data-field]'))saveWeekly();
     else if(t.id==='weeklyStrategyText')writeStore(STORE_WS,{stamp:stamp,text:t.textContent.trim()});
     else if(t.id==='dailyStrategyText')writeStore(STORE_DS,{date:dayStamp,text:t.textContent.trim()});
   });
-  render(fallback);fetchWeekly();
+  render(archive&&archive.weekly?archive.weekly:fallback);if(!archive)fetchWeekly();
   if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
     var old=window.TIN_SHEET.render;window.TIN_SHEET.render=function(){var out=old.apply(this,arguments);updateDaily();return out;};
   }
-  window.TIN_DAILY_STRATEGY={refresh:updateDaily};
+  window.TIN_DAILY_STRATEGY={refresh:updateDaily,exportPNG:exportStrategyPNG};
 })();

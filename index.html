@@ -39,6 +39,7 @@
   <div class="seg" id="seg">
     <button data-v="daily">日报</button>
     <button data-v="sheet">数据日报</button>
+    <button data-v="dailyarchive">日报留档</button>
     <button data-v="weekly">周报·版本一</button>
     <button data-v="weekly2" class="on">周报·版本二</button>
     <button data-v="archive">周报留档</button>
@@ -54,6 +55,7 @@
 </div>
 <iframe id="f-daily" data-lazy="daily_2026-10-18.html" title="锡研究日报" hidden></iframe>
 <iframe id="f-sheet" data-lazy="sheet.html" title="锡数据日报" hidden></iframe>
+<iframe id="f-dailyarchive" data-lazy="daily_archive.html" title="日报留档" hidden></iframe>
 <iframe id="f-weekly" data-lazy="weekly_2026-W40.html" title="锡研究周报·版本一" hidden></iframe>
 <iframe id="f-weekly2" src="weekly_full.html" title="锡研究周报·版本二"></iframe>
 <iframe id="f-archive" data-lazy="weekly_archive.html" title="周报留档" hidden></iframe>
@@ -69,14 +71,14 @@
   var seg=document.getElementById('seg');
   function show(v){
     seg.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
-    ['daily','sheet','weekly','weekly2','archive','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
+    ['daily','sheet','dailyarchive','weekly','weekly2','archive','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
       var f=document.getElementById('f-'+k); if(!f)return;
       f.hidden = (k!==v);
       if(k===v && f.dataset.lazy && !f.dataset.loaded){ f.src=f.dataset.lazy; f.dataset.loaded='1'; }
     });
   }
   seg.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.v);});
-  var m=/[?&]v=(weekly2|daily|sheet|weekly|archive|news|metals|db|bal|cu|cudb|lab)(?:&|$)/.exec(location.search);
+  var m=/[?&]v=(weekly2|daily|sheet|dailyarchive|weekly|archive|news|metals|db|bal|cu|cudb|lab)(?:&|$)/.exec(location.search);
   if(m) show(m[1]);
 })();
 </script>
