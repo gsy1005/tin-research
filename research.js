@@ -52,9 +52,9 @@ register('datagap', '数据缺口', ['总览'], [id('datagap')]);
 
 /* Focus: sentiment and macro */
 const focusGroups = splitOnMarkers(takeUntil(id('focus'), id('ai')), node => node.nodeType === 1 && node.classList.contains('lead'));
-register('focus-sentiment', '锡市场情绪', ['重点关注', '宏观与策略'], focusGroups[0] || []);
-register('focus-macro', '宏观环境', ['重点关注', '宏观与策略'], focusGroups[1] || []);
-register('ai', 'AI 高频验证', ['重点关注', '宏观与策略'], takeUntil(id('ai'), id('supply')));
+register('focus-sentiment', '锡市场情绪', ['重点关注'], focusGroups[0] || []);
+register('focus-macro', '宏观环境', ['重点关注'], focusGroups[1] || []);
+register('ai', 'AI 高频验证', ['重点关注'], takeUntil(id('ai'), id('supply')));
 
 /* Supply and inventory */
 const supplyGroups = splitOnMarkers(takeUntil(id('supply'), id('invsec')), node => node.nodeType === 1 && node.classList.contains('lead'));
@@ -99,8 +99,8 @@ register('demand-newenergy', '新能源汽车', solderTrail, [...withoutHeading(
 register('demand-solar', '光伏', solderTrail, [lead('光伏：组件产量 · 光伏耗锡量'), splitChartGroup(demandGroups[4], [1, 2])]);
 
 /* Other weekly pages */
-register('spot', '现货与进出口', ['重点关注', '宏观与策略'], takeUntil(id('spot'), id('strategy')));
-register('strategy', '策略与验证点', ['重点关注', '宏观与策略'], takeUntil(id('strategy'), id('lab')));
+register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
+register('strategy', '策略与验证点', ['重点关注'], takeUntil(id('strategy'), id('lab')));
 register('lab', '图表工作区', ['图表工作区'], takeUntil(id('lab'), id('ai-detail')));
 register('cost', '矿山成本与边际', ['重点关注', '供给'], takeUntil(id('minecost'), id('decks')));
 
@@ -184,7 +184,8 @@ const NAV = [
       page('demand-tinplate', '马口铁'),
       page('demand-battery', '铅蓄电池')
     ], true),
-    group('宏观与策略', [page('focus-sentiment', '锡市场情绪'), page('focus-macro', '宏观环境'), page('ai', 'AI 高频验证'), page('spot', '现货与进出口'), page('strategy', '策略与验证点')], true)
+    page('focus-sentiment', '锡市场情绪'), page('focus-macro', '宏观环境'), page('ai', 'AI 高频验证'),
+    page('spot', '现货与进出口'), page('strategy', '策略与验证点')
   ], true),
   page('balance', '平衡表与全年情景'),
   group('AI 耗锡专题', aiIds.filter(pid => registry.has(pid)).map(pid => page(pid, aiLabels[aiIds.indexOf(pid)]))),
