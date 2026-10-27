@@ -34,12 +34,12 @@
   function dayLabel(day){var p=day.split('-');return Number(p[1])+'/'+Number(p[2]);}
   function changeText(cur,pre,unit){if(!cur||!pre)return '暂无可比值';var d=cur[1]-pre[1];return '较'+(pre[0].slice(5).replace('-','/'))+(d===0?'持平':(d>0?'增加 ':'减少 ')+fmt(Math.abs(d))+(unit||''));}
   function context(){
-    var wh=last('d339'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65');
+    var wh=last('d339'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557');
     var day=(wh&&wh[0])||(down&&down[0])||(price&&price[0])||'';
-    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339');
+    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pSox=prev('d557');
     var total=down&&trade?down[1]+trade[1]:null;
     var oldTotal=pDown&&pTrade?pDown[1]+pTrade[1]:null;
-    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,total:total,oldTotal:oldTotal};
+    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,sox:sox,pSox:pSox,total:total,oldTotal:oldTotal};
   }
   function dailyText(key,c){
     var d=c.label;
@@ -49,7 +49,7 @@
       return d+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
     }
     if(key==='macro')return d+' 宏观以日报上方最新表述为准，继续跟踪中东、利率与美股财报';
-    if(key==='ai')return d+' AI 与半导体等待最新财报及高频数据验证，周度观察框架不变';
+    if(key==='ai')return c.sox?dayLabel(c.sox[0])+' SOX '+fmt(c.sox[1])+' 点，'+changeText(c.sox,c.pSox,' 点')+'；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
     if(key==='mine')return d+' TC 为周频指标，最新周度值不变';
     if(key==='smelt')return d+' 开工和周产量为周频指标，跟踪炼厂减产意愿是否兑现';
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨');

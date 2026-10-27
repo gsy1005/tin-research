@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""应用 GitHub 日报四项手动输入中的云锡升水、印尼成交，并刷新基本面分析。
+"""应用 GitHub 日报手动输入中的云锡升水、SOX、印尼成交，并刷新基本面分析。
 
 下游/同业成交仍由 auto_daily.py 写入；本脚本不会改动这两项。
-环境变量：IN_DATE（可空）、IN_YX（云锡升水）、IN_IDN（印尼当日成交）。
+环境变量：IN_DATE（可空）、IN_YX（云锡升水）、IN_SOX（SOX 收盘）、IN_IDN（印尼当日成交）。
 """
 import json
 import os
@@ -51,6 +51,10 @@ def main():
     if yx:
         upsert(by_key["d65"]["s"], day, float(yx))
 
+    sox = os.environ.get("IN_SOX", "").strip()
+    if sox:
+        upsert(by_key["d557"]["s"], day, float(sox))
+
     idn = os.environ.get("IN_IDN", "").strip()
     if idn:
         upsert(by_key["d480"]["s"], day, float(idn))
@@ -86,7 +90,7 @@ def main():
     else:
         analysis += "后续结合月末成交、印尼出口及国内到港验证供应边际。"
 
-    if yx or idn:
+    if yx or sox or idn:
         write_db(header, db)
 
     note_text = NOTE_PATH.read_text(encoding="utf-8")

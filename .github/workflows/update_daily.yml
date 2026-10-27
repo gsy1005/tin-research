@@ -17,6 +17,9 @@ on:
       idn:
         description: '今日印尼交易所成交量（吨；无成交填0）★必填'
         required: true
+      sox:
+        description: '最新SOX收盘价（点）★必填'
+        required: true
       px:
         description: '价格：开 高 低 收 量（空格分隔）或只填收盘价；留空=自动抓取'
         required: false
@@ -49,10 +52,11 @@ jobs:
           IN_OPT: ${{ github.event.inputs.opt }}
           IFIND_KEY: ${{ secrets.IFIND_KEY }}
         run: python .gen/auto_daily.py --ci
-      - name: 应用云锡升水与印尼成交并刷新分析
+      - name: 应用云锡升水、SOX与印尼成交并刷新分析
         env:
           IN_DATE: ${{ github.event.inputs.date }}
           IN_YX: ${{ github.event.inputs.yx }}
+          IN_SOX: ${{ github.event.inputs.sox }}
           IN_IDN: ${{ github.event.inputs.idn }}
         run: python tools/apply_manual_inputs.py
       - name: 补回跨品种比价序列
