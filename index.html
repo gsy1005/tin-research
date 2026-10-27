@@ -24,11 +24,13 @@
   .wm{position:fixed;right:14px;bottom:8px;z-index:999;font-size:11px;color:rgba(138,148,166,.4);letter-spacing:.5px;pointer-events:none;}
   iframe[hidden]{display:none;}
   @media (max-width:640px){
-    .topbar{padding:8px 10px;gap:6px;}
-    .seg{flex:1;min-width:0;}
-    .seg button{flex:1;padding:8px 4px;font-size:12.5px;border-radius:6px;}
-    .author{font-size:12px;width:100%;text-align:right;}
-    iframe{height:calc(100vh - 78px);}
+    .topbar{padding:8px 10px;gap:7px;}
+    .seg{flex:1 0 100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;}
+    .seg::-webkit-scrollbar{display:none;}
+    .seg button{flex:0 0 auto;padding:8px 10px;font-size:12.5px;border-radius:6px;white-space:nowrap;}
+    .author{font-size:12px;width:100%;text-align:left;white-space:normal;line-height:1.5;}
+    .author span{margin-left:5px;letter-spacing:1px;}
+    iframe{height:calc(100vh - 102px);}
   }
 </style>
 </head>

@@ -217,7 +217,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 }
 </style>
 <link rel="stylesheet" href="weekly_mobile.css?v=202610270235">
-<link rel="stylesheet" href="weekly_polish.css?v=202610270235">
+<link rel="stylesheet" href="weekly_polish.css?v=20261027-ai-tin-v3">
 </head>
 <body>
 <div class="printcover"><div class="fwscale fwcover"><div class="fwslide">
@@ -242,7 +242,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button><button class="editbtn" id="longbtn" type="button" onclick="PGX.go('long')" style="background:#0F7B6C;color:#fff;border-color:#0F7B6C">📜 长页版</button><a class="editbtn" href="weekly_archive.html" style="text-decoration:none;line-height:1.8">🗂 周报留档</a>
 </div>
 <nav class="toc" id="toc">
-  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a><a href="#ai-detail">详细AI</a>
+  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a><a href="#ai-detail">AI耗锡量</a>
 </nav>
 <details class="fold" id="framework">
   <summary>📖 锡产业研究框架（基础认知 · 供给×需求×工艺×单耗，点击展开/折叠）</summary>
@@ -436,7 +436,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <div class="lead">重点跟踪：韩国半导体出口 · DRAM 现货价 · LLM Token 价格</div>
 <ul class="sq">
   <li><b>韩国半导体出口</b>：2026 年 10 月前 20 日同比 <span class="rd">+222.5%</span>，AI 硬件需求仍强；出口金额同时受价格和产品结构影响，仍需与出货量、PCB 投产及焊料订单交叉验证。</li>
-  <li><b>DRAM 现货</b>：DDR3 4Gb 10/23 为 <b>1.357 美元</b>，用于观察存储链价格变化；NAND Flash 数据及月度产业链指标放在详细 AI，不在重点关注重复展示。</li>
+  <li><b>DRAM 现货</b>：DDR3 4Gb 10/23 为 <b>1.357 美元</b>，用于观察存储链价格变化；NAND Flash 数据及月度产业链指标放在详细周报 AI 板块，不在重点关注重复展示。</li>
   <li><b>LLM Token 价格</b>：SDLLMTK 10/23 为 <b>0.9348 美元/百万 tokens</b>。该指标衡量市场实际支付的推理 token 价格，不直接代表 AI 总支出或锡需求，需与硬件出货和营收指标配合解读。</li>
 </ul>
 <div class="charts3">
@@ -884,44 +884,115 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   </div>
 </div>
 
-<h2 id="ai-detail">详细周报 · AI：半导体、存储、PCB 与美股验证<span class="en">AI DETAIL</span></h2>
-<div class="lead">AI 产业链扩展数据：贸易、指数、存储与月度营收</div>
-<ul class="sq">
-  <li>韩国计算机设备出口、韩国存储器出口价格、SOX、KOSPI、纳斯达克及 NAND Flash 均保留在此；月度序列另包含台积电营收、台湾电子 PMI 新订单、韩国半导体出口、日本与北美 PCB，以及台股 PCB 制造、原料和铜箔基板营收。</li>
-  <li>韩国存储器出口价格采用 UN Comtrade HS854232 的出口金额÷净重，最新有效月为 <b>2025-12</b>，约 <b>3,516.27 万美元/吨</b>；该口径也会受产品结构和出口均价影响，并非单一存储芯片现货报价。2026 年 1—9 月经接口核查暂无返回数据。</li>
-  <li>NAND Flash 64Gb 最近有效数据为 10/12 的 <b>42.337 美元</b>；之后的 <b>#N/A</b> 均保留为缺数，不按零值处理。韩国半导体月度出口的单位严格沿用原表“百万美元”。</li>
-</ul>
-<div class="charts3">
-  <div class="cbox"><div class="echart" data-fn="a_kr_computer_exp.png"></div><img class="pimg" src="charts_full/a_kr_computer_exp.png" alt="韩国计算机设备出口"><div class="cap">韩国计算机设备出口</div><div class="stats">最新 424.1（10/20）｜环比 +236（+125.9%）｜同比 +433</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kr_memory_price.png"></div><img class="pimg" src="charts_full/a_kr_memory_price.png" alt="韩国存储器出口价格"><div class="cap">韩国存储器出口价格</div><div class="stats">最新 3,516（12/1）｜环比 +197（+5.9%）｜同比 +911（+35.0%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_soxsn.png"></div><img class="pimg" src="charts_full/a_soxsn.png" alt="SOX×沪锡主力"><div class="cap">SOX×沪锡主力</div><div class="stats">最新 10,779（10/23）｜环比 +47（+0.4%）｜同比 +3,932（+57.4%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kospi.png"></div><img class="pimg" src="charts_full/a_kospi.png" alt="KOSPI指数"><div class="cap">KOSPI指数</div><div class="stats">最新 5,595（10/18）｜环比 -73（-1.3%）｜同比 +1,780（+46.7%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_nasdaq.png"></div><img class="pimg" src="charts_full/a_nasdaq.png" alt="纳斯达克指数"><div class="cap">纳斯达克指数</div><div class="stats">最新 26,713（10/15）｜环比 +20（+0.1%）｜同比 +4,043（+17.8%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_nand.png"></div><img class="pimg" src="charts_full/a_nand.png" alt="NAND Flash现货价"><div class="cap">NAND Flash现货价</div><div class="stats">最新 42.337（10/12）｜环比 +0.25（+0.6%）｜同比 +36（+571.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_tsmc_rev.png"></div><img class="pimg" src="charts_full/a_tsmc_rev.png" alt="台积电营收"><div class="cap">台积电营收</div><div class="stats">最新 5,119（9/30）｜环比 -29（-0.6%）｜同比 +1,809（+54.6%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_tw_pmi_orders.png"></div><img class="pimg" src="charts_full/a_tw_pmi_orders.png" alt="台湾电子PMI新订单"><div class="cap">台湾电子PMI新订单</div><div class="stats">最新 56.7（9/30）｜环比 -11（-16.0%）｜同比 +11（+24.3%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_kr_semi_monthly.png"></div><img class="pimg" src="charts_full/a_kr_semi_monthly.png" alt="韩国半导体月度出口"><div class="cap">韩国半导体月度出口</div><div class="stats">最新 60,295（9/30）｜环比 +13,642（+29.2%）｜同比 +43,674（+262.8%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_jp_pcb_output.png"></div><img class="pimg" src="charts_full/a_jp_pcb_output.png" alt="日本PCB产量"><div class="cap">日本PCB产量</div><div class="stats">最新 647.6（8/31）｜环比 -165（-20.3%）｜同比 +33（+5.4%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_na_pcb_yoy.png"></div><img class="pimg" src="charts_full/a_na_pcb_yoy.png" alt="北美PCB订单同比"><div class="cap">北美PCB订单同比</div><div class="stats">最新 -35（8/31）｜环比 -97（-156.5%）｜同比 -31</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_rev.png" alt="台股PCB制造营收"><div class="cap">台股PCB制造营收</div><div class="stats">最新 1,140（9/30）｜环比 +94（+9.0%）｜同比 +313（+37.8%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_material_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_material_rev.png" alt="台股PCB原料营收"><div class="cap">台股PCB原料营收</div><div class="stats">最新 773.5（9/30）｜环比 +67（+9.5%）｜同比 +344（+80.0%）</div></div>
-  <div class="cbox"><div class="echart" data-fn="a_tw_ccl_rev.png"></div><img class="pimg" src="charts_full/a_tw_ccl_rev.png" alt="台股铜箔基板营收"><div class="cap">台股铜箔基板营收</div><div class="stats">最新 687.2（9/30）｜环比 +62（+9.8%）｜同比 +321（+87.8%）</div></div>
+<h2 id="ai-detail">AI耗锡量：算力硬件全链路需求测算<span class="en">AI TIN DEMAND</span></h2>
+<div class="ai-tin-intro">从芯片先进封装、EUV 光刻，到 PCB 电镀与 SMT 贴片，沿硬件制造流程拆解锡的真实消耗；再以出货量、板型结构、单位耗锡和投产爬坡解释 2026—2030 年的增量来源。</div>
+<div class="ai-tin-metrics">
+  <div><span>2026E 全链路耗锡</span><strong>1.21<small>万吨</small></strong></div>
+  <div><span>2030E 全链路耗锡</span><strong>2.28<small>万吨</small></strong></div>
+  <div><span>2026—2030 板级增量贡献</span><strong>98.3<small>%</small></strong></div>
+  <div><span>2030E 全球锡消费占比</span><strong>5.7<small>%</small></strong></div>
 </div>
-<div class="lead">美股财报：进入盈利兑现验证期</div>
+<div class="lead">一、研究背景：算力扩张如何传导至锡需求</div>
 <ul class="sq">
-  <li>下周科技财报密集：周三海力士电话会；周四谷歌、微软业绩与三星电话会；周五亚马逊、英特尔业绩。SOX 本周高波动，说明市场对算力链盈利持续性的分歧仍然较大。</li>
-  <li><b>云厂商</b>：沿用“订单—资本开支—收入—利润—现金流”的验证链条，重点看 AI 订单和资本开支能否转化为收入、利润与经营现金流，而不仅是继续上调投入。</li>
-  <li><b>存储与硬件</b>：三星、SK 海力士需要验证 HBM 增长能否兑现为利润，英特尔等则提供硬件链需求与盈利的另一侧证据。对锡而言，这决定 AI 焊料预期是获得现实支撑，还是继续回吐溢价。</li>
-  <li><b>美股定价与锡的映射</b>：财报不仅决定科技指数方向，也会通过风险偏好和实际利率预期影响有色估值。业绩超预期且盈利质量改善，才有利于锡的算力链需求预期；若仅资本开支上升而收入、现金流不跟进，需防估值压缩与需求预期下修共振。</li>
-  <li><b>交易含义</b>：财报超预期与低库存共振时，近月反弹和逼仓风险会加大；财报不及预期且中东升级时，单边空配更占优。财报公布前不宜把单一方向仓位打满。</li>
+  <li><b>需求起点</b>：大模型训练、推理与智能体应用推动云厂商扩大算力投入，GPU、HBM、高速光模块和高多层 PCB 同步放量。资本开支本身不直接耗锡，只有继续转化为芯片、板卡和整机柜出货，并带动封装、PCB 与贴片产线运行，才形成实物需求。</li>
+  <li><b>传导链条</b>：云厂商资本开支 → AI 芯片及整机柜出货 → 先进封装、高阶 PCB 与 SMT 产量 → 锡球、微凸块、镀锡化学品、锡膏和锡条消耗。研究重点是找到每一环可跟踪的实物量，而不是用投资额直接替代耗锡量。</li>
+  <li><b>为什么使用锡</b>：锡兼具焊接性、导电性和物理稳定性。芯片端依靠锡球与微凸块完成微互连，板级依靠锡膏形成大量焊点，PCB 制程则在电镀、线路蚀刻保护和表面处理中使用锡材。</li>
+  <li><b>材料结构</b>：板级焊接以普通工业锡材为主，是全链路的主要数量来源；芯片端体量较小，但对纯度、粒径和一致性的要求更高，体现高纯锡的结构性需求。因而“总吨位增长”与“高纯材料升级”需要分别判断。</li>
+  <li><b>时间维度</b>：终端消耗发生在生产制造阶段，采购则可能因备库、试产和产线铺底提前出现。AI 对锡市场的影响既包括年度消费中枢上移，也包括扩产阶段采购节奏前置。</li>
 </ul>
-<div class="lead">PCB 集中投产：采购前置，2026H2—2027 是耗锡拉动强窗口</div>
+<div class="ai-tin-chain">
+  <a class="ai-tin-map" href="charts_full/ai_tin_chain.png" target="_blank" rel="noopener" aria-label="查看产业链耗锡环节原图">
+    <img src="charts_full/ai_tin_chain.png" alt="锡产业链需求端：AI服务器经AI板卡、高阶PCB和SMT环节消耗锡焊料">
+    <span>产业链框架图 · 点击查看大图</span>
+  </a>
+  <div class="ai-tin-paths">
+    <h3>锡究竟耗在哪里？</h3>
+    <div><b>SMT 贴片</b><span>锡膏、锡条完成元器件与 PCB 焊盘的电气连接，是板级用锡核心。</span></div>
+    <div><b>PCB 制程</b><span>板面电镀、线路蚀刻保护与表面处理均会使用锡材。</span></div>
+    <div><b>先进封装</b><span>锡球、微凸块连接芯片、晶圆与基板，受益于 HBM 和 Chiplet。</span></div>
+    <div><b>EUV 光刻</b><span>高纯锡微滴经激光激发产生极紫外光，属于前道制造耗材。</span></div>
+    <p>数量看板级焊接，材料升级看芯片端高纯锡。</p>
+  </div>
+</div>
+<div class="lead">二、测算边界、公式与核心驱动</div>
 <ul class="sq">
-  <li><b>投产节奏</b>：2025 年公告的新建项目集中在 2026 年下半年投产，2026Q3 是设备进厂与试产的重要节点；2026 年新公告的高端 HLC/HDI 项目主要在 2027—2028 年释放，形成 2026H2—2028 的产能集中释放期。</li>
-  <li><b>需求前置</b>：PCB 产线通常在投产前 1—2 个季度锁定锡膏和镀锡化学品，试产、打样和铺底库存也会提前耗锡。中性测算下，采购高峰落在 <b>2026H2—2027H1</b>，早于产能达产高峰。</li>
-  <li><b>旗舰项目下限</b>：9 个披露面积产能的头部项目合计 468 万㎡/年，按 318g 锡/㎡测算，满产年化耗锡约 <b>1,489 吨</b>；2026、2027 年新增耗锡分别约 <b>575 吨、429 吨</b>。未披露面积产能的项目及存量产线利用率提升未计入，因此该结果是下限而非行业总增量。</li>
+  <li><b>空间边界</b>：覆盖先进封装、PCB 电镀和 SMT 贴片，并对 EUV 光刻作独立跟踪。芯片、板卡与整机属于上下游关系，不能把各环节已经包含的同一批锡材重复相加。</li>
+  <li><b>数量边界</b>：年度耗锡是制造过程中的消耗口径；企业为试产、备库和铺底库存形成的采购口径单独观察。采购前置会改变需求出现的年份，但不等于永久增加终端消耗。</li>
+  <li><b>架构变化</b>：Scale-Out 主要通过增加服务器节点扩展算力，Scale-Up 则强化服务器内部及机柜内的高速互连。后者提高计算板、交换板、电源板和连接器的集成密度，使 PCB 面积、层数、焊点数量与单板制造难度同步上升。</li>
+  <li><b>出货结构</b>：传统 8GPU 服务器出货趋于收缩，AI 整机柜成为主要增量载体；整机柜渗透率预计由 2026 年的 32.5% 升至 2030 年的 53.8%。因此，芯片端不是简单跟随服务器台数增长，而是由产品组合切换驱动。</li>
+  <li><b>板型结构</b>：PCB／SMT 按多层板、HDI 和封装基板分别测算。三类产品的面积增速与单位面积耗锡不同，分开计算可以识别“总量扩张”和“高阶化”各自贡献。</li>
+  <li><b>结果属性</b>：2026—2030 年数值是基于出货、渗透率和单耗假设的情景测算，不是企业产量指引。后续数据更新应先替换出货与面积，再校准单耗和爬坡参数。</li>
+</ul>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data ai-tin-text"><thead><tr><th>环节</th><th>计算路径</th><th>决定结果的核心变量</th></tr></thead><tbody>
+<tr><td>先进封装</td><td>传统 8GPU 服务器出货量 × 单耗 ＋ AI 整机柜出货量 × 单耗</td><td>两类硬件出货、整机柜渗透率、HBM／Chiplet 封装复杂度、单位微互连耗锡</td></tr>
+<tr><td>PCB／SMT</td><td>Σ（多层板、HDI、封装基板有效面积 × 对应单位面积耗锡）</td><td>板型面积、层数与密度、良率、电镀及贴片单耗</td></tr>
+<tr><td>EUV 光刻</td><td>先进制程晶圆量 × EUV 层数 × 单位晶圆锡耗</td><td>晶圆产量、EUV 层数、设备稼动率、锡微滴利用效率</td></tr>
+<tr><td>扩产项目</td><td>有效新增产能 × 单位面积耗锡 × 当年爬坡比例</td><td>投产时间、设备进厂、试产、良率、稼动率及采购前置周期</td></tr>
+</tbody></table></div>
+<p class="note">阅读表格时需区分“先进封装年度耗锡”“AI 相关 PCB／SMT 年度耗锡”和“单个扩产项目新增耗锡”：前两者构成全链路年度结果，项目测算用于解释增量兑现节奏，不再额外叠加到全链路总量上。</p>
+<div class="lead">三、芯片端：先进封装与 EUV 光刻</div>
+<h3 class="ai-tin-h3">先进封装：整机柜取代传统 8GPU 服务器成为增量来源</h3>
+<ul class="sq">
+  <li><b>耗锡位置</b>：锡球和微锡凸块承担芯片、晶圆与封装基板之间的电气互连。HBM 堆叠、Chiplet 和 2.5D／3D 封装提高微凸块数量与封装复杂度，但单个互连点体积很小，因此总耗锡仍明显低于板级焊接。</li>
+  <li><b>数量与结构</b>：芯片端耗锡预计由 2026 年的约 328 吨增至 2030 年的约 508 吨，累计增加约 180 吨，增幅约 54.9%，年均复合增速约 11.6%。同期其占全链路耗锡的比重由约 2.7% 降至约 2.2%，原因是板级耗锡增长更快。</li>
+  <li><b>整机柜贡献</b>：AI 整机柜耗锡由 207.03 吨升至 408.98 吨，接近翻倍，占芯片端的比重由约 63.1% 升至约 80.6%；传统 8GPU 服务器耗锡则由 120.93 吨降至 98.69 吨。芯片端增长实质上完全来自整机柜放量。</li>
+  <li><b>年度节奏</b>：2027、2028 年芯片端同比增加约 46 吨、60 吨，是本轮增量较高的两个年份；2029、2030 年新增量约 44 吨、30 吨，体现高基数下增速逐步放缓。</li>
+</ul>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data"><thead><tr><th>先进封装耗锡</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2029E</th><th>2030E</th></tr></thead><tbody>
+<tr><td>传统 8GPU 服务器（吨）</td><td>120.93</td><td>101.40</td><td>112.56</td><td>107.64</td><td>98.69</td></tr>
+<tr><td>AI 整机柜（吨）</td><td>207.03</td><td>272.32</td><td>321.30</td><td>369.92</td><td>408.98</td></tr>
+<tr class="final"><td>合计（吨）</td><td>327.96</td><td>373.72</td><td>433.86</td><td>477.56</td><td>507.67</td></tr>
+<tr><td>同比增速</td><td>—</td><td>13.95%</td><td>16.09%</td><td>10.07%</td><td>6.30%</td></tr>
+</tbody></table></div>
+<p class="note">芯片端表格为先进封装口径。全链路表格为便于阅读采用取整值，因此 328、374、434、478、508 吨与本表合计存在四舍五入差异。</p>
+<h3 class="ai-tin-h3">EUV 光刻：高纯锡是光源系统的工艺耗材</h3>
+<ul class="sq">
+  <li><b>工艺原理</b>：EUV 光源以高纯锡微滴为靶材，经高功率激光激发形成等离子体并产生 13.5nm 极紫外光。这里的锡不参与焊接，而是随先进制程晶圆制造持续消耗。</li>
+  <li><b>驱动变量</b>：需求主要取决于先进制程晶圆产量、单片晶圆使用的 EUV 层数、设备稼动率及单位晶圆锡耗。AI 芯片需求只有先传导至晶圆投片和 EUV 工艺使用量，才会形成这一环节的锡耗。</li>
+  <li><b>测算处理</b>：目前缺少可连续核验的年度晶圆量与单位锡耗参数，因此 EUV 保持定性跟踪，不在先进封装表格上另行叠加数值，避免用未经校验的假设放大芯片端结果。</li>
+</ul>
+<div class="lead">四、板级制造：PCB 电镀与 SMT 贴片是耗锡主体</div>
+<ul class="sq">
+  <li><b>PCB 制程</b>：锡用于板面电镀、线路蚀刻保护和表面防腐处理。AI 服务器高层数、高速、高密度设计提升单板面积与制造难度，有效产出还受到良率和爬坡影响，是多层板、HDI 和封装基板耗锡增长的共同基础。</li>
+  <li><b>SMT 贴片</b>：锡膏经印刷和回流焊，将 GPU、存储、供电、光模块及其他元器件连接到 PCB 焊盘。整机柜内部计算板、交换板和电源板数量增加，既扩大板面积，也提高元器件与焊点密度。</li>
+  <li><b>多层板</b>：2026—2030 年耗锡由 5,562 吨增至 9,994 吨，增加 4,432 吨，约占板级总增量的 42.4%，仍是绝对增量最大的板型；年均复合增速约 15.8%。</li>
+  <li><b>HDI 板</b>：耗锡由 3,326 吨增至 6,280 吨，增加 2,954 吨，约占板级总增量的 28.3%；年均复合增速约 17.2%，反映高密度互连需求提升。</li>
+  <li><b>封装基板</b>：耗锡由 2,923 吨增至 5,987 吨，增加 3,064 吨，约占板级总增量的 29.3%；年均复合增速约 19.6%，在三类板中最高，占板级耗锡的比重由约 24.8% 升至约 26.9%。</li>
+  <li><b>结构判断</b>：PCB 与 SMT 合计贡献全链路 97% 以上的年度耗锡。2026—2030 年板级耗锡增加 10,449 吨，约贡献全链路总增量的 98.3%，是决定 AI 用锡绝对规模的核心。</li>
+</ul>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data"><thead><tr><th>PCB、SMT 耗锡（吨）</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2029E</th><th>2030E</th></tr></thead><tbody>
+<tr><td>多层板</td><td>5,562</td><td>7,230</td><td>8,618</td><td>9,149</td><td>9,994</td></tr>
+<tr><td>HDI 板</td><td>3,326</td><td>4,340</td><td>5,201</td><td>5,606</td><td>6,280</td></tr>
+<tr><td>封装基板</td><td>2,923</td><td>3,811</td><td>4,662</td><td>5,050</td><td>5,987</td></tr>
+<tr class="final"><td>合计</td><td>11,811</td><td>15,381</td><td>18,481</td><td>19,806</td><td>22,260</td></tr>
+<tr><td>合计同比</td><td>—</td><td>30.23%</td><td>20.15%</td><td>7.16%</td><td>12.40%</td></tr>
+</tbody></table></div>
+<p class="note">同比沿用原始测算序列；分项和合计在展示时经过取整，个别年份直接按展示值复算会有轻微尾差。三类板型的增量贡献和复合增速均依据本表展示值计算。</p>
+<div class="lead">五、全链路结果：总量接近翻倍，2027—2028 为增量高峰</div>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data"><thead><tr><th>年份</th><th>芯片端（吨）</th><th>PCB、SMT（吨）</th><th>全链路合计（吨）</th><th>当年新增（吨）</th><th>同比增速</th></tr></thead><tbody>
+<tr><td>2026E</td><td>328</td><td>11,811</td><td><b>12,139</b></td><td>—</td><td>—</td></tr>
+<tr><td>2027E</td><td>374</td><td>15,381</td><td><b>15,755</b></td><td>+3,616</td><td>29.79%</td></tr>
+<tr><td>2028E</td><td>434</td><td>18,481</td><td><b>18,915</b></td><td>+3,160</td><td>20.06%</td></tr>
+<tr><td>2029E</td><td>478</td><td>19,806</td><td><b>20,284</b></td><td>+1,369</td><td>7.24%</td></tr>
+<tr><td>2030E</td><td>508</td><td>22,260</td><td><b>22,768</b></td><td>+2,484</td><td>12.25%</td></tr>
+</tbody></table></div>
+<ul class="sq">
+  <li><b>总量</b>：2026—2030 年全链路耗锡由 12,139 吨增至 22,768 吨，累计增加 10,629 吨，增幅约 87.6%，年均复合增速约 17.0%。“接近翻倍”指累计增幅，不是每年翻倍。</li>
+  <li><b>年度节奏</b>：2027 年新增 3,616 吨、2028 年新增 3,160 吨，是增量最高的两个阶段；2029 年新增量收窄至 1,369 吨，2030 年回升至 2,484 吨。12.25% 是 2030 年当年的同比增速，不是 2026—2030 年复合增速。</li>
+  <li><b>增量拆解</b>：四年芯片端仅增加约 180 吨，PCB／SMT 增加约 10,449 吨。换言之，全链路增长主要由板级制造决定，芯片端更多体现高纯锡材料需求与先进封装景气度。</li>
+  <li><b>全球占比</b>：按本专题全球锡消费假设，2026 年约 35.72 万吨、2030 年约 40 万吨，AI 全链路占比分别约为 12,139÷357,200＝3.4%、22,768÷400,000＝5.7%。占比提升说明 AI 对边际需求的影响增强，但仍需与传统焊料、锡化工和镀锡板需求共同判断总平衡。</li>
+  <li><b>弹性来源</b>：若出货量或有效 PCB 面积变化，在其他参数不变时，相应环节耗锡近似同方向变化；若单位耗锡因工艺优化下降，则会抵消一部分面积和焊点增长。实际结果取决于“数量 × 单耗”的净效应。</li>
+</ul>
+<div class="lead">六、PCB 扩产：采购前置，2026H2—2027 是耗锡拉动强窗口</div>
+<ul class="sq">
+  <li><b>投产节奏</b>：2025 年公告的新建项目集中在 2026 年下半年投产，2026Q3 是设备进厂与试产的重要节点；2026 年新公告的高端 HLC／HDI 项目主要在 2027—2028 年释放，形成 2026H2—2028 的产能集中释放期。</li>
+  <li><b>传导顺序</b>：项目公告不等于耗锡立即发生。较合理的跟踪顺序是设备进厂 → 试产打样 → 良率爬坡 → 稼动率提升 → 稳定量产。试产和铺底库存往往先形成采购，稳定量产后才转化为持续消耗。</li>
+  <li><b>需求前置</b>：PCB 产线通常在投产前 1—2 个季度锁定锡膏和镀锡化学品。中性测算下，采购高峰落在 <b>2026H2—2027H1</b>，早于产能达产高峰；因此月度采购数据可能领先年度实际耗锡。</li>
+  <li><b>旗舰项目下限</b>：9 个披露面积产能的头部项目合计约 468.2 万㎡／年，按 318g 锡／㎡测算，满产年化耗锡约为 <b>468.2×10,000×318÷1,000,000≈1,489 吨</b>。2026、2027 年新增耗锡分别约 <b>575 吨、429 吨</b>，是爬坡增量最集中的两个年份。</li>
+  <li><b>下限含义</b>：未披露面积产能的项目及存量产线利用率提升未计入 9 项目测算，因此 1,489 吨是已披露项目的满产年化下限，不是行业年度总增量，也不能直接视为某一年的实际消耗。</li>
   <li><b>行业总量与单耗</b>：全球 PCB 环节耗锡量预计由 2026 年 16.3 万吨增至 2030 年 21.2 万吨，累计增加 4.9 万吨；AI 服务器 PCB 面积、层数与单机耗锡均高于传统服务器，是总量扩张之外的核心弹性。</li>
-  <li><b>扩展情景</b>：将仅披露投资额的大陆项目按投资额折算产能，中性情景下本轮扩产满产年化耗锡约 2,900 吨，2030 年测算约 2,919 吨；折算系数差异较大，应理解为量级估计。</li>
+  <li><b>采购与消耗分离</b>：中性情景表内，2025—2027 年采购口径相对消耗口径的前置量分别为 202、385、282 吨，随后逐步收敛。前置量已经包含在采购口径中，不能再与采购量或消耗量重复相加。</li>
+  <li><b>扩展情景</b>：将仅披露投资额的大陆项目按投资额折算产能，中性情景下本轮扩产满产年化耗锡约 2,900 吨，2030 年测算约 2,919 吨；折算系数差异较大，应理解为量级估计，优先级低于直接披露面积产能的项目。</li>
   <li><b>风险与验证</b>：若 AI 服务器出货放缓、PCB 产能集中释放引发价格竞争，或高锡价继续抑制焊料采购，实际增量可能低于测算。后续重点跟踪设备进厂、试产、稼动率及锡膏采购，而不是只看投产公告。</li>
 </ul>
 <div class="charts3">
@@ -958,7 +1029,21 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 </details>
 
 
-<!-- ============ 详细周报（PPT 1-7 按序全量收录） ============ -->
+<div class="lead">七、结论、验证指标与模型更新顺序</div>
+<ul class="sq">
+  <li><b>基准判断</b>：AI 已成为锡消费的重要新增来源，2026—2030 年增量主要由 PCB／SMT 贡献，先进封装与 EUV 则提供高纯锡的结构性需求。总量兑现仍取决于实际出货、有效面积和制造稼动率，不能只用资本开支替代实物需求。</li>
+  <li><b>领先指标</b>：先看云厂商硬件订单、AI 整机柜渗透率、PCB 项目设备进厂和试产节点。这些指标决定后续几个季度的生产准备与采购前置，但尚不能单独证明终端消耗已经兑现。</li>
+  <li><b>同步指标</b>：再看高阶 PCB 出货、SMT 锡膏采购、PCB 镀锡化学品消耗、产线良率与稼动率。若出货和采购同步上行，且库存没有异常累积，耗锡测算的可信度更高。</li>
+  <li><b>滞后核验</b>：最后以 HBM、先进封装、先进制程晶圆产量及企业实际产量核验芯片端需求，并将年度实际消耗与模型值对照，回溯修正出货、单耗和爬坡假设。</li>
+  <li><b>主要风险</b>：硬件出货不及预期、PCB 扩产导致价格竞争、单耗下降、良率爬坡偏慢或高锡价抑制采购，均可能使实际耗锡低于测算；投产公告不等同于达产，备库也不等同于终端消耗。</li>
+</ul>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data ai-tin-text"><thead><tr><th>待验证变量</th><th>需要补充的数据</th><th>对模型的影响</th></tr></thead><tbody>
+<tr><td>硬件出货</td><td>传统 8GPU 服务器、AI 整机柜年度出货及整机柜渗透率</td><td>决定先进封装总量和产品结构，是芯片端测算的第一层输入</td></tr>
+<tr><td>单位耗锡</td><td>两类硬件单耗、三类 PCB 单位面积耗锡、EUV 单位晶圆锡耗</td><td>决定数量增长能否有效转化为锡耗，检验工艺降耗的抵消作用</td></tr>
+<tr><td>有效产能</td><td>项目面积产能、投产时间、爬坡比例、良率及稼动率</td><td>把公告产能转换为实际可生产面积，校准年度消耗节奏</td></tr>
+<tr><td>采购前置</td><td>备库周期、试产采购、铺底库存和后续去库存</td><td>区分采购高峰与真实消耗，避免把同一批锡材跨年重复计算</td></tr>
+</tbody></table></div>
+<p class="note">更新顺序建议为：先替换硬件出货和 PCB 有效面积，再校准单位耗锡与投产爬坡，最后处理采购前置。这样可以把总量、结构和时间节奏分开验证。</p>
 
 <h2 id="minecost">矿山成本与边际<span class="en">MINE COST &amp; MARGIN</span></h2>
 <div class="pptzone">
@@ -984,6 +1069,39 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 </div>
 
 <h2 id="decks">详细周报 · 全量数据图表<span class="en">DETAIL DECKS 1–7</span></h2>
+<h2 id="ai-weekly-detail">详细周报 · AI：半导体、存储与美股验证<span class="en">AI DETAIL</span></h2>
+<div class="lead">AI 产业链扩展数据：贸易、指数、存储与月度营收</div>
+<ul class="sq">
+  <li>韩国计算机设备出口、韩国存储器出口价格、SOX、KOSPI、纳斯达克及 NAND Flash 均保留在此；月度序列另包含台积电营收、台湾电子 PMI 新订单、韩国半导体出口、日本与北美 PCB，以及台股 PCB 制造、原料和铜箔基板营收。</li>
+  <li>韩国存储器出口价格采用 UN Comtrade HS854232 的出口金额÷净重，最新有效月为 <b>2025-12</b>，约 <b>3,516.27 万美元/吨</b>；该口径也会受产品结构和出口均价影响，并非单一存储芯片现货报价。2026 年 1—9 月经接口核查暂无返回数据。</li>
+  <li>NAND Flash 64Gb 最近有效数据为 10/12 的 <b>42.337 美元</b>；之后的 <b>#N/A</b> 均保留为缺数，不按零值处理。韩国半导体月度出口的单位严格沿用原表“百万美元”。</li>
+</ul>
+<div class="charts3">
+  <div class="cbox"><div class="echart" data-fn="a_kr_computer_exp.png"></div><img class="pimg" src="charts_full/a_kr_computer_exp.png" alt="韩国计算机设备出口"><div class="cap">韩国计算机设备出口</div><div class="stats">最新 424.1（10/20）｜环比 +236（+125.9%）｜同比 +433</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kr_memory_price.png"></div><img class="pimg" src="charts_full/a_kr_memory_price.png" alt="韩国存储器出口价格"><div class="cap">韩国存储器出口价格</div><div class="stats">最新 3,516（12/1）｜环比 +197（+5.9%）｜同比 +911（+35.0%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_soxsn.png"></div><img class="pimg" src="charts_full/a_soxsn.png" alt="SOX×沪锡主力"><div class="cap">SOX×沪锡主力</div><div class="stats">最新 10,779（10/23）｜环比 +47（+0.4%）｜同比 +3,932（+57.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kospi.png"></div><img class="pimg" src="charts_full/a_kospi.png" alt="KOSPI指数"><div class="cap">KOSPI指数</div><div class="stats">最新 5,595（10/18）｜环比 -73（-1.3%）｜同比 +1,780（+46.7%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_nasdaq.png"></div><img class="pimg" src="charts_full/a_nasdaq.png" alt="纳斯达克指数"><div class="cap">纳斯达克指数</div><div class="stats">最新 26,713（10/15）｜环比 +20（+0.1%）｜同比 +4,043（+17.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_nand.png"></div><img class="pimg" src="charts_full/a_nand.png" alt="NAND Flash现货价"><div class="cap">NAND Flash现货价</div><div class="stats">最新 42.337（10/12）｜环比 +0.25（+0.6%）｜同比 +36（+571.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tsmc_rev.png"></div><img class="pimg" src="charts_full/a_tsmc_rev.png" alt="台积电营收"><div class="cap">台积电营收</div><div class="stats">最新 5,119（9/30）｜环比 -29（-0.6%）｜同比 +1,809（+54.6%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pmi_orders.png"></div><img class="pimg" src="charts_full/a_tw_pmi_orders.png" alt="台湾电子PMI新订单"><div class="cap">台湾电子PMI新订单</div><div class="stats">最新 56.7（9/30）｜环比 -11（-16.0%）｜同比 +11（+24.3%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_kr_semi_monthly.png"></div><img class="pimg" src="charts_full/a_kr_semi_monthly.png" alt="韩国半导体月度出口"><div class="cap">韩国半导体月度出口</div><div class="stats">最新 60,295（9/30）｜环比 +13,642（+29.2%）｜同比 +43,674（+262.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_jp_pcb_output.png"></div><img class="pimg" src="charts_full/a_jp_pcb_output.png" alt="日本PCB产量"><div class="cap">日本PCB产量</div><div class="stats">最新 647.6（8/31）｜环比 -165（-20.3%）｜同比 +33（+5.4%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_na_pcb_yoy.png"></div><img class="pimg" src="charts_full/a_na_pcb_yoy.png" alt="北美PCB订单同比"><div class="cap">北美PCB订单同比</div><div class="stats">最新 -35（8/31）｜环比 -97（-156.5%）｜同比 -31</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_rev.png" alt="台股PCB制造营收"><div class="cap">台股PCB制造营收</div><div class="stats">最新 1,140（9/30）｜环比 +94（+9.0%）｜同比 +313（+37.8%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_pcb_material_rev.png"></div><img class="pimg" src="charts_full/a_tw_pcb_material_rev.png" alt="台股PCB原料营收"><div class="cap">台股PCB原料营收</div><div class="stats">最新 773.5（9/30）｜环比 +67（+9.5%）｜同比 +344（+80.0%）</div></div>
+  <div class="cbox"><div class="echart" data-fn="a_tw_ccl_rev.png"></div><img class="pimg" src="charts_full/a_tw_ccl_rev.png" alt="台股铜箔基板营收"><div class="cap">台股铜箔基板营收</div><div class="stats">最新 687.2（9/30）｜环比 +62（+9.8%）｜同比 +321（+87.8%）</div></div>
+</div>
+<div class="lead">美股财报：进入盈利兑现验证期</div>
+<ul class="sq">
+  <li>下周科技财报密集：周三海力士电话会；周四谷歌、微软业绩与三星电话会；周五亚马逊、英特尔业绩。SOX 本周高波动，说明市场对算力链盈利持续性的分歧仍然较大。</li>
+  <li><b>云厂商</b>：沿用“订单—资本开支—收入—利润—现金流”的验证链条，重点看 AI 订单和资本开支能否转化为收入、利润与经营现金流，而不仅是继续上调投入。</li>
+  <li><b>存储与硬件</b>：三星、SK 海力士需要验证 HBM 增长能否兑现为利润，英特尔等则提供硬件链需求与盈利的另一侧证据。对锡而言，这决定 AI 焊料预期是获得现实支撑，还是继续回吐溢价。</li>
+  <li><b>美股定价与锡的映射</b>：财报不仅决定科技指数方向，也会通过风险偏好和实际利率预期影响有色估值。业绩超预期且盈利质量改善，才有利于锡的算力链需求预期；若仅资本开支上升而收入、现金流不跟进，需防估值压缩与需求预期下修共振。</li>
+  <li><b>交易含义</b>：财报超预期与低库存共振时，近月反弹和逼仓风险会加大；财报不及预期且中东升级时，单边空配更占优。财报公布前不宜把单一方向仓位打满。</li>
+</ul>
+
+
 <h2>详细周报 · 供给端一：矿端（储量 · 产量 · 项目 · 锡精矿进口）<span class="en">DECK 1</span></h2>
 
 <div class="lead">矿端① 储量：全球储量 · 储量占比 · 中国分省</div>
