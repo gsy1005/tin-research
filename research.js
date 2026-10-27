@@ -52,9 +52,9 @@ register('datagap', '数据缺口', ['总览'], [id('datagap')]);
 
 /* Focus: sentiment and macro */
 const focusGroups = splitOnMarkers(takeUntil(id('focus'), id('ai')), node => node.nodeType === 1 && node.classList.contains('lead'));
-register('focus-sentiment', '锡市场情绪', ['宏观与策略'], focusGroups[0] || []);
-register('focus-macro', '宏观环境', ['宏观与策略'], focusGroups[1] || []);
-register('ai', 'AI 高频验证', ['宏观与策略'], takeUntil(id('ai'), id('supply')));
+register('focus-sentiment', '锡市场情绪', ['重点关注', '宏观与策略'], focusGroups[0] || []);
+register('focus-macro', '宏观环境', ['重点关注', '宏观与策略'], focusGroups[1] || []);
+register('ai', 'AI 高频验证', ['重点关注', '宏观与策略'], takeUntil(id('ai'), id('supply')));
 
 /* Supply and inventory */
 const supplyGroups = splitOnMarkers(takeUntil(id('supply'), id('invsec')), node => node.nodeType === 1 && node.classList.contains('lead'));
@@ -99,8 +99,8 @@ register('demand-newenergy', '新能源汽车', solderTrail, [...withoutHeading(
 register('demand-solar', '光伏', solderTrail, [lead('光伏：组件产量 · 光伏耗锡量'), splitChartGroup(demandGroups[4], [1, 2])]);
 
 /* Other weekly pages */
-register('spot', '现货与进出口', ['宏观与策略'], takeUntil(id('spot'), id('strategy')));
-register('strategy', '策略与验证点', ['宏观与策略'], takeUntil(id('strategy'), id('lab')));
+register('spot', '现货与进出口', ['重点关注', '宏观与策略'], takeUntil(id('spot'), id('strategy')));
+register('strategy', '策略与验证点', ['重点关注', '宏观与策略'], takeUntil(id('strategy'), id('lab')));
 register('lab', '图表工作区', ['图表工作区'], takeUntil(id('lab'), id('ai-detail')));
 register('cost', '矿山成本与边际', ['重点关注', '供给'], takeUntil(id('minecost'), id('decks')));
 
@@ -183,9 +183,9 @@ const NAV = [
       group('锡化工', [page('demand-pvc', 'PVC'), page('demand-float', '浮法玻璃')], true),
       page('demand-tinplate', '马口铁'),
       page('demand-battery', '铅蓄电池')
-    ], true)
+    ], true),
+    group('宏观与策略', [page('focus-sentiment', '锡市场情绪'), page('focus-macro', '宏观环境'), page('ai', 'AI 高频验证'), page('spot', '现货与进出口'), page('strategy', '策略与验证点')], true)
   ], true),
-  group('宏观与策略', [page('focus-sentiment', '锡市场情绪'), page('focus-macro', '宏观环境'), page('ai', 'AI 高频验证'), page('spot', '现货与进出口'), page('strategy', '策略与验证点')]),
   page('balance', '平衡表与全年情景'),
   group('AI 耗锡专题', aiIds.filter(pid => registry.has(pid)).map(pid => page(pid, aiLabels[aiIds.indexOf(pid)]))),
   page('lab', '图表工作区'),
@@ -200,24 +200,53 @@ const NAV = [
 ];
 
 const treeNav = $('#treeNav');
-function buildNav(items, parent, depth = 0) {
-  items.forEach(item => {
+let navPath = [];
+function findNavPath(targetId, targetType = 'page', items = NAV, trail = []) {
+  for (const item of items) {
+    const path = [...trail, item];
+    if (item.type === targetType && item.id === targetId) return path;
     if (item.type === 'group') {
-      const details = document.createElement('details');
-      details.open = depth > 0 && item.open;
-      const summary = document.createElement('summary'); summary.textContent = item.label;
-      const children = document.createElement('div'); children.className = 'tree-children';
-      details.append(summary, children); parent.appendChild(details);
-      buildNav(item.children, children, depth + 1);
-    } else {
-      const button = document.createElement('button');
-      button.type = 'button'; button.className = 'tree-link'; button.textContent = item.label;
-      button.dataset[item.type === 'tool' ? 'tool' : 'page'] = item.id;
-      parent.appendChild(button);
+      const match = findNavPath(targetId, targetType, item.children, path);
+      if (match) return match;
     }
-  });
+  }
+  return null;
 }
-buildNav(NAV, treeNav);
+function renderNav(path = navPath) {
+  navPath = path;
+  treeNav.replaceChildren();
+  let items = NAV;
+  let depth = 0;
+  while (items?.length) {
+    const row = document.createElement('div');
+    row.className = `nav-row nav-row-depth-${depth}`;
+    const label = document.createElement('span');
+    label.className = 'nav-row-label';
+    label.textContent = depth === 0 ? '研究模块' : navPath[depth - 1]?.label || '';
+    row.appendChild(label);
+    items.forEach((item, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'tree-link nav-choice';
+      button.textContent = item.label;
+      button.dataset.navDepth = depth;
+      button.dataset.navIndex = index;
+      if (item.type === 'group') button.dataset.navGroup = 'true';
+      else button.dataset[item.type === 'tool' ? 'tool' : 'page'] = item.id;
+      const selected = navPath[depth] === item;
+      button.classList.toggle('active', selected);
+      button.classList.toggle('is-parent', item.type === 'group');
+      button.setAttribute('aria-current', selected && item.type !== 'group' ? 'page' : 'false');
+      if (item.type === 'group') button.setAttribute('aria-expanded', String(selected));
+      row.appendChild(button);
+    });
+    treeNav.appendChild(row);
+    const selectedGroup = navPath[depth];
+    if (!selectedGroup || selectedGroup.type !== 'group') break;
+    items = selectedGroup.children;
+    depth += 1;
+  }
+}
 
 /* Private technical analysis: original daily-report theory, external price snapshots. */
 const technicalPage = registry.get('technical') || (() => {
@@ -503,11 +532,7 @@ function showPage(pageId, updateUrl = true) {
   currentPage = pageId;
   toolPage.hidden = true; toolFrame.hidden = true; wrap.hidden = false;
   registry.forEach(page => page.section.classList.toggle('active', page.id === pageId));
-  $$('.tree-link[data-page]', treeNav).forEach(button => {
-    const active = button.dataset.page === pageId;
-    button.classList.toggle('active', active); button.setAttribute('aria-current', active ? 'page' : 'false');
-  });
-  $$(':scope > details', treeNav).forEach(details => { details.open = false; });
+  renderNav(findNavPath(pageId) || []);
   $('#techTop').classList.toggle('active', pageId === 'technical');
   $('#breadcrumb').innerHTML = record.trail.map(item => `<span>${item}</span>`).join('') + `<span>${record.title}</span>`;
   document.title = `${record.title} · 锡研究周报`;
@@ -522,26 +547,26 @@ function showTool(toolId) {
   wrap.hidden = true; toolPage.hidden = false; toolFrame.hidden = false;
   $('#toolTitle').textContent = tool[0]; $('#breadcrumb').innerHTML = `<span>研究工作台</span><span>${tool[0]}</span>`;
   if (toolFrame.dataset.tool !== toolId) { toolFrame.src = tool[1]; toolFrame.dataset.tool = toolId; }
-  $$('.tree-link', treeNav).forEach(button => button.classList.remove('active'));
-  $$(':scope > details', treeNav).forEach(details => { details.open = false; });
+  renderNav(findNavPath(toolId, 'tool') || []);
   $('#techTop').classList.remove('active'); $('#mobilePageTitle').textContent = tool[0];
   document.title = `${tool[0]} · 锡研究周报`; window.scrollTo({ top: 0, behavior: 'instant' });
 }
 treeNav.addEventListener('click', event => {
-  const pageButton = event.target.closest('[data-page]'), toolButton = event.target.closest('[data-tool]');
-  if (pageButton) showPage(pageButton.dataset.page);
-  if (toolButton) showTool(toolButton.dataset.tool);
+  const button = event.target.closest('.nav-choice');
+  if (!button) return;
+  const depth = Number(button.dataset.navDepth), index = Number(button.dataset.navIndex);
+  let items = NAV;
+  for (let level = 0; level < depth; level += 1) items = navPath[level].children;
+  const item = items[index];
+  if (!item) return;
+  if (item.type === 'group') {
+    renderNav([...navPath.slice(0, depth), item]);
+    return;
+  }
+  if (item.type === 'tool') showTool(item.id);
+  else showPage(item.id);
 });
 $('#closeTool').addEventListener('click', () => showPage(currentPage));
-
-/* Keep only one dropdown open and return focus to the top navigation on small screens. */
-treeNav.addEventListener('toggle', event => {
-  const details = event.target;
-  if (details.tagName !== 'DETAILS' || !details.open) return;
-  [...details.parentElement.children].forEach(sibling => { if (sibling !== details && sibling.tagName === 'DETAILS') sibling.open = false; });
-  if (innerWidth <= 1180 && details.parentElement === treeNav) $('#topNavigation').scrollIntoView({ block: 'start' });
-}, true);
-document.addEventListener('click', event => { if (!treeNav.contains(event.target)) $$(':scope > details', treeNav).forEach(details => { details.open = false; }); });
 
 /* Fixed mobile previous/next controls; no need to scroll back to the top. */
 const PAGE_ORDER = [];
