@@ -146,9 +146,7 @@
         var ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
         var name='锡供需策略_'+exportDate+'.png';
         var a=document.createElement('a');a.download=name;document.body.appendChild(a);
-        function clickUrl(url){a.href=url;a.click();a.parentNode.removeChild(a);}
-        if(canvas.toBlob)canvas.toBlob(function(blob){if(!blob)return;var url=URL.createObjectURL(blob);clickUrl(url);setTimeout(function(){URL.revokeObjectURL(url);},30000);},'image/png');
-        else clickUrl(canvas.toDataURL('image/png'));
+        a.href=canvas.toDataURL('image/png');a.click();a.parentNode.removeChild(a);
       };
       img.onerror=function(){alert('供需策略图片导出失败，请刷新后重试。');};
       img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
