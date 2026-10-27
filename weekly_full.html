@@ -217,7 +217,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 }
 </style>
 <link rel="stylesheet" href="weekly_mobile.css?v=202610270235">
-<link rel="stylesheet" href="weekly_polish.css?v=20261027-ai-tin-v3">
+<link rel="stylesheet" href="weekly_polish.css?v=20261027-ai-tin-v4">
 </head>
 <body>
 <div class="printcover"><div class="fwscale fwcover"><div class="fwslide">
@@ -242,7 +242,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <button class="editbtn" id="pdfbtn" type="button" onclick="PGX.go('a4')">🖨 导出PDF · A4版</button><button class="editbtn" id="pptbtn" type="button" onclick="PGX.go('ppt')" style="background:#1F4E79;color:#fff;border-color:#1F4E79">📊 周报PPT版</button><button class="editbtn" id="longbtn" type="button" onclick="PGX.go('long')" style="background:#0F7B6C;color:#fff;border-color:#0F7B6C">📜 长页版</button><a class="editbtn" href="weekly_archive.html" style="text-decoration:none;line-height:1.8">🗂 周报留档</a>
 </div>
 <nav class="toc" id="toc">
-  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a><a href="#ai-detail">AI耗锡量</a>
+  <a href="#framework">产业链</a><a href="#q4outlook">季度展望</a><a href="#sumsec">总结</a><a href="#focus">重点关注</a><a class="toc-sub" href="#ai-detail" aria-label="重点关注子栏目：AI耗锡量">AI耗锡量</a><a href="#ai">AI</a><a href="#sentiment">市场情绪</a><a href="#balance">平衡表</a><a href="#supply">供给·矿端</a><a href="#smelt">供给·冶炼</a><a href="#minecost">矿山成本</a><a href="#invsec">库存</a><a href="#demand">需求</a><a href="#spot">现货·进出口</a><a href="#strategy">策略</a><a href="#lab">图表工作区</a><a href="#decks">详细周报</a>
 </nav>
 <details class="fold" id="framework">
   <summary>📖 锡产业研究框架（基础认知 · 供给×需求×工艺×单耗，点击展开/折叠）</summary>
@@ -930,6 +930,15 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <tr><td>扩产项目</td><td>有效新增产能 × 单位面积耗锡 × 当年爬坡比例</td><td>投产时间、设备进厂、试产、良率、稼动率及采购前置周期</td></tr>
 </tbody></table></div>
 <p class="note">阅读表格时需区分“先进封装年度耗锡”“AI 相关 PCB／SMT 年度耗锡”和“单个扩产项目新增耗锡”：前两者构成全链路年度结果，项目测算用于解释增量兑现节奏，不再额外叠加到全链路总量上。</p>
+<h3 class="ai-tin-h3">从硬件架构到锡耗：数量、密度、面积和良率共同作用</h3>
+<ul class="sq">
+  <li><b>数量效应</b>：GPU、HBM、交换机芯片和光模块出货增加，会同时拉动封装与板级互连需求。但芯片颗数、服务器台数和整机柜数量不是同一单位，必须先统一硬件口径，再匹配各自的单位耗锡。</li>
+  <li><b>密度效应</b>：Scale-Up 提高机柜内计算密度和高速互连密度，即使整机外观数量不变，内部计算板、交换板、供电与连接系统也可能增加。密度提升主要影响焊点数量、元器件贴装和高阶 PCB 使用比例。</li>
+  <li><b>面积效应</b>：PCB 电镀和部分表面处理更接近面积驱动，SMT 则同时受板面积、元器件数量和焊点密度影响。因此不能只用服务器台数估计全部板级锡耗，也不能只用 PCB 面积解释全部锡膏需求。</li>
+  <li><b>微型化对冲</b>：先进封装中，互连点数量增加并不必然带来同比例锡耗增长。凸块和锡球尺寸缩小、工艺收得率提高，会降低单点或单位面积耗锡；最终结果取决于互连数量增长与微型化降耗的差值。</li>
+  <li><b>有效产出</b>：高阶 PCB 的名义面积产能需要经过良率与稼动率修正。试产阶段良率偏低时，投料和采购可能先发生，但合格品出货较慢；只看合格板面积或只看投料面积，都可能误判真实消耗。</li>
+  <li><b>库存效应</b>：锡价快速上涨或供应预期收紧时，企业可能增加安全库存，采购量短期高于生产消耗；去库存阶段则相反。库存变化解释的是时间差，不应直接计入长期单耗。</li>
+</ul>
 <div class="lead">三、芯片端：先进封装与 EUV 光刻</div>
 <h3 class="ai-tin-h3">先进封装：整机柜取代传统 8GPU 服务器成为增量来源</h3>
 <ul class="sq">
@@ -937,6 +946,7 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <li><b>数量与结构</b>：芯片端耗锡预计由 2026 年的约 328 吨增至 2030 年的约 508 吨，累计增加约 180 吨，增幅约 54.9%，年均复合增速约 11.6%。同期其占全链路耗锡的比重由约 2.7% 降至约 2.2%，原因是板级耗锡增长更快。</li>
   <li><b>整机柜贡献</b>：AI 整机柜耗锡由 207.03 吨升至 408.98 吨，接近翻倍，占芯片端的比重由约 63.1% 升至约 80.6%；传统 8GPU 服务器耗锡则由 120.93 吨降至 98.69 吨。芯片端增长实质上完全来自整机柜放量。</li>
   <li><b>年度节奏</b>：2027、2028 年芯片端同比增加约 46 吨、60 吨，是本轮增量较高的两个年份；2029、2030 年新增量约 44 吨、30 吨，体现高基数下增速逐步放缓。</li>
+  <li><b>单耗理解</b>：这里的“单位耗锡”是封装环节的综合结果，既受锡球、微凸块数量影响，也受尺寸、合金比例、工艺损耗和回收处理影响。跟踪时应尽量使用同一封装平台、同一产品代际的可比单耗，避免跨产品直接套用。</li>
 </ul>
 <div class="ai-tin-tablewrap"><table class="sum ai-tin-data"><thead><tr><th>先进封装耗锡</th><th>2026E</th><th>2027E</th><th>2028E</th><th>2029E</th><th>2030E</th></tr></thead><tbody>
 <tr><td>传统 8GPU 服务器（吨）</td><td>120.93</td><td>101.40</td><td>112.56</td><td>107.64</td><td>98.69</td></tr>
@@ -950,8 +960,16 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <li><b>工艺原理</b>：EUV 光源以高纯锡微滴为靶材，经高功率激光激发形成等离子体并产生 13.5nm 极紫外光。这里的锡不参与焊接，而是随先进制程晶圆制造持续消耗。</li>
   <li><b>驱动变量</b>：需求主要取决于先进制程晶圆产量、单片晶圆使用的 EUV 层数、设备稼动率及单位晶圆锡耗。AI 芯片需求只有先传导至晶圆投片和 EUV 工艺使用量，才会形成这一环节的锡耗。</li>
   <li><b>测算处理</b>：目前缺少可连续核验的年度晶圆量与单位锡耗参数，因此 EUV 保持定性跟踪，不在先进封装表格上另行叠加数值，避免用未经校验的假设放大芯片端结果。</li>
+  <li><b>外推限制</b>：EUV 属于晶圆前道制造，先进封装属于后道封装，两者的驱动指标并不相同。AI 芯片设计需求、晶圆投片、封装产出和整机出货之间存在良率与库存时滞，不能把 EUV 锡耗按服务器出货量简单线性外推。</li>
 </ul>
-<div class="lead">四、板级制造：PCB 电镀与 SMT 贴片是耗锡主体</div>
+<div class="lead">四、板级制造：PCB 电镀与 SMT 贴片是耗锡主体</div><h3 class="ai-tin-h3">三类板型的用途和耗锡驱动并不相同</h3>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data ai-tin-text"><thead><tr><th>板型</th><th>在 AI 硬件中的主要位置</th><th>耗锡驱动与复核重点</th></tr></thead><tbody>
+<tr><td>多层板</td><td>计算、交换、供电及其他板级系统，是较大面积板卡需求的重要载体</td><td>重点看有效板面积、层数、板面电镀及贴装单耗；层数增加会影响制造复杂度，但不能直接按层数倍数放大锡耗</td></tr>
+<tr><td>HDI 板</td><td>元器件和高速互连更密集的高密度板级系统</td><td>重点看高密度设计带来的面积、贴装和制程变化；微孔、细线路与良率会影响有效产出，应结合实际单耗复核</td></tr>
+<tr><td>封装基板</td><td>连接芯片封装与板级系统的高密度承载基板</td><td>重点看 AI 芯片与 HBM 封装出货、基板面积和封装形式；其增长同时受芯片数量和先进封装复杂度影响</td></tr>
+</tbody></table></div>
+<p class="note">三类板型需要分别获取“有效面积 × 单位面积耗锡”。只用 PCB 总产值、层数或投资额，无法稳定推出锡耗，因为产品价格、产品结构和良率都会改变金额与实物量之间的关系。</p>
+
 <ul class="sq">
   <li><b>PCB 制程</b>：锡用于板面电镀、线路蚀刻保护和表面防腐处理。AI 服务器高层数、高速、高密度设计提升单板面积与制造难度，有效产出还受到良率和爬坡影响，是多层板、HDI 和封装基板耗锡增长的共同基础。</li>
   <li><b>SMT 贴片</b>：锡膏经印刷和回流焊，将 GPU、存储、供电、光模块及其他元器件连接到 PCB 焊盘。整机柜内部计算板、交换板和电源板数量增加，既扩大板面积，也提高元器件与焊点密度。</li>
@@ -983,6 +1001,14 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
   <li><b>全球占比</b>：按本专题全球锡消费假设，2026 年约 35.72 万吨、2030 年约 40 万吨，AI 全链路占比分别约为 12,139÷357,200＝3.4%、22,768÷400,000＝5.7%。占比提升说明 AI 对边际需求的影响增强，但仍需与传统焊料、锡化工和镀锡板需求共同判断总平衡。</li>
   <li><b>弹性来源</b>：若出货量或有效 PCB 面积变化，在其他参数不变时，相应环节耗锡近似同方向变化；若单位耗锡因工艺优化下降，则会抵消一部分面积和焊点增长。实际结果取决于“数量 × 单耗”的净效应。</li>
 </ul>
+<h3 class="ai-tin-h3">全链路结果的四个复核公式</h3>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data ai-tin-text"><thead><tr><th>复核项目</th><th>计算过程</th><th>结果与含义</th></tr></thead><tbody>
+<tr><td>四年总增量</td><td>22,768－12,139</td><td>10,629 吨，表示 2030 年相对 2026 年的年度耗锡增加量</td></tr>
+<tr><td>年均复合增速</td><td>（22,768÷12,139）^（1÷4）－1</td><td>约 17.0%，用于描述四年平滑增长，不代表每一年的实际同比</td></tr>
+<tr><td>板级增量贡献</td><td>（22,260－11,811）÷（22,768－12,139）</td><td>10,449÷10,629≈98.3%，说明新增吨位几乎全部来自 PCB／SMT</td></tr>
+<tr><td>当年新增量</td><td>本年全年耗锡－上一年全年耗锡</td><td>2027 年为 15,755－12,139＝3,616 吨，其余年份按同一方法计算</td></tr>
+</tbody></table></div>
+<p class="note">年度耗锡是“当年流量”，不是截至该年的累计消耗。把 2026—2030 年各年耗锡相加，才会得到这一期间累计消耗；本专题的“四年总增量”专指 2030 年与 2026 年两个年度流量之差。</p>
 <div class="lead">六、PCB 扩产：采购前置，2026H2—2027 是耗锡拉动强窗口</div>
 <ul class="sq">
   <li><b>投产节奏</b>：2025 年公告的新建项目集中在 2026 年下半年投产，2026Q3 是设备进厂与试产的重要节点；2026 年新公告的高端 HLC／HDI 项目主要在 2027—2028 年释放，形成 2026H2—2028 的产能集中释放期。</li>
@@ -1044,6 +1070,24 @@ html.pgxa4 .charts2,html.pgxppt .charts2,html.pgxa4 .cols2,html.pgxppt .cols2{gr
 <tr><td>采购前置</td><td>备库周期、试产采购、铺底库存和后续去库存</td><td>区分采购高峰与真实消耗，避免把同一批锡材跨年重复计算</td></tr>
 </tbody></table></div>
 <p class="note">更新顺序建议为：先替换硬件出货和 PCB 有效面积，再校准单位耗锡与投产爬坡，最后处理采购前置。这样可以把总量、结构和时间节奏分开验证。</p>
+
+<div class="lead">八、跟踪频率、数据衔接与常见口径误区</div>
+<h3 class="ai-tin-h3">按周、月、季、年建立验证顺序</h3>
+<div class="ai-tin-tablewrap"><table class="sum ai-tin-data ai-tin-text"><thead><tr><th>频率</th><th>重点跟踪数据</th><th>主要验证目的</th></tr></thead><tbody>
+<tr><td>周度／事件</td><td>PCB 项目设备进厂、试产、锡膏与镀锡化学品订单、锡价及采购反馈</td><td>识别采购前置和投产节点，判断短期需求是否提前或延后</td></tr>
+<tr><td>月度</td><td>AI 服务器及整机柜出货、高阶 PCB 出货或营收、SMT 稼动率、焊料库存</td><td>把硬件订单转换为实际生产与采购，观察出货、消耗和库存是否匹配</td></tr>
+<tr><td>季度</td><td>云厂商资本开支、AI 芯片与 HBM 出货、先进封装产能、项目良率和爬坡</td><td>校准上下游时滞、有效产能和芯片端需求，检验中期测算方向</td></tr>
+<tr><td>年度</td><td>分硬件出货、三类 PCB 有效面积、单位耗锡、全球锡消费总量</td><td>全面更新全链路表格、复合增速、增量贡献和全球消费占比</td></tr>
+</tbody></table></div>
+<h3 class="ai-tin-h3">五个容易造成高估或重复计算的地方</h3>
+<ul class="sq">
+  <li><b>资本开支不等于耗锡</b>：资本开支还包含厂房、土地、设备和其他基础设施，只有进入硬件制造并形成相关产线运行，才会传导至锡材消耗。</li>
+  <li><b>公告产能不等于当年产量</b>：项目需要经过建设、设备调试、试产、良率提升和稼动率爬坡。满产年化耗锡只能说明稳定运行后的量级，不能直接填入投产当年的消耗。</li>
+  <li><b>采购不等于消耗</b>：备库会抬高当期采购，去库存会压低当期采购。若采购和消耗两张表同时进入总量，会把同一批锡材计算两次。</li>
+  <li><b>出货增长不等于单耗不变</b>：硬件数量增加的同时，封装微型化、焊料工艺改进和回收率变化可能降低单位耗锡，必须分别更新数量和单耗。</li>
+  <li><b>全链路与项目测算不能相加</b>：全链路表格已经包含 AI 相关 PCB／SMT 年度需求，9 个旗舰项目和扩展情景用于解释其中的增量来源与兑现时间，不是额外的一块需求。</li>
+</ul>
+<p class="note">拿到 Excel 后，优先检查年份、单位、产品分类和口径是否一致，再更新公式。若同一指标存在多个来源，保留各自定义与原始值，不用简单平均掩盖口径差异。</p>
 
 <h2 id="minecost">矿山成本与边际<span class="en">MINE COST &amp; MARGIN</span></h2>
 <div class="pptzone">

@@ -16,6 +16,11 @@
 #sumsec table.sum tbody tr:not(.final):hover td:not(.c){background:var(--leadbg)}
 #sumsec table.sum tr.final td{background:var(--soft)}
 
+/* AI 耗锡量：重点关注的二级入口，使用红色描边和小字号区分层级。 */
+.toc a.toc-sub{margin-left:1px;padding:2px 9px;border:1px solid var(--red);border-radius:10px;background:var(--soft);color:var(--red);font-size:12px;line-height:1.8}
+.toc a.toc-sub::before{content:"↳";margin-right:4px;font-family:Arial,sans-serif;font-weight:700}
+.toc a.toc-sub:hover,.toc a.toc-sub:focus-visible{background:var(--red);color:#fff}
+body.dark .toc a.toc-sub:hover,body.dark .toc a.toc-sub:focus-visible{color:#141a26}
 /* AI 耗锡量：全链路测算与产业链展示，沿用周报双配色。 */
 .ai-tin-intro{padding:12px 15px;background:var(--soft);border-top:2px solid var(--red);font-size:15px;line-height:1.75}
 .ai-tin-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin:12px 0 16px;background:var(--line);border:1px solid var(--line)}
@@ -51,5 +56,5 @@
 .ai-tin-data.ai-tin-text th:not(:first-child),.ai-tin-data.ai-tin-text td:not(:first-child){text-align:left;white-space:normal;font-variant-numeric:normal}
 .ai-tin-data.ai-tin-text td{line-height:1.65;vertical-align:top}
 .ai-tin-data.ai-tin-text td:first-child{color:var(--blue);white-space:nowrap}
-@media(max-width:760px){.ai-tin-h3{font-size:15px;margin-top:14px}.ai-tin-data{min-width:620px;font-size:12.5px}.ai-tin-data.ai-tin-text{min-width:720px}.ai-tin-data th,.ai-tin-data td{padding:7px 8px}}
+@media(max-width:760px){.toc a.toc-sub{padding:1px 8px;font-size:11px}.ai-tin-h3{font-size:15px;margin-top:14px}.ai-tin-data{min-width:620px;font-size:12.5px}.ai-tin-data.ai-tin-text{min-width:720px}.ai-tin-data th,.ai-tin-data td{padding:7px 8px}}
 @media print{.ai-tin-chain{grid-template-columns:1fr 1fr}.ai-tin-map span{display:none}.ai-tin-metrics strong{font-size:22px}.ai-tin-tablewrap{overflow:visible}.ai-tin-data{min-width:0}}
