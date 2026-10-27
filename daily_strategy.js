@@ -13,7 +13,7 @@
       {key:'macro',cat:'宏观',related:'下周重点为以色列大选、FOMC、欧洲央行与欧元区 GDP；中东基准情形仍是大选前后先升级、再降级，油价高波动可能强化通胀约束；利率基准情形为 10 月不加息，后续仍保留收紧可能',conclusion:'宏观没有额外利好时，锡价 39 万附近可短空；若中东升级与财报不及预期叠加，风险资产和锡价下行压力将加大',signal:'偏空'},
       {key:'ai',cat:'美股·半导体 AI',related:'SOX 10/23 为 10,779 点，周中波动显著；下周海力士、三星、谷歌、微软、亚马逊、英特尔等密集披露业绩或召开电话会。沿用宏观周报的验证链条：AI 订单与资本开支能否进一步转化为收入、利润和经营现金流',conclusion:'Anthropic 提交 S-1，上半年收入约 163 亿美元，二季度首次实现经营利润，缓解市场对 AI 收入兑现的担忧；招股书公布后费城半导体指数收涨 2.82%，AI 硬件链修复，但巨额算力投入及后续成本仍需验证。对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'},
       {key:'mine',cat:'供给·矿端',related:'TC 云南 17,000 / 江西 13,000 元/金属吨，上周均下调 500，本周维稳；锡价回落同步降低与价格挂钩的冶炼损耗成本',conclusion:'矿端当前偏宽松。上周锡价 41→37 万对应损耗成本减负约 1,000–1,500 元/吨，大于 TC 500 元/吨的名义降幅，剔除价格折旧后实际加工收益不降反升；本周 TC 维稳，矿端并未进一步收紧',signal:'偏空'},
-      {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'开工与周产量下降已与低库存形成印证；若减产意愿落地，锭端供应将进一步收紧。云锡点火后，后续以实际开工、周产量和厂库验证供应恢复幅度',signal:'利多'},
+      {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'},
       {key:'demand',cat:'需求·焊料',related:'本周下游成交 1,445 吨，较上周减少 997 吨；10 月 Mysteel 焊料总开工率 69.35%（环比 -0.65pct），大型 82.56 / 中型 72.85 / 小型 52.63',conclusion:'周度成交回落说明高价下主动补库不足；后续必须验证下游终端订单能否接续，不能把低价补库或库存下降直接等同于终端需求转强',signal:'中性'},
       {key:'spot',cat:'现货·贸易',related:'本周成交 1,904 吨（下游 1,445＋贸易商 459），周降 41.6%；云锡升水 3,000 → 3,500，云字 3,000 / 小牌 2,500；进口盈亏修复至 -253 元/吨，LME Cash-3M 为 +60.77 美元/吨',conclusion:'升水继续抬升、进口窗口接近打平且外盘转为升水，现货偏紧仍未缓解；但成交缩量表明高价抑制采购，紧现货与弱成交并存',signal:'利多'},
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
@@ -62,11 +62,28 @@
     if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
     return '';
   }
+  function dailyView(key,c){
+    var totalDown=c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal;
+    var downDown=c.down&&c.pDown&&c.down[1]<c.pDown[1];
+    var whDown=c.wh&&c.pWh&&c.wh[1]<c.pWh[1];
+    var premUp=c.prem&&c.pPrem&&c.prem[1]>c.pPrem[1];
+    if(key==='price')return {text:c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，宏观无额外利好时可短空，但低库存下不宜追空':'价格尚未站稳 39 万元/吨，单边不追涨；宏观无额外利好时，反弹至 39 万附近可短空',signal:'偏空'};
+    if(key==='macro')return {text:'宏观仍决定单边方向，继续跟踪中东、海外利率与美股财报；没有额外利好时，39 万元/吨附近可短空',signal:'偏空'};
+    if(key==='ai')return {text:'Anthropic 招股书缓解 AI 收入兑现担忧，费半上涨带动硬件链修复；对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'};
+    if(key==='mine')return {text:'TC 维稳，矿端当前仍偏宽松；天马矿明年配额问题尚待核实，暂不计入确定性减量',signal:'偏空'};
+    if(key==='smelt')return {text:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'};
+    if(key==='demand')return {text:downDown?'下游成交继续缩量，高价采购偏弱；月度销量相对稳定，终端订单尚不足以承接明显供应增量':'下游成交边际改善，但仍需终端订单和月度销量验证持续性',signal:downDown?'偏空':'中性'};
+    if(key==='spot')return {text:premUp&&totalDown?'云锡升水上调反映品牌现货仍紧，但总成交缩量显示高价抑制采购，紧现货与弱需求并存':totalDown?'成交缩量，现货承接偏弱，继续结合升贴水验证真实紧张程度':'成交有所承接，结合升贴水继续验证现货强度',signal:premUp&&!totalDown?'利多':'双向'};
+    if(key==='spread')return {text:'近月低库存仍支持正套，但价差已高于 1,000–2,000 元/吨参考区间，等待回落再择机入场',signal:'利多'};
+    if(key==='inventory')return {text:whDown?'仓单继续去化，可交割货源仍紧，近月支撑和逼仓风险尚未解除；但云锡复产的后续影响需持续跟踪':'仓单未继续去化，近月紧张程度需结合社库和复产进度重新验证',signal:whDown?'利多':'中性'};
+    if(key==='risk')return {text:'云锡复产带来供应恢复预期，仓单下降又支撑近月，月度销量相对稳定，双向波动风险仍高',signal:'双向'};
+    return {text:'',signal:'中性'};
+  }
   function autoStrategy(c){
     var structure=c.wh&&c.pWh&&c.wh[1]<c.pWh[1]?'仓单继续去化，近月供应支撑仍在':'仓单未继续去化，近月支撑需要进一步验证';
     var demand=c.total!==null&&c.oldTotal!==null?(c.total<c.oldTotal?'成交较前日缩量，高价下采购偏谨慎':'成交较前日放量，需求承接有所改善'):'成交可比数据不足';
     var price=c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，可短空，但仍须防近月逼仓':'价格未进入或尚未站稳 39 万元/吨参考区，单边不追涨杀跌；宏观无额外利好时，39 万元/吨附近可短空';
-    return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
+    return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。云锡点火后产量恢复预期增强，而下游月度销量相对稳定，若稳定产出兑现，供需边际将转松。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
   }
   function saveWeekly(){
     var values={};
@@ -75,13 +92,23 @@
   }
   function saveDailyCells(){
     var values={};
-    document.querySelectorAll('#weeksumBody [data-daily-key]').forEach(function(td){values[td.dataset.dailyKey]=td.textContent.trim();});
+    document.querySelectorAll('#weeksumBody [data-daily-key]').forEach(function(td){values['change:'+td.dataset.dailyKey]=td.textContent.trim();});
+    document.querySelectorAll('#weeksumBody [data-daily-conclusion-key]').forEach(function(td){values['conclusion:'+td.dataset.dailyConclusionKey]=td.textContent.trim();});
+    document.querySelectorAll('#weeksumBody [data-daily-signal-key]').forEach(function(td){values['signal:'+td.dataset.dailySignalKey]=td.textContent.trim();});
     writeStore(STORE_DAY,{date:dayStamp,values:values});
   }
   function updateDaily(){
     var c=context();dayStamp=c.day;
     var edits=readStore(STORE_DAY),values=edits&&edits.date===dayStamp?edits.values:{};
-    source.rows.forEach(function(row){var td=document.querySelector('#weeksumBody [data-daily-key="'+row.key+'"]');if(td)td.textContent=values[row.key]||dailyText(row.key,c);});
+    source.rows.forEach(function(row){
+      var td=document.querySelector('#weeksumBody [data-daily-key="'+row.key+'"]');
+      if(td)td.textContent=values['change:'+row.key]||values[row.key]||dailyText(row.key,c);
+      var view=dailyView(row.key,c);
+      var conclusion=document.querySelector('#weeksumBody [data-daily-conclusion-key="'+row.key+'"]');
+      if(conclusion)conclusion.textContent=values['conclusion:'+row.key]||view.text;
+      var signal=document.querySelector('#weeksumBody [data-daily-signal-key="'+row.key+'"]');
+      if(signal)signal.textContent=values['signal:'+row.key]||view.signal;
+    });
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
     var el=document.getElementById('dailyStrategyText'),saved=readStore(STORE_DS);
     if(el)el.textContent=saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
@@ -93,7 +120,10 @@
     source.rows.forEach(function(row){
       var tr=document.createElement('tr');
       [['cat','wcat'],['related',''],['conclusion',''],['signal','wsignal']].forEach(function(part){
-        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';td.textContent=values[row.key+'|'+part[0]]||row[part[0]];tr.appendChild(td);
+        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';td.textContent=values[row.key+'|'+part[0]]||row[part[0]];
+        if(part[0]==='conclusion')td.dataset.dailyConclusionKey=row.key;
+        if(part[0]==='signal')td.dataset.dailySignalKey=row.key;
+        tr.appendChild(td);
         if(part[0]==='conclusion'){
           var daily=document.createElement('td');daily.className='wdaily';daily.dataset.dailyKey=row.key;daily.contentEditable=archive?'false':'true';tr.insertBefore(daily,td);
         }
@@ -159,7 +189,7 @@
   block.addEventListener('input',function(e){
     if(archive)return;
     var t=e.target;
-    if(t.matches('#weeksumBody [data-daily-key]'))saveDailyCells();
+    if(t.matches('#weeksumBody [data-daily-key], #weeksumBody [data-daily-conclusion-key], #weeksumBody [data-daily-signal-key]'))saveDailyCells();
     else if(t.matches('#weeksumBody [data-field]'))saveWeekly();
     else if(t.id==='weeklyStrategyText')writeStore(STORE_WS,{stamp:stamp,text:t.textContent.trim()});
     else if(t.id==='dailyStrategyText')writeStore(STORE_DS,{date:dayStamp,text:t.textContent.trim()});
