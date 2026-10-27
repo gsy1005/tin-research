@@ -67,24 +67,31 @@ def clean(path):
 
 
 def ensure_sheet_customs():
-    """日报生成后补上海关图与升贴水坐标脚本，重复运行不重复插入。"""
+    """日报生成后接回自定义图表、供需策略模块，重复运行不重复插入。"""
     path = "sheet.html"
     if not glob.glob(path):
         return
     src = open(path, encoding="utf-8").read()
-    if 'src="sheet_customs.js' in src:
-        return
-    tag = '<script src="sheet_customs.js?v=202610270148"></script>'
-    out, count = re.subn(
-        r'(<script src="sheet\.js\?v=[^"]+"></script>)',
-        r"\1\n" + tag,
-        src,
-        count=1,
-    )
-    if count != 1:
-        raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入海关图")
-    open(path, "w", encoding="utf-8").write(out)
-    print("已接入 sheet_customs.js")
+    out = src
+    if 'href="daily_strategy.css' not in out:
+        out = out.replace('</head>', '<link rel="stylesheet" href="daily_strategy.css?v=202610271253">\n</head>', 1)
+    tags = []
+    if 'src="sheet_customs.js' not in out:
+        tags.append('<script src="sheet_customs.js?v=202610270148"></script>')
+    if 'src="daily_strategy.js' not in out:
+        tags.append('<script src="daily_strategy.js?v=202610271253"></script>')
+    if tags:
+        out, count = re.subn(
+            r'(<script src="sheet\.js\?v=[^"]+"></script>)',
+            r"\1\n" + '\n'.join(tags),
+            out,
+            count=1,
+        )
+        if count != 1:
+            raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入自定义模块")
+    if out != src:
+        open(path, "w", encoding="utf-8").write(out)
+        print("已接入日报自定义图表与供需策略模块")
 
 
 def main():
