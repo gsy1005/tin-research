@@ -10,17 +10,17 @@
   var fallback={
     rows:[
       {key:'price',cat:'价格',related:'Mysteel 现货均价 378,750（10/16）→ 374,000（10/23），周 -1.3%；周内最高 390,000（10/21），随后回落至 374,000；SMM 1#锡 10/23 为 371,900',conclusion:'反弹未能站稳 39 万附近，符合短期顶部区间判断；但低库存与近月 Back 仍限制低位追空的赔率',signal:'中性'},
-      {key:'macro',cat:'宏观',related:'下周重点为以色列大选、FOMC、欧洲央行与欧元区 GDP；中东基准情形仍是大选前后先升级、再降级，油价高波动可能强化通胀约束；利率基准情形为 10 月不加息，后续仍保留收紧可能',conclusion:'宏观没有额外利好时，锡价 39 万附近偏空配；若中东升级与财报不及预期叠加，风险资产和锡价下行压力将加大',signal:'偏空'},
+      {key:'macro',cat:'宏观',related:'下周重点为以色列大选、FOMC、欧洲央行与欧元区 GDP；中东基准情形仍是大选前后先升级、再降级，油价高波动可能强化通胀约束；利率基准情形为 10 月不加息，后续仍保留收紧可能',conclusion:'宏观没有额外利好时，锡价 39 万附近可短空；若中东升级与财报不及预期叠加，风险资产和锡价下行压力将加大',signal:'偏空'},
       {key:'ai',cat:'美股·半导体 AI',related:'SOX 10/23 为 10,779 点，周中波动显著；下周海力士、三星、谷歌、微软、亚马逊、英特尔等密集披露业绩或召开电话会。沿用宏观周报的验证链条：AI 订单与资本开支能否进一步转化为收入、利润和经营现金流',conclusion:'美股科技财报同时影响风险偏好和锡的算力链需求预期：云厂商收入兑现、存储厂利润改善才构成持续利好；若业绩或现金流不及预期，估值压缩与需求预期下修可能共振',signal:'双向'},
       {key:'mine',cat:'供给·矿端',related:'TC 云南 17,000 / 江西 13,000 元/金属吨，上周均下调 500，本周维稳；锡价回落同步降低与价格挂钩的冶炼损耗成本',conclusion:'矿端当前偏宽松。上周锡价 41→37 万对应损耗成本减负约 1,000–1,500 元/吨，大于 TC 500 元/吨的名义降幅，剔除价格折旧后实际加工收益不降反升；本周 TC 维稳，矿端并未进一步收紧',signal:'偏空'},
-      {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'开工与周产量下降已与低库存形成印证；若减产意愿落地，锭端供应将进一步收紧。后续以实际开工、周产量和厂库验证减产幅度',signal:'利多'},
+      {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'开工与周产量下降已与低库存形成印证；若减产意愿落地，锭端供应将进一步收紧。云锡点火后，后续以实际开工、周产量和厂库验证供应恢复幅度',signal:'利多'},
       {key:'demand',cat:'需求·焊料',related:'本周下游成交 1,445 吨，较上周减少 997 吨；10 月 Mysteel 焊料总开工率 69.35%（环比 -0.65pct），大型 82.56 / 中型 72.85 / 小型 52.63',conclusion:'周度成交回落说明高价下主动补库不足；后续必须验证下游终端订单能否接续，不能把低价补库或库存下降直接等同于终端需求转强',signal:'中性'},
       {key:'spot',cat:'现货·贸易',related:'本周成交 1,904 吨（下游 1,445＋贸易商 459），周降 41.6%；云锡升水 3,000 → 3,500，云字 3,000 / 小牌 2,500；进口盈亏修复至 -253 元/吨，LME Cash-3M 为 +60.77 美元/吨',conclusion:'升水继续抬升、进口窗口接近打平且外盘转为升水，现货偏紧仍未缓解；但成交缩量表明高价抑制采购，紧现货与弱成交并存',signal:'利多'},
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
       {key:'inventory',cat:'库存',related:'SMM 社库 7,770 → 6,689（周 -1,081 / -13.9%，沪 2,151 / 苏 2,480 / 粤 2,058）；Mysteel 社库 7,968 → 7,103（-865 / -10.9%）；全球显性 11,148（周 -880）；SHFE 仓单 2,136（周 -724）；LME 4,045',conclusion:'两口径社库、仓单与全球显性库存共同去化，可交割货源趋紧，预计本周仍有去库和逼仓风险；这是正套优于单边追空的核心依据',signal:'利多'},
       {key:'risk',cat:'风险点',related:'上行风险：去库超预期、仓单快速下降或宏观利好引发近月逼仓；下行风险：中东升级推高油价与通胀压力，同时科技财报不及预期，形成风险偏好与需求预期的双重压制',conclusion:'低库存使价格上下弹性都放大；正套需防价差继续走扩后的回撤，单边空配需防近月挤仓，单边追多则需防宏观双利空',signal:'双向'}
     ],
-    final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可作为空配，但不宜在低库存环境中追空。'
+    final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可短空，但不宜在低库存环境中追空。'
   };
   var source=fallback,stamp='',dayStamp='';
   function readStore(key){if(archive)return null;try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
@@ -46,26 +46,26 @@
     if(key==='price'){
       var note=(window.TIN_SUMMARY_NOTE&&window.TIN_SUMMARY_NOTE.B)||'';
       var m=note.match(/SMM 1#锡\s*([\d,]+)\s*元\/吨，日(涨|跌)\s*([\d,]+)/);
-      return d+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
+      return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
     }
-    if(key==='macro')return d+' 宏观以日报上方最新表述为准，继续跟踪中东、利率与美股财报';
-    if(key==='ai')return c.sox?dayLabel(c.sox[0])+' SOX '+fmt(c.sox[1])+' 点，'+changeText(c.sox,c.pSox,' 点')+'；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
-    if(key==='mine')return d+' TC 为周频指标，最新周度值不变';
-    if(key==='smelt')return d+' 开工和周产量为周频指标，跟踪炼厂减产意愿是否兑现';
+    if(key==='macro')return d+' 宏观依然关注中东、海外利率与美股财报；其他观点不变，39 万元/吨附近可短空';
+    if(key==='ai')return c.sox?'SOX 最新为 '+fmt(c.sox[1])+' 点（'+dayLabel(c.sox[0])+'），'+d+' 尚未录入新读数；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
+    if(key==='mine')return d+' TC 为周频指标，最新周度值不变；天马矿明年配额可能存在问题，目前待核实';
+    if(key==='smelt')return d+' 云锡已开始点火，后续关注能否稳定产出产品；周度开工与产量继续跟踪';
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨');
-    if(key==='spot')return d+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较前日 '+signed(c.total-c.oldTotal)+' 吨':'')+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨，'+changeText(c.prem,c.pPrem,' 元/吨');
+    if(key==='spot')return d+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较前日 '+signed(c.total-c.oldTotal)+' 吨':'')+'；云锡升水最新为 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨'+(c.prem?'（'+dayLabel(c.prem[0])+'）':'');
     if(key==='spread'){
       var a=last('d63'),b=last('d62');
       return a&&b&&a[0]===c.day&&b[0]===c.day?d+' 连一－连二 '+fmt(a[1]-b[1])+' 元/吨；对照正套参考区间 1,000–2,000 元/吨':d+' 价差以盘中连一－连二为准；正套等待 1,000–2,000 元/吨参考区间';
     }
     if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨，'+changeText(c.wh,c.pWh,' 吨')+'；周频社库不变';
-    if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，近月支撑与高价抑制并存，双向波动风险上升':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
+    if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
     return '';
   }
   function autoStrategy(c){
     var structure=c.wh&&c.pWh&&c.wh[1]<c.pWh[1]?'仓单继续去化，近月供应支撑仍在':'仓单未继续去化，近月支撑需要进一步验证';
     var demand=c.total!==null&&c.oldTotal!==null?(c.total<c.oldTotal?'成交较前日缩量，高价下采购偏谨慎':'成交较前日放量，需求承接有所改善'):'成交可比数据不足';
-    var price=c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，单边空配赔率改善，但仍须防近月逼仓':'价格未进入或尚未站稳 39 万元/吨参考区，单边不追涨杀跌，继续由宏观决定方向';
+    var price=c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，可短空，但仍须防近月逼仓':'价格未进入或尚未站稳 39 万元/吨参考区，单边不追涨杀跌；宏观无额外利好时，39 万元/吨附近可短空';
     return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
   }
   function saveWeekly(){

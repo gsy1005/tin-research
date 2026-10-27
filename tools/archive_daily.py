@@ -11,7 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "daily_archive"
-KEYS = ("d0", "d71", "d72", "d65", "d339", "d340", "d62", "d63", "d480")
+KEYS = ("d0", "d71", "d72", "d65", "d339", "d340", "d62", "d63", "d480", "d557")
 KEY_MAP = {
     "价格": "price", "宏观": "macro", "美股·半导体 AI": "ai",
     "供给·矿端": "mine", "供给·冶炼端": "smelt", "需求·焊料": "demand",
@@ -39,12 +39,15 @@ def weekly_snapshot() -> dict:
         raise RuntimeError("weekly_full.html 未找到周度供需表")
     rows, final = [], ""
     for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", match.group(1), re.S):
-        cells = re.findall(r"<td[^>]*>(.*?)</td>", tr, re.S)
-        values = [plain(cell) for cell in cells]
+        cells = re.findall(r"<td([^>]*)>(.*?)</td>", tr, re.S)
+        values = [plain(cell[1]) for cell in cells]
         if len(values) >= 4:
+            has_daily_change = len(cells) >= 3 and 'class="daily"' in cells[2][0]
+            conclusion_index = 3 if has_daily_change and len(values) >= 5 else 2
             rows.append({
                 "key": KEY_MAP.get(values[0], f"row{len(rows)}"), "cat": values[0],
-                "related": values[1], "conclusion": values[2], "signal": values[3],
+                "related": values[1], "conclusion": values[conclusion_index],
+                "signal": values[conclusion_index + 1],
             })
         elif len(values) >= 2 and "总结论" in values[0]:
             final = values[1]
@@ -81,6 +84,7 @@ def data_table(db: list, archive_date: str) -> str:
         ("SHFE 仓单（吨）", lambda d: value("d339", d)),
         ("SHFE 仓单增减（吨）", lambda d: value("d340", d)),
         ("印尼交易所成交（吨）", lambda d: value("d480", d)),
+        ("SOX（点）", lambda d: value("d557", d)),
         ("连一－连二（元/吨）", lambda d: (value("d63", d) - value("d62", d))
          if value("d63", d) is not None and value("d62", d) is not None else None),
     ]
@@ -108,16 +112,16 @@ def archive_html(archive_date: str, summary: dict, table: str, has_research: boo
     return f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><title>锡数据日报 · {archive_date} 留档</title>
-<link rel="stylesheet" href="../daily_strategy.css?v=202610271450"><style>{ARCHIVE_CSS}</style></head>
+<link rel="stylesheet" href="../daily_strategy.css?v=202610271530"><style>{ARCHIVE_CSS}</style></head>
 <body><nav class="archive-top"><a href="../daily_archive.html">← 日报留档索引</a><a href="../sheet.html">返回最新数据日报</a><span class="badge">历史快照 · 只读</span></nav>
 <main class="archive-wrap"><header class="archive-head"><h1>锡数据日报 · 留档</h1><p>{archive_date} · 日内总结、供需日度变化、周度策略和日度策略均按当天冻结</p></header>
 <section class="archive-summary"><h2>日 内 总 结</h2><div class="summary-grid">{summary_blocks}</div></section>
 <section class="strategy-block is-archive" id="dailyStrategyBlock"><div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>历史快照 · 只读</span></div>
-<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:7%"><col style="width:35%"><col style="width:21%"><col style="width:29%"><col style="width:8%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>周度结论</th><th>多空</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>
+<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:7%"><col style="width:33%"><col style="width:22%"><col style="width:32%"><col style="width:6%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>日度结论</th><th>多空</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>
 <div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>当周结论 · 只读</span></h3><div id="weeklyStrategyText" contenteditable="false"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>当天生成 · 只读</span></h3><div id="dailyStrategyText" contenteditable="false"></div></div></div></section>
 <section class="archive-data"><h2>日度数据快照<span>最近 7 个有数据日期 · 与当天日报口径一致</span></h2><div class="data-scroll">{table}</div></section>
 <footer class="archive-foot">本页为 {archive_date} 独立快照，后续 Excel、周报或日度数据更新不会改写本页。{research}</footer></main>
-<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610271450"></script></body></html>"""
+<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610271745"></script></body></html>"""
 
 
 INDEX_CSS = r"""

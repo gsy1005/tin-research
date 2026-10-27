@@ -74,12 +74,12 @@ def ensure_sheet_customs():
     src = open(path, encoding="utf-8").read()
     out = src
     if 'href="daily_strategy.css' not in out:
-        out = out.replace('</head>', '<link rel="stylesheet" href="daily_strategy.css?v=202610271703">\n</head>', 1)
+        out = out.replace('</head>', '<link rel="stylesheet" href="daily_strategy.css?v=202610271745">\n</head>', 1)
     tags = []
     if 'src="sheet_customs.js' not in out:
         tags.append('<script src="sheet_customs.js?v=202610270148"></script>')
     if 'src="daily_strategy.js' not in out:
-        tags.append('<script src="daily_strategy.js?v=202610271703"></script>')
+        tags.append('<script src="daily_strategy.js?v=202610271745"></script>')
     if tags:
         out, count = re.subn(
             r'(<script src="sheet\.js\?v=[^"]+"></script>)',
@@ -89,8 +89,8 @@ def ensure_sheet_customs():
         )
         if count != 1:
             raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入自定义模块")
-    out = re.sub(r'daily_strategy\.css\?v=[^"]+', 'daily_strategy.css?v=202610271703', out)
-    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271703', out)
+    out = re.sub(r'daily_strategy\.css\?v=[^"]+', 'daily_strategy.css?v=202610271745', out)
+    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271745', out)
     out = out.replace(
         '<button onclick="TIN_DAILY_STRATEGY.exportPNG()">供需策略 PNG</button>',
         '<button onclick="location.href=\'strategy.html\'">供需策略</button>',
