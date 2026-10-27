@@ -120,26 +120,31 @@
   function exportStrategyPNG(){
     try{
       var original=document.getElementById('dailyStrategyBlock');if(!original)return;
-      var sheet=document.getElementById('sheet');
-      var width=Math.max(1120,Math.min(1460,(sheet?sheet.clientWidth:1460)-12));
-      var clone=original.cloneNode(true);
-      clone.style.width=width+'px';clone.style.margin='0';clone.style.background='#fff';
+      var width=1600,exportDate=dayStamp||(archive&&archive.date)||'';
+      var clone=original.cloneNode(true);clone.style.width='auto';clone.style.margin='0';clone.style.background='#fff';
       clone.querySelectorAll('[contenteditable]').forEach(function(el){el.removeAttribute('contenteditable');});
       var wrap=clone.querySelector('.strategy-tablewrap');if(wrap)wrap.style.overflow='visible';
       var table=clone.querySelector('table.weeksum');if(table)table.style.minWidth='0';
-      var css='*{box-sizing:border-box;margin:0;padding:0}body{background:#fff}.strategy-block{border:1px solid #d9d9d9;background:#fff;color:#1a1a1a;font-family:KaiTi,STKaiti,"Noto Serif CJK SC",serif}.strategy-head{display:flex;align-items:baseline;gap:12px;padding:10px 14px;background:#EEF3FA;border-left:5px solid #1F4E79}.strategy-head h2{font-size:19px;letter-spacing:1.5px}.strategy-head span{font-size:13px;color:#666}table.weeksum{table-layout:fixed;border-collapse:collapse;width:100%;font-size:14px}table.weeksum th{background:#1F4E79;color:#fff;border:1px solid #527a9e;padding:6px 8px;font-size:14px;font-weight:400;line-height:1.35;text-align:center}table.weeksum td{border:1px solid #d9d9d9;padding:6px 8px;text-align:left;vertical-align:top;white-space:normal;line-height:1.5;font-size:14px}table.weeksum td.wcat{background:#EEF3FA;color:#1F4E79;text-align:center;font-weight:700}table.weeksum td.wdaily{background:#FDF6F6}table.weeksum td.wsignal{text-align:center;vertical-align:middle;font-weight:700}.strategy-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #d9d9d9}.strategy-card{padding:11px 14px;min-width:0;line-height:1.65;font-size:15px}.strategy-card.weekly{background:#F4F7FB;border-right:1px solid #d9d9d9}.strategy-card.daily{background:#FFF8F8}.strategy-card h3{font-size:15px;margin-bottom:5px;color:#1F4E79;letter-spacing:1px}.strategy-card.daily h3{color:#C00000}';
-      var measure=document.createElement('div');
-      measure.style.cssText='position:fixed;left:-100000px;top:0;width:'+width+'px;background:#fff;visibility:hidden;';
-      var exportStyle=document.createElement('style');exportStyle.textContent=css;
-      measure.appendChild(exportStyle);measure.appendChild(clone);document.body.appendChild(measure);
-      var height=Math.ceil(clone.getBoundingClientRect().height)+2;
-      var markup=new XMLSerializer().serializeToString(clone);measure.parentNode.removeChild(measure);
+      var note=clone.querySelector('.strategy-head span');if(note)note.textContent='周度框架定方向 · 日度数据跟踪边际变化';
+      var weeklyTag=clone.querySelector('.strategy-card.weekly h3 span');if(weeklyTag)weeklyTag.textContent='周度框架';
+      var dailyTag=clone.querySelector('.strategy-card.daily h3 span');if(dailyTag)dailyTag.textContent='日度更新';
+      clone.querySelectorAll('td.wsignal').forEach(function(td){var t=td.textContent;td.style.color=/利多|结构多/.test(t)?'#C00000':(/偏空|利空/.test(t)?'#18734A':'#1F4E79');});
+      var exportRoot=document.createElement('div');exportRoot.className='export-root';
+      var title=document.createElement('div');title.className='export-title';
+      title.innerHTML='<div><h1>锡产业供需与策略</h1><p>TIN SUPPLY · DEMAND &amp; STRATEGY</p></div><div class="meta"><b>中哲金属 · 甘思雨</b><span>数据日期　'+exportDate+'</span></div>';
+      var foot=document.createElement('div');foot.className='export-foot';foot.innerHTML='<span>周度内容联动周报；日度变化依据最新成交、仓单与升贴水。</span><span>仅供内部研究参考</span>';
+      exportRoot.appendChild(title);exportRoot.appendChild(clone);exportRoot.appendChild(foot);
+      var css='*{box-sizing:border-box;margin:0;padding:0}body{background:#fff}.export-root{width:1600px;padding:30px 32px 22px;background:#fff;color:#18212b;font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif}.export-title{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;padding:0 0 17px;margin-bottom:18px;border-bottom:3px solid #C00000}.export-title h1{font-size:32px;letter-spacing:2px;line-height:1.35}.export-title p{margin-top:6px;font-size:12px;letter-spacing:2px;color:#7a828c}.export-title .meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;padding-top:3px;font-size:13px;white-space:nowrap}.export-title .meta b{color:#C00000;font-size:14px}.export-title .meta span{color:#59636f}.strategy-block{border:1px solid #cbd5df;background:#fff}.strategy-head{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:12px 16px;background:#EDF3F8;border-left:6px solid #1F4E79}.strategy-head h2{font-size:20px;letter-spacing:1px}.strategy-head span{font-size:13px;color:#66717d}table.weeksum{table-layout:fixed;border-collapse:collapse;width:100%}table.weeksum th{background:#1F4E79;color:#fff;border:1px solid #527a9e;padding:8px 9px;font-size:15px;font-weight:600;line-height:1.4;text-align:center}table.weeksum td{border:1px solid #d5dce3;padding:8px 9px;text-align:left;vertical-align:top;white-space:normal;overflow-wrap:break-word;line-height:1.55;font-size:15px;color:#18212b}table.weeksum tr:nth-child(even) td:not(.wcat):not(.wdaily){background:#FAFBFC}table.weeksum td.wcat{background:#EDF3F8;color:#1F4E79;text-align:center;font-weight:700}table.weeksum td.wdaily{background:#FFF7F7}table.weeksum td.wsignal{text-align:center;vertical-align:middle;font-weight:700}.strategy-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #cbd5df}.strategy-card{padding:14px 18px;min-width:0;line-height:1.7;font-size:16px}.strategy-card.weekly{background:#F3F7FB;border-right:1px solid #cbd5df}.strategy-card.daily{background:#FFF7F7}.strategy-card h3{font-size:17px;margin-bottom:7px;color:#1F4E79;letter-spacing:1px}.strategy-card.daily h3{color:#C00000}.strategy-card h3 span{display:block;margin:3px 0 0;font-size:11px;color:#7a828c;font-weight:400;letter-spacing:0}.export-foot{display:flex;justify-content:space-between;gap:24px;margin-top:14px;font-size:11px;line-height:1.6;color:#7a828c}';
+      var measure=document.createElement('div');measure.style.cssText='position:fixed;left:-100000px;top:0;width:'+width+'px;background:#fff;visibility:hidden;';
+      var exportStyle=document.createElement('style');exportStyle.textContent=css;measure.appendChild(exportStyle);measure.appendChild(exportRoot);document.body.appendChild(measure);
+      var height=Math.ceil(exportRoot.getBoundingClientRect().height)+2;
+      var markup=new XMLSerializer().serializeToString(exportRoot);measure.parentNode.removeChild(measure);
       var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml"><style>'+css+'</style>'+markup+'</div></foreignObject></svg>';
       var img=new Image();
       img.onload=function(){
         var canvas=document.createElement('canvas');canvas.width=width*2;canvas.height=height*2;
         var ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
-        var name='供需策略_'+(dayStamp||(archive&&archive.date)||'')+'.png';
+        var name='锡供需策略_'+exportDate+'.png';
         var a=document.createElement('a');a.download=name;document.body.appendChild(a);
         function clickUrl(url){a.href=url;a.click();a.parentNode.removeChild(a);}
         if(canvas.toBlob)canvas.toBlob(function(blob){if(!blob)return;var url=URL.createObjectURL(blob);clickUrl(url);setTimeout(function(){URL.revokeObjectURL(url);},30000);},'image/png');
@@ -150,14 +155,7 @@
     }catch(e){alert('供需策略图片导出失败，请刷新后重试。');}
   }
   var block=document.getElementById('dailyStrategyBlock');
-  if(!block){
-    var anchor=document.querySelector('#sheet .main')||document.getElementById('charts');if(!anchor)return;
-    block=document.createElement('section');block.id='dailyStrategyBlock';block.className='strategy-block';
-    block.innerHTML='<div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>周度内容与周报联动；日度变化按最新数据更新，表格和策略均可点击编辑</span></div>'+
-      '<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:7%"><col style="width:35%"><col style="width:21%"><col style="width:29%"><col style="width:8%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>周度结论</th><th>多空</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>'+
-      '<div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>周报结论 · 可编辑</span></h3><div id="weeklyStrategyText" contenteditable="true"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>按日度数据生成 · 可编辑</span></h3><div id="dailyStrategyText" contenteditable="true"></div></div></div>';
-    anchor.parentNode.insertBefore(block,anchor);
-  }
+  if(!block)return;
   if(archive){block.classList.add('is-archive');var headNote=block.querySelector('.strategy-head span');if(headNote)headNote.textContent='历史快照 · 只读；冻结当天的周度内容、日度变化和两种策略';}
   block.addEventListener('input',function(e){
     if(archive)return;

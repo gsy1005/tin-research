@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>锡产业供需与策略 · 可编辑可导出</title>
+<link rel="stylesheet" href="daily_strategy.css?v=202610271530">
+<style>
+:root{--red:#C00000;--blue:#1F4E79;--ink:#1a1a1a;--muted:#6f7680;--line:#d9d9d9;--paper:#fff;--bg:#f2f4f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif}.ctrl{max-width:1600px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}.ctrl a{color:var(--blue);text-decoration:none;font-size:14px}.ctrl .spacer{flex:1}.ctrl button{border:0;border-radius:4px;background:var(--red);color:#fff;padding:8px 18px;font:700 14px "Microsoft YaHei",sans-serif;cursor:pointer}.ctrl button.secondary{background:var(--blue)}.paper{max-width:1600px;margin:0 auto 36px;background:var(--paper);box-shadow:0 1px 8px rgba(20,35,55,.06);padding:0 0 20px}.report-head{position:relative;padding:24px 28px 18px;border-bottom:3px solid var(--red)}.report-head h1{margin:0;border-left:7px solid var(--red);padding-left:16px;font-size:30px;letter-spacing:2px}.report-head p{margin:8px 0 0 23px;color:var(--muted);font-size:13px;letter-spacing:1px}.report-head .author{position:absolute;right:26px;top:26px;color:var(--red);border:1px solid var(--red);border-radius:4px;padding:3px 10px;font-size:12px;font-weight:700}.strategy-block{margin:18px 18px 0;border-color:#cfd6df}.strategy-head{padding:10px 14px}.strategy-head h2{font-size:18px}.strategy-head span{font-size:12px}.paper .weeksum th{font-family:"Microsoft YaHei","PingFang SC",sans-serif}.paper .weeksum td{font-family:"KaiTi","STKaiti","Noto Serif CJK SC",serif;font-size:13px;line-height:1.55;padding:7px 8px}.paper .strategy-card{font-family:"KaiTi","STKaiti","Noto Serif CJK SC",serif;font-size:14px;padding:12px 15px}.paper .strategy-card h3{font-family:"Microsoft YaHei","PingFang SC",sans-serif}.foot{margin:14px 20px 0;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:11px;line-height:1.7}.edit-tip{color:var(--blue)}
+@media(max-width:760px){.ctrl{padding:10px 12px}.ctrl .spacer{display:none}.paper{margin-bottom:0}.report-head{padding:18px 14px 14px}.report-head h1{font-size:24px}.report-head .author{position:static;display:inline-block;margin:12px 0 0 23px}.report-head p{margin-left:0;line-height:1.6}.strategy-block{margin:12px 6px 0}.foot{margin:12px 8px 0;display:block}.foot span{display:block}.strategy-head h2{font-size:16px}}
+</style>
+</head>
+<body data-strategy-page="standalone">
+<nav class="ctrl"><a href="index.html?v=strategy">← 返回工作台</a><a href="sheet.html">查看数据日报</a><span class="spacer"></span><button class="secondary" onclick="location.href='daily_archive.html'">历史留档</button><button onclick="TIN_DAILY_STRATEGY.exportPNG()">导出供需策略 PNG</button></nav>
+<main class="paper" id="strategySheet">
+<header class="report-head"><span class="author">中哲金属 · 甘思雨</span><h1>锡产业供需与策略</h1><p>TIN SUPPLY · DEMAND &amp; STRATEGY　/　周度框架 × 日度边际</p></header>
+<section class="strategy-block" id="dailyStrategyBlock">
+  <div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>周度内容与周报联动；日度变化按最新数据更新，表格和策略均可点击编辑</span></div>
+  <div class="strategy-tablewrap"><table class="weeksum">
+    <colgroup><col style="width:7%"><col style="width:35%"><col style="width:21%"><col style="width:29%"><col style="width:8%"></colgroup>
+    <thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>周度结论</th><th>多空</th></tr></thead>
+    <tbody id="weeksumBody"></tbody>
+  </table></div>
+  <div class="strategy-grid">
+    <div class="strategy-card weekly"><h3>周度策略<span>周报结论 · 可编辑</span></h3><div id="weeklyStrategyText" contenteditable="true"></div></div>
+    <div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>按日度数据生成 · 可编辑</span></h3><div id="dailyStrategyText" contenteditable="true"></div></div>
+  </div>
+</section>
+<footer class="foot"><span class="edit-tip">点击表格或策略文字即可编辑，修改会保存在本机浏览器。</span><span>数据来源：Mysteel、SMM、SHFE、LME 及公开资料</span></footer>
+</main>
+<script src="db_data.js?v=202610262320"></script>
+<script src="summary_note.js?v=202610262320"></script>
+<script src="daily_strategy.js?v=202610271530"></script>
+</body>
+</html>

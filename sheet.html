@@ -67,13 +67,13 @@
   .catcol{width:74px;text-align:center!important;font-weight:800;letter-spacing:0;font-size:13px;vertical-align:middle}
   .sfoot{padding:8px 10px 0;font-size:11.5px;color:var(--faint);line-height:1.6}
 </style>
-<link rel="stylesheet" href="daily_strategy.css?v=202610271450">
+<link rel="stylesheet" href="daily_strategy.css?v=202610271530">
 </head>
 <body>
 <div class="ctrl">
   <b>锡数据日报</b>
   <button onclick="TIN_SHEET.exportPNG()">导出图片 PNG</button>
-  <button onclick="TIN_DAILY_STRATEGY.exportPNG()">供需策略 PNG</button>
+  <button onclick="location.href='strategy.html'">供需策略</button>
   <button class="sec" onclick="TIN_SHEET.exportCSV()">导出表格 CSV</button>
   <a class="archive-link" href="daily_archive.html">日报留档</a>
   <select id="days" onchange="TIN_SHEET.render(this.value)">
@@ -81,7 +81,7 @@
     <option value="5">近 5 个交易日</option>
     <option value="10">近 10 个交易日</option>
   </select>
-  <span class="hint">日内总结、供需变化和两种策略均可点击编辑；每日更新后自动留档</span>
+  <span class="hint">日内总结可点击编辑；供需表和两种策略已移至独立“供需策略”页面</span>
 </div>
 <div id="sheet">
   <div class="shead-bar"><span class="author">中哲金属 · 甘思雨</span><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET · <span id="pageVer" style="letter-spacing:0">版本检测中…</span></div></div>
@@ -102,18 +102,6 @@
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
     <div class="sumblk"><b>情　绪</b><div contenteditable="true" id="sumC"></div></div>
   </div>
-  <section class="strategy-block" id="dailyStrategyBlock">
-    <div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>周度内容与周报联动；日度变化按最新数据更新，表格和策略均可点击编辑</span></div>
-    <div class="strategy-tablewrap"><table class="weeksum">
-      <colgroup><col style="width:7%"><col style="width:35%"><col style="width:21%"><col style="width:29%"><col style="width:8%"></colgroup>
-      <thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>周度结论</th><th>多空</th></tr></thead>
-      <tbody id="weeksumBody"></tbody>
-    </table></div>
-    <div class="strategy-grid">
-      <div class="strategy-card weekly"><h3>周度策略<span>周报结论 · 可编辑</span></h3><div id="weeklyStrategyText" contenteditable="true"></div></div>
-      <div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>按日度数据生成 · 可编辑</span></h3><div id="dailyStrategyText" contenteditable="true"></div></div>
-    </div>
-  </section>
   <div class="main">
     <div class="ttable"><table id="dtable"></table></div>
   </div>
@@ -137,7 +125,7 @@
 <script src="tech.js?v=202610261259"></script>
 <script src="sheet.js?v=202610261259"></script>
 <script src="sheet_customs.js?v=202610270148"></script>
-<script src="daily_strategy.js?v=202610271450"></script>
+<script src="daily_strategy.js?v=202610271530"></script>
 <script>
 /* 日报顶部只保留三段简短结论；切换天数或刷新数据后仍保持简洁。 */
 (function(){

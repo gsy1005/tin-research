@@ -67,19 +67,19 @@ def clean(path):
 
 
 def ensure_sheet_customs():
-    """日报生成后接回自定义图表、供需策略、单独导出及留档入口。"""
+    """日报生成后接回自定义图表、独立供需页入口及留档入口。"""
     path = "sheet.html"
     if not glob.glob(path):
         return
     src = open(path, encoding="utf-8").read()
     out = src
     if 'href="daily_strategy.css' not in out:
-        out = out.replace('</head>', '<link rel="stylesheet" href="daily_strategy.css?v=202610271450">\n</head>', 1)
+        out = out.replace('</head>', '<link rel="stylesheet" href="daily_strategy.css?v=202610271530">\n</head>', 1)
     tags = []
     if 'src="sheet_customs.js' not in out:
         tags.append('<script src="sheet_customs.js?v=202610270148"></script>')
     if 'src="daily_strategy.js' not in out:
-        tags.append('<script src="daily_strategy.js?v=202610271450"></script>')
+        tags.append('<script src="daily_strategy.js?v=202610271530"></script>')
     if tags:
         out, count = re.subn(
             r'(<script src="sheet\.js\?v=[^"]+"></script>)',
@@ -89,12 +89,16 @@ def ensure_sheet_customs():
         )
         if count != 1:
             raise RuntimeError("sheet.html 未找到 sheet.js 引入位置，无法接入自定义模块")
-    out = re.sub(r'daily_strategy\.css\?v=[^"]+', 'daily_strategy.css?v=202610271450', out)
-    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271450', out)
-    if 'TIN_DAILY_STRATEGY.exportPNG()' not in out:
+    out = re.sub(r'daily_strategy\.css\?v=[^"]+', 'daily_strategy.css?v=202610271530', out)
+    out = re.sub(r'daily_strategy\.js\?v=[^"]+', 'daily_strategy.js?v=202610271530', out)
+    out = out.replace(
+        '<button onclick="TIN_DAILY_STRATEGY.exportPNG()">供需策略 PNG</button>',
+        '<button onclick="location.href=\'strategy.html\'">供需策略</button>',
+    )
+    if "location.href='strategy.html'" not in out:
         out, count = re.subn(
             r'(<button onclick="TIN_SHEET\.exportPNG\(\)">.*?</button>)',
-            r'\1\n  <button onclick="TIN_DAILY_STRATEGY.exportPNG()">供需策略 PNG</button>',
+            "\\1\n  <button onclick=\"location.href='strategy.html'\">供需策略</button>",
             out,
             count=1,
         )
@@ -102,23 +106,16 @@ def ensure_sheet_customs():
             raise RuntimeError("sheet.html 未找到日报图片导出按钮")
     if 'href="daily_archive.html"' not in out:
         out = out.replace('  <select id="days"', '  <a class="archive-link" href="daily_archive.html">日报留档</a>\n  <select id="days"', 1)
-    main_pos = out.find('<div class="main">')
     block_pos = out.find('<section class="strategy-block" id="dailyStrategyBlock">')
     if block_pos >= 0:
         block_end = out.find('</section>', block_pos)
         if block_end < 0:
             raise RuntimeError("sheet.html 供需策略区块不完整")
         block_end += len('</section>')
-        if main_pos < 0:
-            raise RuntimeError("sheet.html 未找到日度数据表")
-        if block_pos > main_pos:
-            block_html = out[block_pos:block_end]
-            out = out[:block_pos] + out[block_end:]
-            main_pos = out.find('<div class="main">')
-            out = out[:main_pos] + block_html + '\n  ' + out[main_pos:]
+        out = out[:block_pos] + out[block_end:]
     if out != src:
         open(path, "w", encoding="utf-8").write(out)
-        print("已接入日报图表、供需策略、单独导出与留档入口")
+        print("已接入日报图表、独立供需页与留档入口")
 
 
 def main():
