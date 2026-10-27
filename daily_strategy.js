@@ -111,7 +111,8 @@
       var doc=new DOMParser().parseFromString(html,'text/html'),rows=[];
       doc.querySelectorAll('#sumsec table.sum tbody tr:not(.final)').forEach(function(tr,i){
         var c=tr.querySelectorAll('td');if(c.length<4)return;
-        var cat=c[0].textContent.trim();rows.push({key:keyMap[cat]||('row'+i),cat:cat,related:c[1].textContent.trim(),conclusion:c[2].textContent.trim(),signal:c[3].textContent.trim()});
+        var cat=c[0].textContent.trim(),hasDaily=c.length>=5&&c[2].classList.contains('daily');
+        rows.push({key:keyMap[cat]||('row'+i),cat:cat,related:c[1].textContent.trim(),conclusion:c[hasDaily?3:2].textContent.trim(),signal:c[hasDaily?4:3].textContent.trim()});
       });
       var final=doc.querySelector('#sumsec table.sum tr.final td[colspan]');
       if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
