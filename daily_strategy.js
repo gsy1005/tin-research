@@ -179,8 +179,7 @@
       body.appendChild(tr);
     });
     var ws=readStore(STORE_WS),weeklyEl=document.getElementById('weeklyStrategyText');
-    var freshStrategy=input&&input.date?String(input.strategy||'').trim():'';
-    weeklyEl.textContent=freshStrategy||(ws&&ws.stamp===stamp&&ws.text?ws.text:source.final);
+    weeklyEl.textContent=ws&&ws.stamp===stamp&&ws.text?ws.text:source.final;
     renderWeeklyScore();
     if(archive)document.querySelectorAll('#dailyStrategyBlock [contenteditable]').forEach(function(el){el.contentEditable='false';});
     updateDaily();
