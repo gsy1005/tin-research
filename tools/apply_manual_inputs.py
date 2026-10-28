@@ -252,23 +252,8 @@ def main():
             sections.append("【其他变化】" + other + "。")
         note["B"] = " ".join(sections)
 
-        signals = notes.get("signals", {})
-        macro_signal = signals.get("macro", "利多")
-        ai_signal = signals.get("ai", "利多")
-        spot_signal = signals.get("spot", "双向")
-        inventory_signal = signals.get("inventory")
-        if not inventory_signal:
-            inventory_signal = "偏空" if wh[-1][1] > wh[-2][1] else ("利多" if wh[-1][1] < wh[-2][1] else "中性")
-        deal_pct = down[-1][1] / down[-2][1] - 1 if down and down[-2][1] else 0
-        deal_score = 2 if deal_pct >= .2 else (1 if deal_pct >= .05 else (-2 if deal_pct <= -.2 else (-1 if deal_pct <= -.05 else 0)))
-        dims = [("宏观", signal_score(macro_signal), 25), ("AI", signal_score(ai_signal), 10),
-                ("成交需求", deal_score, 25), ("库存", signal_score(inventory_signal), 25),
-                ("升贴水", signal_score(spot_signal), 15)]
-        value = max(-2, min(2, sum(score * weight / 100 for _, score, weight in dims)))
-        detail = "、".join(f"{name} {score:+d}" for name, score, _ in dims)
-        weights = " / ".join(str(weight) + "%" for _, _, weight in dims)
-        strategy = notes.get("strategy", "日度策略按供需策略页最新内容执行")
-        note["D"] = f"多空评分 {value:+.2f}（{score_label(value)}）：{detail}，权重分别为 {weights}。{strategy} 评分仅反映日度边际。"
+        # 红字“策略”只复制当天日度策略；评分保留在供需策略页。
+        note["D"] = notes.get("strategy", "日度策略按供需策略页最新内容执行")
         note["date"] = day
         NOTE_PATH.write_text("window.TIN_SUMMARY_NOTE = " + json.dumps(note, ensure_ascii=False) + ";\n", encoding="utf-8")
 

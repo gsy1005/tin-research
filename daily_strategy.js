@@ -85,7 +85,7 @@
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
-    if(inputValue('strategy'))return c.label+' 日度策略：'+inputValue('strategy');
+    if(inputValue('strategy'))return inputValue('strategy');
     var deals=c.total!==null&&c.oldTotal!==null?'当日两类成交 '+fmt(c.total)+' 吨，较前日 '+signed(c.total-c.oldTotal)+' 吨':'当日成交可比数据不足';
     var warehouse=c.wh?'SHFE 仓单 '+fmt(c.wh[1])+' 吨（'+dayLabel(c.wh[0])+'）':'SHFE 仓单暂无读数';
     return c.label+' 日度策略：近期中东局势有所缓和，但仍需防范协议仅为暂时、选举前后反复；油价接近 120 美元前高压力位。今晚 FOMC 基准情形是不加息，重点关注沃什讲话。AI 财报反馈偏正面，'+soxDaily(c)+'。SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱。'+deals+'，'+warehouse+'；本周消费偏弱，此前去库主要由低位点价贡献，后续关注贸易商是交仓，还是继续移仓至 12 月挺价。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。评分只反映日度边际，不替代周度供需框架。';
@@ -139,7 +139,8 @@
   }
   function updateDaily(){
     var c=context();dayStamp=c.day;
-    var edits=readStore(STORE_DAY),values=edits&&edits.date===dayStamp?edits.values:{};
+    var hasInput=!!(input&&input.date===dayStamp);
+    var edits=readStore(STORE_DAY),values=!hasInput&&edits&&edits.date===dayStamp?edits.values:{};
     source.rows.forEach(function(row){
       var td=document.querySelector('#weeksumBody [data-daily-key="'+row.key+'"]');
       if(td)td.textContent=values['change:'+row.key]||values[row.key]||dailyText(row.key,c);
@@ -156,7 +157,7 @@
     renderScore(c);
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
     var el=document.getElementById('dailyStrategyText'),saved=readStore(STORE_DS);
-    if(el)el.textContent=saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
+    if(el)el.textContent=!hasInput&&saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
   }
   function render(next){
     source=next;stamp=hash(JSON.stringify(next));
@@ -165,7 +166,9 @@
     source.rows.forEach(function(row){
       var tr=document.createElement('tr');
       [['cat','wcat'],['related',''],['conclusion',''],['signal','wsignal']].forEach(function(part){
-        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';td.textContent=values[row.key+'|'+part[0]]||row[part[0]];
+        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';
+        var savedValue=values[row.key+'|'+part[0]],freshRow=!!(input&&input.date&&['macro','ai','risk'].indexOf(row.key)>=0);
+        td.textContent=(!freshRow&&savedValue)||row[part[0]];
         if(part[0]==='conclusion')td.dataset.dailyConclusionKey=row.key;
         if(part[0]==='signal')td.dataset.dailySignalKey=row.key;
         tr.appendChild(td);
@@ -176,7 +179,8 @@
       body.appendChild(tr);
     });
     var ws=readStore(STORE_WS),weeklyEl=document.getElementById('weeklyStrategyText');
-    weeklyEl.textContent=ws&&ws.stamp===stamp&&ws.text?ws.text:source.final;
+    var freshStrategy=input&&input.date?String(input.strategy||'').trim():'';
+    weeklyEl.textContent=freshStrategy||(ws&&ws.stamp===stamp&&ws.text?ws.text:source.final);
     renderWeeklyScore();
     if(archive)document.querySelectorAll('#dailyStrategyBlock [contenteditable]').forEach(function(el){el.contentEditable='false';});
     updateDaily();
