@@ -11,18 +11,18 @@
   var fallback={
     rows:[
       {key:'price',cat:'价格',related:'Mysteel 现货均价 378,750（10/16）→ 374,000（10/23），周 -1.3%；周内最高 390,000（10/21），随后回落至 374,000；SMM 1#锡 10/23 为 371,900',conclusion:'反弹未能站稳 39 万附近，符合短期顶部区间判断；但低库存与近月 Back 仍限制低位追空的赔率',signal:'中性'},
-      {key:'macro',cat:'宏观',related:'近期中东局势有所缓和，但协议可能仅为暂时，选举前后仍有反复风险；油价接近 120 美元前高压力位。今晚关注 FOMC，基准情形是不加息，重点关注沃什讲话',conclusion:'中东缓和与不加息基准预期支撑风险偏好，但油价前高压力、协议持续性及沃什表态仍可能带来双向扰动',signal:'利多'},
-      {key:'ai',cat:'美股·半导体 AI',related:'Anthropic 招股书及三星、海力士三季报获得市场较正面反馈；SOX 10/23 为 10,779 点，10/26 最新为 11,083.47 点，较 10/23 上涨约 2.8%',conclusion:'AI 收入兑现与存储景气预期改善，叠加 SOX 反弹，对锡的情绪端构成支持；后续继续跟踪 SOX 变化和科技股财报验证',signal:'利多'},
+      {key:'macro',cat:'宏观',related:'下周重点为以色列大选、FOMC、欧洲央行与欧元区 GDP；中东基准情形仍是大选前后先升级、再降级，油价高波动可能强化通胀约束；利率基准情形为 10 月不加息，后续仍保留收紧可能',conclusion:'宏观没有额外利好时，锡价 39 万附近可短空；若中东升级与财报不及预期叠加，风险资产和锡价下行压力将加大',signal:'偏空'},
+      {key:'ai',cat:'美股·半导体 AI',related:'SOX 10/23 为 10,779 点，周中波动显著；下周海力士、三星、谷歌、微软、亚马逊、英特尔等密集披露业绩或召开电话会。沿用宏观周报的验证链条：AI 订单与资本开支能否进一步转化为收入、利润和经营现金流',conclusion:'Anthropic 提交 S-1，上半年收入约 163 亿美元，二季度首次实现经营利润，缓解市场对 AI 收入兑现的担忧；招股书公布后费城半导体指数收涨 2.82%，AI 硬件链修复，但巨额算力投入及后续成本仍需验证。对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'},
       {key:'mine',cat:'供给·矿端',related:'TC 云南 17,000 / 江西 13,000 元/金属吨，上周均下调 500，本周维稳；锡价回落同步降低与价格挂钩的冶炼损耗成本',conclusion:'矿端当前偏宽松。上周锡价 41→37 万对应损耗成本减负约 1,000–1,500 元/吨，大于 TC 500 元/吨的名义降幅，剔除价格折旧后实际加工收益不降反升；本周 TC 维稳，矿端并未进一步收紧',signal:'偏空'},
       {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'},
       {key:'demand',cat:'需求·焊料',related:'本周下游成交 1,445 吨，较上周减少 997 吨；10 月 Mysteel 焊料总开工率 69.35%（环比 -0.65pct），大型 82.56 / 中型 72.85 / 小型 52.63',conclusion:'周度成交回落说明高价下主动补库不足；后续必须验证下游终端订单能否接续，不能把低价补库或库存下降直接等同于终端需求转强',signal:'中性'},
       {key:'spot',cat:'现货·贸易',related:'本周成交 1,904 吨（下游 1,445＋贸易商 459），周降 41.6%；云锡升水 3,000 → 3,500，云字 3,000 / 小牌 2,500；进口盈亏修复至 -253 元/吨，LME Cash-3M 为 +60.77 美元/吨',conclusion:'升水继续抬升、进口窗口接近打平且外盘转为升水，现货偏紧仍未缓解；但成交缩量表明高价抑制采购，紧现货与弱成交并存',signal:'利多'},
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
       {key:'inventory',cat:'库存',related:'SMM 社库 7,770 → 6,689（周 -1,081 / -13.9%，沪 2,151 / 苏 2,480 / 粤 2,058）；Mysteel 社库 7,968 → 7,103（-865 / -10.9%）；全球显性 11,148（周 -880）；SHFE 仓单 2,136（周 -724）；LME 4,045',conclusion:'两口径社库、仓单与全球显性库存共同去化，可交割货源趋紧，预计本周仍有去库和逼仓风险；这是正套优于单边追空的核心依据',signal:'利多'},
-      {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河、东海、光大主要为云锡席位；今日 sn2611 三席位合计净空单 988 手（银河 435、东海 313、光大 240），大概率对应云锡后续 11 月交仓单数量，重点跟踪仓单注册兑现',signal:'双向'},
-      {key:'risk',cat:'风险点',related:'上行风险：中东进一步缓和、FOMC 不加息或 AI 财报与 SOX 继续改善；下行风险：协议仅为暂时、选举前后局势反复、油价突破前高或沃什表态偏鹰',conclusion:'宏观与 AI 支撑和偏弱实物成交并存，左侧单需控制仓位；同时关注基差回落和库存变化，避免把低位点价去库等同于终端消费改善',signal:'双向'}
+      {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'},
+      {key:'risk',cat:'风险点',related:'上行风险：去库超预期、仓单快速下降或宏观利好引发近月逼仓；下行风险：中东升级推高油价与通胀压力，同时科技财报不及预期，形成风险偏好与需求预期的双重压制',conclusion:'低库存使价格上下弹性都放大；正套需防价差继续走扩后的回撤，单边空配需防近月挤仓，单边追多则需防宏观双利空',signal:'双向'}
     ],
-    final:'近期中东局势有所缓和，今晚 FOMC 基准情形是不加息，重点关注沃什讲话；AI 财报反馈与 SOX 反弹提供情绪支持。SN 换月基差开始走弱，11 月及 12 月挺价力度不足，正套逻辑边际减弱。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。后续关注贸易商交仓或移仓至 12 月挺价，以及消费和库存验证。'
+    final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可短空，但不宜在低库存环境中追空。'
   };
   var source=fallback,stamp='',dayStamp='';
   function readStore(key){if(archive)return null;try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
@@ -162,16 +162,18 @@
     var edits=readStore(STORE_WEEK),values=edits&&edits.stamp===stamp?edits.values:{};
     source.rows.forEach(function(row){
       var tr=document.createElement('tr');
-      [['cat','wcat'],['related',''],['conclusion',''],['signal','wsignal']].forEach(function(part){
-        var td=document.createElement('td');td.className=part[1];td.dataset.key=row.key;td.dataset.field=part[0];td.contentEditable=archive?'false':'true';
-        var savedValue=values[row.key+'|'+part[0]],freshRow=!!(input&&input.date&&['macro','ai','risk'].indexOf(row.key)>=0);
-        td.textContent=(!freshRow&&savedValue)||row[part[0]];
-        if(part[0]==='conclusion')td.dataset.dailyConclusionKey=row.key;
-        if(part[0]==='signal')td.dataset.dailySignalKey=row.key;
-        tr.appendChild(td);
-        if(part[0]==='conclusion'){
-          var daily=document.createElement('td');daily.className='wdaily';daily.dataset.dailyKey=row.key;daily.contentEditable=archive?'false':'true';tr.insertBefore(daily,td);
+      ['cat','related','conclusion','dailyChange','dailyConclusion','signal'].forEach(function(part){
+        var td=document.createElement('td');td.dataset.key=row.key;td.contentEditable=archive?'false':'true';
+        if(part==='cat')td.className='wcat';
+        if(part==='signal')td.className='wsignal';
+        if(part==='dailyChange'){td.className='wdaily';td.dataset.dailyKey=row.key;}
+        else if(part==='dailyConclusion'){td.dataset.dailyConclusionKey=row.key;}
+        else{
+          td.dataset.field=part;
+          var savedValue=values[row.key+'|'+part];td.textContent=savedValue||row[part];
+          if(part==='signal')td.dataset.dailySignalKey=row.key;
         }
+        tr.appendChild(td);
       });
       body.appendChild(tr);
     });
@@ -192,9 +194,8 @@
       });
       var position=fallback.rows.find(function(row){return row.key==='position';}),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
       if(position&&riskIndex>=0)rows.splice(riskIndex,0,position);
-      /* 周报原文保留为历史存档；日报中的宏观、AI、风险与策略使用最新框架。 */
-      ['macro','ai','risk'].forEach(function(key){var current=fallback.rows.find(function(row){return row.key===key;}),index=rows.findIndex(function(row){return row.key===key;});if(current&&index>=0)rows[index]=current;});
-      if(rows.length)render({rows:rows,final:fallback.final});
+      var final=doc.querySelector('#sumsec table.sum tr.final td[colspan]');
+      if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
   }
   function exportStrategyPNG(){
