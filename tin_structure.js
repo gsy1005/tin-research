@@ -45,7 +45,7 @@
     const zoneMarkup = zones.map((zone, index) => {
       const zx = left + step * zone.from_i, zw = Math.max(step, (zone.to_i - zone.from_i + 1) * step);
       const zy = y(Number(zone.high)), zh = Math.max(2, y(Number(zone.low)) - zy);
-      return `<rect data-chan-zone x="${zx}" y="${zy}" width="${zw}" height="${zh}" class="sns-chan-zone"/>${index === zones.length - 1 ? `<text x="${Math.min(zx + zw - 4, W - right - 4)}" y="${zy + 12}" text-anchor="end" class="sns-zone-label">中枢 ${fmt(zone.low)}–${fmt(zone.high)}</text>` : ''}`;
+      return `<rect data-chan-zone x="${zx}" y="${zy}" width="${zw}" height="${zh}" class="sns-chan-zone"/>${index === zones.length - 1 ? `<text x="${Math.min(zx + zw - 4, W - right - 4)}" y="${zy + 12}" text-anchor="end" class="sns-zone-label">中枢</text>` : ''}`;
     }).join('');
     const candles = bars.map((bar, index) => {
       const up = Number(bar.c) >= Number(bar.o), cls = up ? 'up' : 'down';
