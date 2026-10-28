@@ -13,7 +13,7 @@
 </style>
 </head>
 <body data-strategy-page="standalone">
-<nav class="ctrl"><a href="index.html?v=strategy">← 返回工作台</a><a href="sheet.html">查看数据日报</a><span class="spacer"></span><button class="secondary" onclick="location.href='daily_archive.html'">历史留档</button><button onclick="TIN_DAILY_STRATEGY.exportPNG()">导出供需策略 PNG</button></nav>
+<nav class="ctrl"><a href="index.html?v=strategy">← 返回工作台</a><a href="sheet.html">查看数据日报</a><a href="daily_input.html"><strong>每日填报</strong></a><span class="spacer"></span><button class="secondary" onclick="location.href='daily_archive.html'">历史留档</button><button onclick="TIN_DAILY_STRATEGY.exportPNG()">导出供需策略 PNG</button></nav>
 <main class="paper" id="strategySheet">
 <header class="report-head"><span class="author">中哲金属 · 甘思雨</span><h1>锡产业供需与策略</h1><p>TIN SUPPLY · DEMAND &amp; STRATEGY　/　周度框架 × 日度边际</p></header>
 <section class="strategy-block" id="dailyStrategyBlock">
@@ -31,7 +31,8 @@
 <footer class="foot"><span class="edit-tip">点击表格或策略文字即可编辑，修改会保存在本机浏览器。</span><span>数据来源：Mysteel、SMM、SHFE、LME 及公开资料</span></footer>
 </main>
 <script src="db_data.js?v=202610281830"></script>
-<script src="summary_note.js?v=202610281850"></script>
-<script src="daily_strategy.js?v=202610281900"></script>
+<script src="summary_note.js?v=202610281910"></script>
+<script src="daily_overrides.js"></script>
+<script src="daily_strategy.js?v=202610281910"></script>
 </body>
 </html>

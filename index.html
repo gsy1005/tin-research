@@ -37,6 +37,7 @@
 <body>
 <div class="topbar">
   <div class="seg" id="seg">
+    <button data-v="input">每日填报</button>
     <button data-v="daily">日报</button>
     <button data-v="sheet">数据日报</button>
     <button data-v="strategy">供需策略</button>
@@ -52,8 +53,9 @@
     <button data-v="cudb">铜数据库</button>
     <button data-v="lab">图表工作区</button>
   </div>
-  <div class="author">锡研究工作台 · <b>TIN RESEARCH</b><span>SN · 有色</span><span style="color:#d4a944;border:1px solid #d4a944;border-radius:4px;padding:1px 8px;margin-left:10px;font-size:11px">日报10/28 · 破止损线·离场警报</span></div>
+  <div class="author">锡研究工作台 · <b>TIN RESEARCH</b><span>SN · 有色</span><span style="color:#d4a944;border:1px solid #d4a944;border-radius:4px;padding:1px 8px;margin-left:10px;font-size:11px">日报10/26 · 破止损线·离场警报</span></div>
 </div>
+<iframe id="f-input" data-lazy="daily_input.html" title="每日填报" hidden></iframe>
 <iframe id="f-daily" data-lazy="daily_2026-10-18.html" title="锡研究日报" hidden></iframe>
 <iframe id="f-sheet" data-lazy="sheet.html" title="锡数据日报" hidden></iframe>
 <iframe id="f-strategy" data-lazy="strategy.html" title="锡产业供需与策略" hidden></iframe>
@@ -73,14 +75,14 @@
   var seg=document.getElementById('seg');
   function show(v){
     seg.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v);});
-    ['daily','sheet','strategy','dailyarchive','weekly','weekly2','archive','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
+    ['input','daily','sheet','strategy','dailyarchive','weekly','weekly2','archive','news','metals','db','bal','cu','cudb','lab'].forEach(function(k){
       var f=document.getElementById('f-'+k); if(!f)return;
       f.hidden = (k!==v);
       if(k===v && f.dataset.lazy && !f.dataset.loaded){ f.src=f.dataset.lazy; f.dataset.loaded='1'; }
     });
   }
   seg.addEventListener('click',function(e){var b=e.target.closest('button');if(b)show(b.dataset.v);});
-  var m=/[?&]v=(weekly2|daily|sheet|strategy|dailyarchive|weekly|archive|news|metals|db|bal|cu|cudb|lab)(?:&|$)/.exec(location.search);
+  var m=/[?&]v=(input|weekly2|daily|sheet|strategy|dailyarchive|weekly|archive|news|metals|db|bal|cu|cudb|lab)(?:&|$)/.exec(location.search);
   if(m) show(m[1]);
 })();
 </script>

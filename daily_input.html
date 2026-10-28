@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>每日填报 · 锡研究日报</title>
+<style>
+:root{--red:#C00000;--blue:#1F4E79;--ink:#18212b;--muted:#6f7680;--line:#d7dee7;--bg:#f3f5f8;--paper:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "Microsoft YaHei","PingFang SC",sans-serif}.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 20px;background:#fff;border-bottom:3px solid var(--red);box-shadow:0 2px 8px rgba(20,35,55,.06)}.top h1{margin:0;font-size:21px;letter-spacing:2px;border-left:6px solid var(--red);padding-left:12px}.top .sub{color:var(--muted);font-size:12px}.top .spacer{flex:1}.btn{border:0;border-radius:5px;background:var(--red);color:#fff;padding:9px 18px;font:700 14px inherit;cursor:pointer;text-decoration:none}.btn.secondary{background:var(--blue)}.btn.light{background:#fff;color:var(--blue);border:1px solid var(--blue)}.btn:disabled{opacity:.55;cursor:wait}.wrap{max-width:1440px;margin:20px auto 40px;padding:0 16px}.notice{padding:11px 14px;background:#eef3fa;border-left:5px solid var(--blue);margin-bottom:14px;color:#44546a}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:15px 17px;box-shadow:0 1px 4px rgba(20,35,55,.04)}.card.full{grid-column:1/-1}.card h2{font-size:16px;margin:0 0 12px;color:var(--blue);letter-spacing:1px;border-bottom:1px solid var(--line);padding-bottom:7px}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}.field{display:flex;flex-direction:column;gap:4px}.field.wide{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:#44546a}.field label span{font-weight:400;color:var(--muted)}input,select,textarea{width:100%;border:1px solid #cbd5df;border-radius:4px;background:#fff;color:var(--ink);padding:8px 9px;font:13px/1.55 inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(31,78,121,.1)}textarea{min-height:82px;resize:vertical}.large{min-height:112px}.signals{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}.status{font-size:12px;color:var(--muted)}.status.ok{color:#18734a}.status.err{color:var(--red)}.preview{white-space:pre-wrap;background:#fff7f7;border:1px solid #ead4d4;border-radius:5px;padding:12px;font-family:"KaiTi","STKaiti",serif;font-size:14px;min-height:70px}.footer{color:var(--muted);font-size:11px;margin-top:12px}@media(max-width:850px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr 1fr}.signals{grid-template-columns:1fr 1fr}.top .sub{display:none}}@media(max-width:520px){.fields{grid-template-columns:1fr}.wrap{padding:0 8px}.top{padding:10px}.top h1{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="top"><h1>每日填报</h1><span class="sub">一次填写，同步数据日报 + 供需策略 + 日度评分</span><span class="spacer"></span><a class="btn light" href="index.html?v=sheet" target="_top">数据日报</a><a class="btn light" href="index.html?v=strategy" target="_top">供需策略</a></header>
+<main class="wrap">
+<div class="notice">本地预览中点击“一键更新日报”会直接修改项目文件。修改上方主日期会同步六项数据日期；印尼、SOX 等沿用旧数据时，可单独保留下方原日期，避免重复累计。草稿自动保存在本机浏览器。</div>
+<form id="dailyForm">
+<div class="grid">
+<section class="card full"><h2>01 · 日度数据</h2><div class="fields">
+<div class="field"><label for="date">日报日期</label><input id="date" type="date" required></div>
+<div class="field"><label for="shfe">SHFE 仓单 <span>吨</span></label><input id="shfe" type="number" step="any" required><input id="shfeDate" type="date" aria-label="SHFE 仓单数据日期" required></div>
+<div class="field"><label for="idn">印尼交易所成交 <span>吨；无成交填 0</span></label><input id="idn" type="number" step="any" required><input id="idnDate" type="date" aria-label="印尼成交数据日期" required></div>
+<div class="field"><label for="trx">下游成交 <span>吨</span></label><input id="trx" type="number" step="any" required><input id="trxDate" type="date" aria-label="下游成交数据日期" required></div>
+<div class="field"><label for="trt">同业成交 <span>吨</span></label><input id="trt" type="number" step="any" required><input id="trtDate" type="date" aria-label="同业成交数据日期" required></div>
+<div class="field"><label for="yx">云锡升贴水 <span>元/吨</span></label><input id="yx" type="number" step="any" required><input id="yxDate" type="date" aria-label="云锡升贴水数据日期" required></div>
+<div class="field"><label for="sox">SOX 收盘价 <span>点</span></label><input id="sox" type="number" step="any" required><input id="soxDate" type="date" aria-label="SOX 数据日期" required></div>
+</div></section>
+<section class="card"><h2>02 · 宏观与 AI</h2><div class="fields">
+<div class="field wide"><label for="macroToday">今日变化 <span>中东、油价、AI 财报及 SOX 等</span></label><textarea id="macroToday" class="large"></textarea></div>
+<div class="field wide"><label for="macroWatch">后续关注 <span>如 FOMC、基准情形、沃什讲话</span></label><textarea id="macroWatch"></textarea></div>
+<div class="field wide"><label for="ai">AI 日度补充 <span>将自动拼接 SOX 最新值与涨跌</span></label><textarea id="ai"></textarea></div>
+</div></section>
+<section class="card"><h2>03 · 供需与现货</h2><div class="fields">
+<div class="field wide"><label for="fundamentals">供需额外变化 <span>冶炼、矿山及其他新增信息</span></label><textarea id="fundamentals"></textarea></div>
+<div class="field wide"><label for="mine">上游点价 <span>矿 / 锭点价、惜售与出货</span></label><textarea id="mine"></textarea></div>
+<div class="field wide"><label for="spot">现货情况 <span>下游成交、挂单心理价位等</span></label><textarea id="spot"></textarea></div>
+<div class="field wide"><label for="lme">LME 仓单情况 <span>未更新也请明确填写</span></label><textarea id="lme"></textarea></div>
+</div></section>
+<section class="card"><h2>04 · 其他变化</h2><div class="fields">
+<div class="field wide"><label for="other">月差、消费与贸易商行为</label><textarea id="other" class="large"></textarea></div>
+<div class="field wide"><label for="demand">需求补充 <span>可选；默认并入日度成交后</span></label><textarea id="demand"></textarea></div>
+<div class="field wide"><label for="position">持仓·席位 <span>银河 / 东海 / 光大，可选</span></label><textarea id="position"></textarea></div>
+</div></section>
+<section class="card"><h2>05 · 情绪与策略</h2><div class="fields">
+<div class="field wide"><label for="sentiment">红字情绪</label><textarea id="sentiment" class="large"></textarea></div>
+<div class="field wide"><label for="strategy">日度策略 <span>填写完整策略文字</span></label><textarea id="strategy" class="large"></textarea></div>
+</div></section>
+<section class="card full"><h2>06 · 评分信号 <span style="font-size:11px;font-weight:400;color:#6f7680">权重固定：宏观 25% + AI 10% + 成交 25% + 库存 25% + 升贴水 15%</span></h2><div class="signals">
+<div class="field"><label for="signalMacro">宏观</label><select id="signalMacro"><option>利多</option><option>双向</option><option>中性</option><option>偏空</option><option>强多</option><option>强空</option></select></div>
+<div class="field"><label for="signalAi">AI</label><select id="signalAi"><option>利多</option><option>双向</option><option>中性</option><option>偏空</option><option>强多</option><option>强空</option></select></div>
+<div class="field"><label for="signalInventory">库存</label><select id="signalInventory"><option>偏空</option><option>利多</option><option>双向</option><option>中性</option><option>强多</option><option>强空</option></select></div>
+<div class="field"><label for="signalSpot">升贴水</label><select id="signalSpot"><option>双向</option><option>利多</option><option>中性</option><option>偏空</option><option>强多</option><option>强空</option></select></div>
+</div><div class="actions"><button class="btn" id="submitBtn" type="submit">一键更新日报</button><button class="btn secondary" id="copyBtn" type="button">复制管线补充信息</button><button class="btn light" id="resetBtn" type="button">重载当前值</button><span class="status" id="status">已载入当前日报数据</span></div></section>
+<section class="card full"><h2>更新结果预览</h2><div class="preview" id="preview">提交后显示本次生成的红字宏观、基本面与策略。</div><div class="footer">同步位置：数据日报红字 A/B/C/D、供需表日度变化与日度结论、日度策略、日度评分。周度框架不随每日填报自动改写。</div></section>
+</div></form>
+</main>
+<script src="db_data.js"></script><script src="daily_overrides.js"></script>
+<script>
+(function(){
+  var form=document.getElementById('dailyForm'),statusEl=document.getElementById('status'),preview=document.getElementById('preview');
+  var textKeys=['macroToday','macroWatch','ai','fundamentals','mine','spot','lme','other','demand','position','sentiment','strategy'];
+  var numKeys=['trx','trt','shfe','yx','idn','sox'];
+  var seriesKey={trx:'d72',trt:'d71',shfe:'d339',yx:'d65',idn:'d480',sox:'d557'};
+  function latest(k){var row=(window.DB_DATA||[]).find(function(x){return x.k===k;});return row&&row.s.length?row.s[row.s.length-1]:null;}
+  function set(id,value){document.getElementById(id).value=value==null?'':value;}
+  function loadCurrent(){
+    var n=window.TIN_DAILY_INPUT||{},day=n.date||(latest('d339')||[''])[0];set('date',day);
+    numKeys.forEach(function(k){var p=latest(seriesKey[k]);set(k,p?p[1]:'');set(k+'Date',p?p[0]:day);});textKeys.forEach(function(k){set(k,n[k]||'');});
+    var s=n.signals||{};set('signalMacro',s.macro||'利多');set('signalAi',s.ai||'利多');set('signalInventory',s.inventory||'偏空');set('signalSpot',s.spot||'双向');
+    statusEl.className='status';statusEl.textContent='已载入当前日报数据';
+  }
+  function values(){var v={dates:{}};numKeys.forEach(function(k){v[k]=document.getElementById(k).value.trim();v.dates[k]=document.getElementById(k+'Date').value;});textKeys.forEach(function(k){v[k]=document.getElementById(k).value.trim();});v.date=document.getElementById('date').value;v.signals={macro:document.getElementById('signalMacro').value,ai:document.getElementById('signalAi').value,inventory:document.getElementById('signalInventory').value,spot:document.getElementById('signalSpot').value};return v;}
+  function saveDraft(){try{localStorage.setItem('TIN_DAILY_INPUT_DRAFT',JSON.stringify(values()));}catch(e){}}
+  function restoreDraft(){try{var d=JSON.parse(localStorage.getItem('TIN_DAILY_INPUT_DRAFT')||'null');if(!d)return false;numKeys.concat(textKeys,['date']).forEach(function(k){if(d[k]!=null)set(k,d[k]);});numKeys.forEach(function(k){if(d.dates&&d.dates[k])set(k+'Date',d.dates[k]);});if(d.signals){set('signalMacro',d.signals.macro);set('signalAi',d.signals.ai);set('signalInventory',d.signals.inventory);set('signalSpot',d.signals.spot);}statusEl.textContent='已恢复本机未提交草稿';return true;}catch(e){return false;}}
+  function pipelineNotes(v){var labels={macroToday:'今日变化',macroWatch:'后续关注',ai:'AI',fundamentals:'供需',mine:'上游点价',spot:'现货',lme:'LME',other:'其他变化',demand:'需求',position:'持仓',sentiment:'情绪',strategy:'策略'};var lines=textKeys.filter(function(k){return v[k];}).map(function(k){return labels[k]+'：'+v[k];});Object.keys(v.signals).forEach(function(k){var names={macro:'宏观信号',ai:'AI信号',inventory:'库存信号',spot:'升贴水信号'};lines.push(names[k]+'：'+v.signals[k]);});return lines.join('\n');}
+  document.getElementById('date').addEventListener('change',function(){var day=this.value;numKeys.forEach(function(k){set(k+'Date',day);});});
+  form.addEventListener('input',saveDraft);form.addEventListener('change',saveDraft);
+  document.getElementById('resetBtn').addEventListener('click',function(){localStorage.removeItem('TIN_DAILY_INPUT_DRAFT');loadCurrent();preview.textContent='已重新载入当前文件中的数值与文字。';});
+  document.getElementById('copyBtn').addEventListener('click',async function(){try{await navigator.clipboard.writeText(pipelineNotes(values()));statusEl.className='status ok';statusEl.textContent='管线补充信息已复制';}catch(e){statusEl.className='status err';statusEl.textContent='复制失败，请检查浏览器权限';}});
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();var btn=document.getElementById('submitBtn');btn.disabled=true;statusEl.className='status';statusEl.textContent='正在更新数据日报与供需策略…';
+    try{var r=await fetch('/api/daily-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(values())});var out=await r.json();if(!r.ok||!out.ok)throw new Error(out.error||('HTTP '+r.status));localStorage.removeItem('TIN_DAILY_INPUT_DRAFT');statusEl.className='status ok';statusEl.textContent='更新完成：'+out.date+'，日报与供需策略已同步';var s=out.summary||{};preview.textContent='【宏观】\n'+(s.A||'')+'\n\n【基本面】\n'+(s.B||'')+'\n\n【策略】\n'+(s.D||'');
+    }catch(err){statusEl.className='status err';statusEl.textContent='更新失败：'+err.message+'（草稿已保留）';preview.textContent='若在 GitHub Pages 静态页面使用，请点击“复制管线补充信息”，再进入“日报一键更新”管线运行。';}
+    finally{btn.disabled=false;}
+  });
+  loadCurrent();restoreDraft();
+})();
+</script>
+</body></html>
