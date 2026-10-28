@@ -57,7 +57,7 @@
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨')+'；本周消费整体偏弱，此前去库仍主要依赖低位点价';
     if(key==='spot')return d+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较前日 '+signed(c.total-c.oldTotal)+' 吨':'')+'；关注贸易商是交仓，还是继续移仓至 12 月挺价；云锡升水最新为 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨'+(c.prem?'（'+dayLabel(c.prem[0])+'）':'');
     if(key==='spread')return '10/28 SN 换月基差走弱，12 月挺价力度不足，11 月也在走弱；最新价差数值待补充';
-    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME 仓单 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'），'+changeText(c.lme,c.pLme,' 吨'):'')+'；周频社库不变';
+    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME 今日未更新库存，最新仍为 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'）':'')+'；周频社库不变';
     if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
     return '';
   }
