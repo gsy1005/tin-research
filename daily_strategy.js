@@ -6,7 +6,7 @@
   var STORE_WS='TIN_DAILY_WEEKLY_STRATEGY_V1';
   var STORE_DS='TIN_DAILY_DAILY_STRATEGY_V1';
   var archive=window.DAILY_ARCHIVE||null;
-  var keyMap={'价格':'price','宏观':'macro','美股·半导体 AI':'ai','供给·矿端':'mine','供给·冶炼端':'smelt','需求·焊料':'demand','现货·贸易':'spot','月差结构':'spread','库存':'inventory','风险点':'risk'};
+  var keyMap={'价格':'price','宏观':'macro','美股·半导体 AI':'ai','供给·矿端':'mine','供给·冶炼端':'smelt','需求·焊料':'demand','现货·贸易':'spot','月差结构':'spread','库存':'inventory','持仓·席位':'position','风险点':'risk'};
   var fallback={
     rows:[
       {key:'price',cat:'价格',related:'Mysteel 现货均价 378,750（10/16）→ 374,000（10/23），周 -1.3%；周内最高 390,000（10/21），随后回落至 374,000；SMM 1#锡 10/23 为 371,900',conclusion:'反弹未能站稳 39 万附近，符合短期顶部区间判断；但低库存与近月 Back 仍限制低位追空的赔率',signal:'中性'},
@@ -18,6 +18,7 @@
       {key:'spot',cat:'现货·贸易',related:'本周成交 1,904 吨（下游 1,445＋贸易商 459），周降 41.6%；云锡升水 3,000 → 3,500，云字 3,000 / 小牌 2,500；进口盈亏修复至 -253 元/吨，LME Cash-3M 为 +60.77 美元/吨',conclusion:'升水继续抬升、进口窗口接近打平且外盘转为升水，现货偏紧仍未缓解；但成交缩量表明高价抑制采购，紧现货与弱成交并存',signal:'利多'},
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
       {key:'inventory',cat:'库存',related:'SMM 社库 7,770 → 6,689（周 -1,081 / -13.9%，沪 2,151 / 苏 2,480 / 粤 2,058）；Mysteel 社库 7,968 → 7,103（-865 / -10.9%）；全球显性 11,148（周 -880）；SHFE 仓单 2,136（周 -724）；LME 4,045',conclusion:'两口径社库、仓单与全球显性库存共同去化，可交割货源趋紧，预计本周仍有去库和逼仓风险；这是正套优于单边追空的核心依据',signal:'利多'},
+      {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'},
       {key:'risk',cat:'风险点',related:'上行风险：去库超预期、仓单快速下降或宏观利好引发近月逼仓；下行风险：中东升级推高油价与通胀压力，同时科技财报不及预期，形成风险偏好与需求预期的双重压制',conclusion:'低库存使价格上下弹性都放大；正套需防价差继续走扩后的回撤，单边空配需防近月挤仓，单边追多则需防宏观双利空',signal:'双向'}
     ],
     final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可短空，但不宜在低库存环境中追空。'
@@ -48,8 +49,9 @@
       var m=note.match(/SMM 1#锡\s*([\d,]+)\s*元\/吨，日(涨|跌)\s*([\d,]+)/);
       return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
     }
-    if(key==='macro')return d+' 宏观依然关注中东、海外利率与美股财报；其他观点不变，39 万元/吨附近可短空';
+    if(key==='macro')return '10/28 今晚关注 FOMC 议息会，基准情形是不加息，重点关注沃什讲话；其他观点不变，39 万元/吨附近可短空';
     if(key==='ai')return c.sox?'SOX 最新为 '+fmt(c.sox[1])+' 点（'+dayLabel(c.sox[0])+'），'+d+' 尚未录入新读数；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
+    if(key==='position')return '净空单日变化（10/27→10/28，手）：sn2611 银河 469→435（-34）、东海 324→313（-11）、光大 493→240（-253）；sn2612 银河 1,169→1,170（+1）、东海净空单 380（昨日多单未上榜）、光大未上榜；sn2701 银河 195→208（+13）、光大 609→626（+17），东海多单未上榜';
     if(key==='mine')return d+' TC 为周频指标，最新周度值不变；天马矿明年配额可能存在问题，目前待核实';
     if(key==='smelt')return d+' 云锡已开始点火，后续关注能否稳定产出产品；周度开工与产量继续跟踪';
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨');
@@ -69,8 +71,9 @@
     var lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
     var premUp=c.prem&&c.pPrem&&c.prem[1]>c.pPrem[1];
     if(key==='price')return {text:c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，宏观无额外利好时可短空，但低库存下不宜追空':'价格尚未站稳 39 万元/吨，单边不追涨；宏观无额外利好时，反弹至 39 万附近可短空',signal:'偏空'};
-    if(key==='macro')return {text:'宏观仍决定单边方向，继续跟踪中东、海外利率与美股财报；没有额外利好时，39 万元/吨附近可短空',signal:'偏空'};
+    if(key==='macro')return {text:'今晚议息会的基准情形是不加息，重点关注沃什讲话对后续利率路径的指引；没有额外利好时，39 万元/吨附近可短空',signal:'偏空'};
     if(key==='ai')return {text:'Anthropic 招股书缓解 AI 收入兑现担忧，费半上涨带动硬件链修复；对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'};
+    if(key==='position')return {text:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'};
     if(key==='mine')return {text:'TC 维稳，矿端当前仍偏宽松；天马矿明年配额问题尚待核实，暂不计入确定性减量',signal:'偏空'};
     if(key==='smelt')return {text:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'};
     if(key==='demand')return {text:downDown?'下游成交继续缩量，高价采购偏弱；月度销量相对稳定，终端订单尚不足以承接明显供应增量':'下游成交边际改善，但仍需终端订单和月度销量验证持续性',signal:downDown?'偏空':'中性'};
@@ -147,6 +150,8 @@
         var cat=c[0].textContent.trim(),hasDaily=c.length>=5&&c[2].classList.contains('daily');
         rows.push({key:keyMap[cat]||('row'+i),cat:cat,related:c[1].textContent.trim(),conclusion:c[hasDaily?3:2].textContent.trim(),signal:c[hasDaily?4:3].textContent.trim()});
       });
+      var position=fallback.rows.find(function(row){return row.key==='position';}),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
+      if(position&&riskIndex>=0)rows.splice(riskIndex,0,position);
       var final=doc.querySelector('#sumsec table.sum tr.final td[colspan]');
       if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
