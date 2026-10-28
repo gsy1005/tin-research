@@ -85,34 +85,51 @@
     var warehouse=c.wh?'SHFE 仓单 '+fmt(c.wh[1])+' 吨（'+dayLabel(c.wh[0])+'）':'SHFE 仓单暂无读数';
     return c.label+' 日度策略：做多窗口的宏观底座未变，9 月底前无更鹰数据（10Y 4.990%）、油 110.62 美元、中美会晤临近。SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱。'+deals+'，'+warehouse+'；本周消费偏弱，此前去库主要由低位点价贡献，后续关注贸易商是交仓，还是继续移仓至 12 月挺价。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。评分只反映日度边际，不替代周度供需框架。';
   }
+  function signalScore(s){
+    if(s==='强多')return 2;if(s==='利多'||s==='结构多')return 1;if(s==='中性略偏多')return 0.5;
+    if(s==='强空')return -2;if(s==='偏空')return -1;if(s==='中性略偏空')return -0.5;return 0;
+  }
+  function scoreLabel(value){return value>=1.25?'强多':(value>=0.5?'偏多':(value>0.1?'中性略偏多':(value>=-0.1?'中性':(value>-0.5?'中性略偏空':(value>-1.25?'偏空':'强空')))));}
+  function scoreValue(dims){return Math.max(-2,Math.min(2,dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0)));}
   function scoreModel(c){
     var dealPct=c.down&&c.pDown&&c.pDown[1]?(c.down[1]-c.pDown[1])/c.pDown[1]*100:null;
     var dealScore=dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0))));
     var inventorySignal=dailyView('inventory',c).signal,spotSignal=dailyView('spot',c).signal;
-    function signalScore(s){return s==='利多'?1:(s==='偏空'?-1:0);}
     var dims=[{name:'宏观',score:1,weight:25},{name:'成交需求',score:dealScore,weight:35},{name:'库存',score:signalScore(inventorySignal),weight:25},{name:'升贴水',score:signalScore(spotSignal),weight:15}];
-    var value=dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0);
-    value=Math.max(-2,Math.min(2,value));
-    var label=value>=1.25?'强多':(value>=0.5?'偏多':(value>0.1?'中性略偏多':(value>=-0.1?'中性':(value>-0.5?'中性略偏空':(value>-1.25?'偏空':'强空')))));
-    return {value:value,label:label,dims:dims,dealPct:dealPct,inventorySignal:inventorySignal,spotSignal:spotSignal};
+    var value=scoreValue(dims);
+    return {value:value,label:scoreLabel(value),dims:dims,dealPct:dealPct,inventorySignal:inventorySignal,spotSignal:spotSignal};
+  }
+  function weeklyScoreModel(){
+    var rows={};source.rows.forEach(function(row){rows[row.key]=row;});
+    var dims=[{key:'macro',name:'宏观',weight:25},{key:'demand',name:'成交需求',weight:35},{key:'inventory',name:'库存',weight:25},{key:'spot',name:'升贴水',weight:15}];
+    dims.forEach(function(d){d.signal=rows[d.key]?rows[d.key].signal:'中性';d.score=signalScore(d.signal);});
+    var value=scoreValue(dims);return {value:value,label:scoreLabel(value),dims:dims};
+  }
+  function scoreMarkup(m,basis,note){
+    var text=(m.value>0?'+':'')+m.value.toFixed(2),color=m.value>0?'#C00000':(m.value<0?'#1F4E79':'#173554');
+    var detail=m.dims.map(function(d){return d.name+' '+(d.score>0?'+':'')+d.score+' × '+d.weight+'%';}).join('；');
+    return '<div class="score-top"><span class="score-number" style="color:'+color+'">'+text+'</span><span class="score-label" style="color:'+color+'">'+m.label+'</span></div><div class="score-track"><i class="score-marker" style="left:'+((m.value+2)/4*100)+'%"></i></div><div class="score-ticks"><span>-2 强空</span><span>-1</span><span>0</span><span>+1</span><span>+2 强多</span></div><div class="score-detail">'+detail+'<br>'+basis+'</div><div class="score-note">'+note+'</div>';
   }
   function renderScore(c){
     var el=document.getElementById('dailyScore');if(!el)return;
-    var m=scoreModel(c),text=(m.value>0?'+':'')+m.value.toFixed(2),color=m.value>0?'#C00000':(m.value<0?'#1F4E79':'#173554');
-    var detail=m.dims.map(function(d){return d.name+' '+(d.score>0?'+':'')+d.score+' × '+d.weight+'%';}).join('；');
-    var basis='下游成交环比 '+(m.dealPct===null?'暂无可比值':signed(m.dealPct)+'%')+'；库存分项 '+m.inventorySignal+'；升贴水分项 '+m.spotSignal;
-    el.innerHTML='<div class="score-top"><span class="score-number" style="color:'+color+'">'+text+'</span><span class="score-label" style="color:'+color+'">'+m.label+'</span></div><div class="score-track"><i class="score-marker" style="left:'+((m.value+2)/4*100)+'%"></i></div><div class="score-ticks"><span>-2 强空</span><span>-1</span><span>0</span><span>+1</span><span>+2 强多</span></div><div class="score-detail">'+detail+'<br>'+basis+'</div><div class="score-note">宏观小利好记 +1；下游成交环比 ≥5% 记 +1、≥20% 记 +2，≤-5% 记 -1、≤-20% 记 -2。仅作日度边际跟踪。</div>';
+    var m=scoreModel(c),basis='下游成交环比 '+(m.dealPct===null?'暂无可比值':signed(m.dealPct)+'%')+'；库存分项 '+m.inventorySignal+'；升贴水分项 '+m.spotSignal;
+    el.innerHTML=scoreMarkup(m,basis,'宏观小利好记 +1；下游成交环比 ≥5% 记 +1、≥20% 记 +2，≤-5% 记 -1、≤-20% 记 -2。仅作日度边际跟踪。');
+  }
+  function renderWeeklyScore(){
+    var el=document.getElementById('weeklyScore');if(!el)return;
+    var m=weeklyScoreModel(),basis=m.dims.map(function(d){return d.name+' '+d.signal;}).join('；');
+    el.innerHTML=scoreMarkup(m,basis,'周度评分沿用日度四项权重；利多/结构多 +1、偏空 -1、中性/双向 0，强多/强空 ±2。');
   }
   function saveWeekly(){
     var values={};
-    document.querySelectorAll('#weeksumBody [data-field]').forEach(function(td){values[td.dataset.key+'|'+td.dataset.field]=td.textContent.trim();});
+    document.querySelectorAll('#weeksumBody [data-field]').forEach(function(td){var label=td.querySelector('.signal-label');values[td.dataset.key+'|'+td.dataset.field]=(label?label.textContent:td.textContent).trim();});
     writeStore(STORE_WEEK,{stamp:stamp,values:values});
   }
   function saveDailyCells(){
     var values={};
     document.querySelectorAll('#weeksumBody [data-daily-key]').forEach(function(td){values['change:'+td.dataset.dailyKey]=td.textContent.trim();});
     document.querySelectorAll('#weeksumBody [data-daily-conclusion-key]').forEach(function(td){values['conclusion:'+td.dataset.dailyConclusionKey]=td.textContent.trim();});
-    document.querySelectorAll('#weeksumBody [data-daily-signal-key]').forEach(function(td){values['signal:'+td.dataset.dailySignalKey]=td.textContent.trim();});
+    document.querySelectorAll('#weeksumBody [data-daily-signal-key]').forEach(function(td){var label=td.querySelector('.signal-label');values['signal:'+td.dataset.dailySignalKey]=(label?label.textContent:td.textContent).trim();});
     writeStore(STORE_DAY,{date:dayStamp,values:values});
   }
   function updateDaily(){
@@ -125,7 +142,11 @@
       var conclusion=document.querySelector('#weeksumBody [data-daily-conclusion-key="'+row.key+'"]');
       if(conclusion)conclusion.textContent=values['conclusion:'+row.key]||view.text;
       var signal=document.querySelector('#weeksumBody [data-daily-signal-key="'+row.key+'"]');
-      if(signal)signal.textContent=values['signal:'+row.key]||view.signal;
+      if(signal){
+        var signalText=values['signal:'+row.key]||view.signal,value=signalScore(signalText);
+        signal.textContent='';var label=document.createElement('span');label.className='signal-label';label.textContent=signalText;signal.appendChild(label);
+        var badge=document.createElement('span');badge.className='direction-score '+(value>0?'pos':(value<0?'neg':'flat'));badge.textContent='评分 '+((value>0?'+':'')+value.toFixed(2));signal.appendChild(badge);
+      }
     });
     renderScore(c);
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
@@ -151,6 +172,7 @@
     });
     var ws=readStore(STORE_WS),weeklyEl=document.getElementById('weeklyStrategyText');
     weeklyEl.textContent=ws&&ws.stamp===stamp&&ws.text?ws.text:source.final;
+    renderWeeklyScore();
     if(archive)document.querySelectorAll('#dailyStrategyBlock [contenteditable]').forEach(function(el){el.contentEditable='false';});
     updateDaily();
   }
