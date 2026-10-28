@@ -19,7 +19,7 @@
       {key:'spot',cat:'现货·贸易',related:'本周成交 1,904 吨（下游 1,445＋贸易商 459），周降 41.6%；云锡升水 3,000 → 3,500，云字 3,000 / 小牌 2,500；进口盈亏修复至 -253 元/吨，LME Cash-3M 为 +60.77 美元/吨',conclusion:'升水继续抬升、进口窗口接近打平且外盘转为升水，现货偏紧仍未缓解；但成交缩量表明高价抑制采购，紧现货与弱成交并存',signal:'利多'},
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
       {key:'inventory',cat:'库存',related:'SMM 社库 7,770 → 6,689（周 -1,081 / -13.9%，沪 2,151 / 苏 2,480 / 粤 2,058）；Mysteel 社库 7,968 → 7,103（-865 / -10.9%）；全球显性 11,148（周 -880）；SHFE 仓单 2,136（周 -724）；LME 4,045',conclusion:'两口径社库、仓单与全球显性库存共同去化，可交割货源趋紧，预计本周仍有去库和逼仓风险；这是正套优于单边追空的核心依据',signal:'利多'},
-      {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'},
+      {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河、东海、光大主要为云锡席位；今日 sn2611 三席位合计净空单 988 手（银河 435、东海 313、光大 240），大概率对应云锡后续 11 月交仓单数量，重点跟踪仓单注册兑现',signal:'双向'},
       {key:'risk',cat:'风险点',related:'上行风险：中东进一步缓和、FOMC 不加息或 AI 财报与 SOX 继续改善；下行风险：协议仅为暂时、选举前后局势反复、油价突破前高或沃什表态偏鹰',conclusion:'宏观与 AI 支撑和偏弱实物成交并存，左侧单需控制仓位；同时关注基差回落和库存变化，避免把低位点价去库等同于终端消费改善',signal:'双向'}
     ],
     final:'近期中东局势有所缓和，今晚 FOMC 基准情形是不加息，重点关注沃什讲话；AI 财报反馈与 SOX 反弹提供情绪支持。SN 换月基差开始走弱，11 月及 12 月挺价力度不足，正套逻辑边际减弱。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。后续关注贸易商交仓或移仓至 12 月挺价，以及消费和库存验证。'
@@ -60,7 +60,7 @@
     }
     if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');if(mt||mw)return d+' 今日变化：'+mt+'；后续关注：'+mw;return d+' 近期中东局势有所缓和，但仍需防范协议仅为暂时、选举前后局势反复；油价接近 120 美元前高压力位。今晚关注 FOMC，基准情形是不加息，重点关注沃什讲话';}
     if(key==='ai')return soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书及三星、海力士三季报获得市场较正面反馈，继续跟踪 SOX 变化');
-    if(key==='position')return inputValue('position')||'净空单日变化（10/27→10/28，手）：sn2611 银河 469→435（-34）、东海 324→313（-11）、光大 493→240（-253）；sn2612 银河 1,169→1,170（+1）、东海净空单 380（昨日多单未上榜）、光大未上榜；sn2701 银河 195→208（+13）、光大 609→626（+17），东海多单未上榜';
+    if(key==='position')return inputValue('position')||'10/28 云锡三席位 sn2611 合计净空单 988 手（银河 435、东海 313、光大 240），较 10/27 合计减少 298 手';
     if(key==='mine')return inputValue('mine')?d+' '+inputValue('mine'):'10/28 矿端点价约千吨，锭端点价较少，主要为此前已交货但未定价的货源；天马矿明年配额可能存在问题，目前待核实';
     if(key==='smelt'){var sm=[inputValue('smelt'),inputValue('fundamentals')].filter(Boolean).join('；');return sm?d+' '+sm:d+' 云锡已开始点火，后续关注能否稳定产出产品；周度开工与产量继续跟踪';}
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨')+'；'+(inputValue('demand')||'本周消费整体偏弱，此前去库仍主要依赖低位点价');
@@ -74,7 +74,7 @@
     if(key==='price')return {text:'中东缓和与不加息基准预期对风险偏好有支撑，但成交仍弱，左侧单维持轻仓；收盘破 39 万止损，成交重回 400 吨上方或收盘收复 41 万再加满',signal:inputSignal('price','双向')};
     if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');return {text:mt||mw?('今日变化：'+mt+'；后续关注：'+mw):'中东缓和与不加息基准预期支撑风险偏好；但协议持续性、选举前后反复、油价前高压力及沃什表态仍可能带来双向扰动',signal:inputSignal('macro','利多')};}
     if(key==='ai')return {text:soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书和三星、海力士三季报反馈偏正面，AI 硬件链情绪改善，对锡构成情绪支持'),signal:inputSignal('ai','利多')};
-    if(key==='position')return {text:inputValue('position')||'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:inputSignal('position','双向')};
+    if(key==='position')return {text:inputValue('position')||'银河、东海、光大主要为云锡席位；今日 sn2611 三席位合计净空单 988 手（银河 435、东海 313、光大 240），大概率对应云锡后续 11 月交仓单数量，重点跟踪仓单注册兑现',signal:inputSignal('position','双向')};
     if(key==='mine')return {text:inputValue('mine')||'矿端点价约千吨，挺价惜售情绪进一步松动；点价以此前已交货但未定价货源为主，锭端点价较少',signal:inputSignal('mine','偏空')};
     if(key==='smelt'){var sm=[inputValue('smelt'),inputValue('fundamentals')].filter(Boolean).join('；');return {text:sm||'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:inputSignal('smelt','偏空')};}
     if(key==='demand')return {text:inputValue('demand')||'本周消费整体偏弱，今日下游成交继续缩量；此前去库主要由低位点价贡献，不能直接等同于终端需求改善',signal:inputSignal('demand','偏空')};
@@ -110,20 +110,17 @@
     dims.forEach(function(d){d.signal=rows[d.key]?rows[d.key].signal:'中性';d.score=signalScore(d.signal);});
     var value=scoreValue(dims);return {value:value,label:scoreLabel(value),dims:dims};
   }
-  function scoreMarkup(m,basis,note){
+  function scoreMarkup(m){
     var text=(m.value>0?'+':'')+m.value.toFixed(2),color=m.value>0?'#C00000':(m.value<0?'#1F4E79':'#173554');
-    var detail=m.dims.map(function(d){return d.name+' '+(d.score>0?'+':'')+d.score+' × '+d.weight+'%';}).join('；');
-    return '<div class="score-top"><span class="score-number" style="color:'+color+'">'+text+'</span><span class="score-label" style="color:'+color+'">'+m.label+'</span></div><div class="score-track"><i class="score-marker" style="left:'+((m.value+2)/4*100)+'%"></i></div><div class="score-ticks"><span>-2 强空</span><span>-1</span><span>0</span><span>+1</span><span>+2 强多</span></div><div class="score-detail">'+detail+'<br>'+basis+'</div><div class="score-note">'+note+'</div>';
+    return '<div class="score-top"><span class="score-number" style="color:'+color+'">'+text+'</span><span class="score-label" style="color:'+color+'">'+m.label+'</span></div><div class="score-track"><i class="score-marker" style="left:'+((m.value+2)/4*100)+'%"></i></div><div class="score-ticks"><span>-2 强空</span><span>-1</span><span>0</span><span>+1</span><span>+2 强多</span></div>';
   }
   function renderScore(c){
     var el=document.getElementById('dailyScore');if(!el)return;
-    var m=scoreModel(c),basis='下游成交环比 '+(m.dealPct===null?'暂无可比值':signed(m.dealPct)+'%')+'；库存分项 '+m.inventorySignal+'；升贴水分项 '+m.spotSignal;
-    el.innerHTML=scoreMarkup(m,basis,'宏观与 AI 小利好各记 +1；下游成交环比 ≥5% 记 +1、≥20% 记 +2，≤-5% 记 -1、≤-20% 记 -2。仅作日度边际跟踪。');
+    el.innerHTML=scoreMarkup(scoreModel(c));
   }
   function renderWeeklyScore(){
     var el=document.getElementById('weeklyScore');if(!el)return;
-    var m=weeklyScoreModel(),basis=m.dims.map(function(d){return d.name+' '+d.signal;}).join('；');
-    el.innerHTML=scoreMarkup(m,basis,'周度评分沿用日度五项权重：宏观 25%、AI 10%、成交 25%、库存 25%、升贴水 15%；利多/结构多 +1、偏空 -1、中性/双向 0。');
+    el.innerHTML=scoreMarkup(weeklyScoreModel());
   }
   function saveWeekly(){
     var values={};
