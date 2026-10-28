@@ -261,6 +261,7 @@ technicalPage.body.innerHTML = `
   <div class="tech-gate" id="techGate"><h3>技术分析（私享）</h3><p>采用锡研究日报原有技术理论。请输入访问密码，解锁仅在本次浏览器会话中有效。</p><form id="techForm"><input id="techPassword" type="password" inputmode="numeric" autocomplete="off" aria-label="技术分析访问密码" placeholder="访问密码" required><button type="submit">解锁技术分析</button></form><div class="tech-gate-error" id="techGateError" aria-live="polite"></div></div>
   <div class="tech-private" id="techPrivate" hidden>
     <button class="tech-lock" id="techLock" type="button">退出私享</button>
+    <div id="tinStructurePrivate" class="tin-structure-root"></div>
     <div class="tech-intro"><p>趋势 / 动能 / 量价 · 日线原引擎 · 多周期验证</p><span class="tag" id="privateTechUpdated">等待读取数据…</span></div>
     <div class="tech-score" id="privateTechScore"></div><div class="tech-grid" id="privateTechGrid"></div>
     <div class="tech-brief" id="privateTechBrief"></div><div id="privateTechDetails"></div>
@@ -454,7 +455,9 @@ function renderTechnical(data) {
   requestAnimationFrame(drawKline);
 }
 function initTechnical() {
-  syncTechGate(); if (!techUnlocked || technicalLoading) return;
+  syncTechGate(); if (!techUnlocked) return;
+  window.TinStructure?.mount(id('tinStructurePrivate'));
+  if (technicalLoading) return;
   if (technicalData) { renderTechnical(technicalData); return; }
   technicalLoading = true; id('privateTechUpdated').textContent = '正在读取数据并运行日报引擎…';
   Promise.all([fetchTechnicalSnapshot(), loadDailyEngine(), loadLegacyTechData().catch(() => null)]).then(([data, , legacy]) => { technicalData = mergeTechnicalData(data, legacy); renderTechnical(technicalData); }).catch(() => {
