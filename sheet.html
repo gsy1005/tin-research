@@ -67,7 +67,7 @@
   .catcol{width:74px;text-align:center!important;font-weight:800;letter-spacing:0;font-size:13px;vertical-align:middle}
   .sfoot{padding:8px 10px 0;font-size:11.5px;color:var(--faint);line-height:1.6}
 </style>
-<link rel="stylesheet" href="daily_strategy.css?v=202610271745">
+<link rel="stylesheet" href="daily_strategy.css?v=202610271530">
 </head>
 <body>
 <div class="ctrl">
@@ -101,6 +101,7 @@
     <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
     <div class="sumblk"><b>情　绪</b><div contenteditable="true" id="sumC"></div></div>
+    <div class="sumblk"><b>策　略</b><div contenteditable="true" id="sumD"></div></div>
   </div>
   <div class="main">
     <div class="ttable"><table id="dtable"></table></div>
@@ -120,18 +121,18 @@
   <div id="wsgrid"></div>
 </div>
 <script src="lib/chart.min.js"></script>
-<script src="db_data.js?v=202610281011"></script>
-<script src="summary_note.js?v=202610281011"></script>
-<script src="tech.js?v=202610281011"></script>
-<script src="sheet.js?v=202610281011"></script>
-<script src="sheet_customs.js?v=202610281011"></script>
-<script src="daily_strategy.js?v=202610271915"></script>
+<script src="db_data.js?v=202610271840"></script>
+<script src="summary_note.js?v=202610281745"></script>
+<script src="tech.js?v=202610261259"></script>
+<script src="sheet.js?v=202610261259"></script>
+<script src="sheet_customs.js?v=202610270148"></script>
+<script src="daily_strategy.js?v=202610281745"></script>
 <script>
-/* 日报顶部只保留三段简短结论；切换天数或刷新数据后仍保持简洁。 */
+/* 日报顶部保留四段简短结论；切换天数或刷新数据后仍保持简洁。 */
 (function(){
   function applySimpleSummary(){
     var n=window.TIN_SUMMARY_NOTE||{};
-    [['sumA','A'],['sumB','B'],['sumC','C']].forEach(function(x){
+    [['sumA','A'],['sumB','B'],['sumC','C'],['sumD','D']].forEach(function(x){
       var el=document.getElementById(x[0]);
       if(el&&n[x[1]]&&el.textContent!==n[x[1]])el.textContent=n[x[1]];
     });

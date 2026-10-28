@@ -36,7 +36,7 @@
   function changeText(cur,pre,unit){if(!cur||!pre)return '暂无可比值';var d=cur[1]-pre[1];return '较'+(pre[0].slice(5).replace('-','/'))+(d===0?'持平':(d>0?'增加 ':'减少 ')+fmt(Math.abs(d))+(unit||''));}
   function context(){
     var wh=last('d339'),lme=last('d334'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557');
-    var day=(wh&&wh[0])||(down&&down[0])||(price&&price[0])||(lme&&lme[0])||'';
+    var day=[wh,lme,down,trade,price,prem,sox].filter(Boolean).map(function(p){return p[0];}).sort().pop()||'';
     var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pLme=prev('d334'),pSox=prev('d557');
     var total=down&&trade?down[1]+trade[1]:null;
     var oldTotal=pDown&&pTrade?pDown[1]+pTrade[1]:null;
@@ -49,7 +49,7 @@
       var m=note.match(/SMM 1#锡\s*([\d,]+)\s*元\/吨，日(涨|跌)\s*([\d,]+)/);
       return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
     }
-    if(key==='macro')return '10/28 今晚关注 FOMC 议息会，基准情形是不加息，重点关注沃什讲话；其他观点不变，39 万元/吨附近可短空';
+    if(key==='macro')return d+' 中东局势有所缓和，但仍需防范反复；今晚关注 FOMC 议息会，基准情形是不加息，重点关注沃什讲话；美股修复对风险偏好构成小幅支持';
     if(key==='ai')return c.sox?'SOX 最新为 '+fmt(c.sox[1])+' 点（'+dayLabel(c.sox[0])+'），'+d+' 尚未录入新读数；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
     if(key==='position')return '净空单日变化（10/27→10/28，手）：sn2611 银河 469→435（-34）、东海 324→313（-11）、光大 493→240（-253）；sn2612 银河 1,169→1,170（+1）、东海净空单 380（昨日多单未上榜）、光大未上榜；sn2701 银河 195→208（+13）、光大 609→626（+17），东海多单未上榜';
     if(key==='mine')return d+' TC 为周频指标，最新周度值不变；天马矿明年配额可能存在问题，目前待核实';
@@ -60,7 +60,7 @@
       var a=last('d63'),b=last('d62');
       return a&&b&&a[0]===c.day&&b[0]===c.day?d+' 连一－连二 '+fmt(a[1]-b[1])+' 元/吨；对照正套参考区间 1,000–2,000 元/吨':d+' 价差以盘中连一－连二为准；正套等待 1,000–2,000 元/吨参考区间';
     }
-    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨，'+changeText(c.wh,c.pWh,' 吨')+'；LME 仓单 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'），'+changeText(c.lme,c.pLme,' 吨'):'')+'；周频社库不变';
+    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME 仓单 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'），'+changeText(c.lme,c.pLme,' 吨'):'')+'；周频社库不变';
     if(key==='risk')return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';
     return '';
   }
@@ -71,25 +71,40 @@
     var lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
     var premUp=c.prem&&c.pPrem&&c.prem[1]>c.pPrem[1];
     if(key==='price')return {text:c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，宏观无额外利好时可短空，但低库存下不宜追空':'价格尚未站稳 39 万元/吨，单边不追涨；宏观无额外利好时，反弹至 39 万附近可短空',signal:'偏空'};
-    if(key==='macro')return {text:'今晚议息会的基准情形是不加息，重点关注沃什讲话对后续利率路径的指引；没有额外利好时，39 万元/吨附近可短空',signal:'偏空'};
-    if(key==='ai')return {text:'Anthropic 招股书缓解 AI 收入兑现担忧，费半上涨带动硬件链修复；对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'};
+    if(key==='macro')return {text:'中东局势有所缓和，但仍需防范反复；美股修复对风险偏好和锡的情绪端构成小幅利好，日度宏观不按偏空处理。今晚关注 FOMC 与后续利率路径',signal:'双向'};
+    if(key==='ai')return {text:'Anthropic 招股书缓解 AI 收入兑现担忧，费半上涨带动硬件链修复；对锡构成情绪端的小幅利好，后续继续关注美股财报',signal:'利多'};
     if(key==='position')return {text:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'};
     if(key==='mine')return {text:'TC 维稳，矿端当前仍偏宽松；天马矿明年配额问题尚待核实，暂不计入确定性减量',signal:'偏空'};
     if(key==='smelt')return {text:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'};
     if(key==='demand')return {text:downDown?'下游成交继续缩量，高价采购偏弱；月度销量相对稳定，终端订单尚不足以承接明显供应增量':'下游成交边际改善，但仍需终端订单和月度销量验证持续性',signal:downDown?'偏空':'中性'};
     if(key==='spot')return {text:premUp&&totalDown?'云锡升水上调反映品牌现货仍紧，但总成交缩量显示高价抑制采购，紧现货与弱需求并存':totalDown?'成交缩量，现货承接偏弱，继续结合升贴水验证真实紧张程度':'成交有所承接，结合升贴水继续验证现货强度',signal:premUp&&!totalDown?'利多':'双向'};
     if(key==='spread')return {text:'近月低库存仍支持正套，但价差已高于 1,000–2,000 元/吨参考区间，等待回落再择机入场',signal:'利多'};
-    if(key==='inventory')return {text:whDown&&lmeDown?'SHFE 与 LME 仓单同步去化，海内外可交割货源均偏紧，近月支撑和逼仓风险尚未解除；但云锡复产的后续影响需持续跟踪':whDown||lmeDown?'SHFE 与 LME 仓单变化分化，单一市场去库仍提供支撑，但需结合另一市场库存、社库和云锡复产进度验证':'SHFE 与 LME 仓单均未继续去化，库存支撑边际减弱，需结合社库和云锡复产进度重新验证',signal:whDown&&lmeDown?'利多':(whDown||lmeDown?'双向':'偏空')};
+    if(key==='inventory')return {text:whDown&&lmeDown?'SHFE 与 LME 仓单最新读数均下降，可交割货源偏紧，近月支撑仍在；两者日期不同，且云锡复产的后续影响需持续跟踪':whDown||lmeDown?'SHFE 与 LME 仓单变化分化，单一市场去库仍提供支撑，但需结合另一市场库存、社库和云锡复产进度验证':'SHFE 与 LME 仓单均未继续去化，库存支撑边际减弱，需结合社库和云锡复产进度重新验证',signal:whDown&&lmeDown?'利多':(whDown||lmeDown?'双向':'偏空')};
     if(key==='risk')return {text:'云锡复产带来供应恢复预期，仓单下降又支撑近月，月度销量相对稳定，双向波动风险仍高',signal:'双向'};
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
-    var whDown=c.wh&&c.pWh&&c.wh[1]<c.pWh[1],lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
-    var structure=whDown&&lmeDown?'SHFE 与 LME 仓单同步去化，海内外供应支撑仍在':(whDown||lmeDown?'SHFE 与 LME 仓单未同步去化，内外库存出现分化':'SHFE 与 LME 仓单均未继续去化，库存支撑需要进一步验证');
-    var lmeText=c.lme?'LME 仓单 '+fmt(c.lme[1])+' 吨（'+dayLabel(c.lme[0])+'，'+changeText(c.lme,c.pLme,' 吨')+'）':'LME 仓单暂无读数';
-    var demand=c.total!==null&&c.oldTotal!==null?(c.total<c.oldTotal?'成交较前日缩量，高价下采购偏谨慎':'成交较前日放量，需求承接有所改善'):'成交可比数据不足';
-    var price=c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，可短空，但仍须防近月逼仓':'价格未进入或尚未站稳 39 万元/吨参考区，单边不追涨杀跌；宏观无额外利好时，39 万元/吨附近可短空';
-    return c.label+' 日度策略：周度“正套优先、宏观决定单边”的框架不变。'+structure+'，'+lmeText+'；'+demand+'；云锡升水 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨。云锡点火后产量恢复预期增强，而下游月度销量相对稳定，若稳定产出兑现，供需边际将转松。'+price+'；正套仍等待连一－连二回落至 1,000–2,000 元/吨再择机入场。';
+    var deals=c.total!==null&&c.oldTotal!==null?'当日两类成交 '+fmt(c.total)+' 吨，较前日 '+signed(c.total-c.oldTotal)+' 吨':'当日成交可比数据不足';
+    var warehouse=c.wh?'SHFE 仓单 '+fmt(c.wh[1])+' 吨（'+dayLabel(c.wh[0])+'）':'SHFE 仓单暂无读数';
+    return c.label+' 日度策略：近期中东局势有所缓和，但仍要防范反复；美股修复对风险偏好构成小幅支持。日度以观望为主，若表达看空观点，可用期权，并注意权利金、波动率成本及最大亏损。'+deals+'，'+warehouse+'；评分只反映日度边际，不替代周度供需框架。';
+  }
+  function scoreModel(c){
+    var dealPct=c.down&&c.pDown&&c.pDown[1]?(c.down[1]-c.pDown[1])/c.pDown[1]*100:null;
+    var dealScore=dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0))));
+    var inventorySignal=dailyView('inventory',c).signal,spotSignal=dailyView('spot',c).signal;
+    function signalScore(s){return s==='利多'?1:(s==='偏空'?-1:0);}
+    var dims=[{name:'宏观',score:1,weight:25},{name:'成交需求',score:dealScore,weight:35},{name:'库存',score:signalScore(inventorySignal),weight:25},{name:'升贴水',score:signalScore(spotSignal),weight:15}];
+    var value=dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0);
+    value=Math.max(-2,Math.min(2,value));
+    var label=value>=1.25?'强多':(value>=0.5?'偏多':(value>0.1?'中性略偏多':(value>=-0.1?'中性':(value>-0.5?'中性略偏空':(value>-1.25?'偏空':'强空')))));
+    return {value:value,label:label,dims:dims,dealPct:dealPct,inventorySignal:inventorySignal,spotSignal:spotSignal};
+  }
+  function renderScore(c){
+    var el=document.getElementById('dailyScore');if(!el)return;
+    var m=scoreModel(c),text=(m.value>0?'+':'')+m.value.toFixed(2),color=m.value>0?'#C00000':(m.value<0?'#1F4E79':'#173554');
+    var detail=m.dims.map(function(d){return d.name+' '+(d.score>0?'+':'')+d.score+' × '+d.weight+'%';}).join('；');
+    var basis='下游成交环比 '+(m.dealPct===null?'暂无可比值':signed(m.dealPct)+'%')+'；库存分项 '+m.inventorySignal+'；升贴水分项 '+m.spotSignal;
+    el.innerHTML='<div class="score-top"><span class="score-number" style="color:'+color+'">'+text+'</span><span class="score-label" style="color:'+color+'">'+m.label+'</span></div><div class="score-track"><i class="score-marker" style="left:'+((m.value+2)/4*100)+'%"></i></div><div class="score-ticks"><span>-2 强空</span><span>-1</span><span>0</span><span>+1</span><span>+2 强多</span></div><div class="score-detail">'+detail+'<br>'+basis+'</div><div class="score-note">宏观小利好记 +1；下游成交环比 ≥5% 记 +1、≥20% 记 +2，≤-5% 记 -1、≤-20% 记 -2。仅作日度边际跟踪。</div>';
   }
   function saveWeekly(){
     var values={};
@@ -115,6 +130,7 @@
       var signal=document.querySelector('#weeksumBody [data-daily-signal-key="'+row.key+'"]');
       if(signal)signal.textContent=values['signal:'+row.key]||view.signal;
     });
+    renderScore(c);
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
     var el=document.getElementById('dailyStrategyText'),saved=readStore(STORE_DS);
     if(el)el.textContent=saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
