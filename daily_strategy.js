@@ -10,7 +10,7 @@
   var fallback={
     rows:[
       {key:'price',cat:'价格',related:'Mysteel 现货均价 378,750（10/16）→ 374,000（10/23），周 -1.3%；周内最高 390,000（10/21），随后回落至 374,000；SMM 1#锡 10/23 为 371,900',conclusion:'反弹未能站稳 39 万附近，符合短期顶部区间判断；但低库存与近月 Back 仍限制低位追空的赔率',signal:'中性'},
-      {key:'macro',cat:'宏观',related:'下周重点为以色列大选、FOMC、欧洲央行与欧元区 GDP；中东基准情形仍是大选前后先升级、再降级，油价高波动可能强化通胀约束；利率基准情形为 10 月不加息，后续仍保留收紧可能',conclusion:'宏观没有额外利好时，锡价 39 万附近可短空；若中东升级与财报不及预期叠加，风险资产和锡价下行压力将加大',signal:'偏空'},
+      {key:'macro',cat:'宏观',related:'做多窗口的宏观底座未变：9 月底前无更鹰数据，10Y 4.990%，油价 110.62 美元，中美会晤临近',conclusion:'锡的方向由宏观窗口接管，实物门紧逼为加仓信号；但成交缩量仍是左侧单风险项，确认前维持轻仓',signal:'利多'},
       {key:'ai',cat:'美股·半导体 AI',related:'SOX 10/23 为 10,779 点，周中波动显著；下周海力士、三星、谷歌、微软、亚马逊、英特尔等密集披露业绩或召开电话会。沿用宏观周报的验证链条：AI 订单与资本开支能否进一步转化为收入、利润和经营现金流',conclusion:'Anthropic 提交 S-1，上半年收入约 163 亿美元，二季度首次实现经营利润，缓解市场对 AI 收入兑现的担忧；招股书公布后费城半导体指数收涨 2.82%，AI 硬件链修复，但巨额算力投入及后续成本仍需验证。对锡仍更多是情绪影响，后续继续关注美股财报',signal:'双向'},
       {key:'mine',cat:'供给·矿端',related:'TC 云南 17,000 / 江西 13,000 元/金属吨，上周均下调 500，本周维稳；锡价回落同步降低与价格挂钩的冶炼损耗成本',conclusion:'矿端当前偏宽松。上周锡价 41→37 万对应损耗成本减负约 1,000–1,500 元/吨，大于 TC 500 元/吨的名义降幅，剔除价格折旧后实际加工收益不降反升；本周 TC 维稳，矿端并未进一步收紧',signal:'偏空'},
       {key:'smelt',cat:'供给·冶炼端',related:'SMM 两省开工率（10/23 周）合计 27.11%（-2.25pct），云南 25.56 / 江西 29.47；两省周产量 1,440 吨，上周 1,560 吨；近期部分炼厂有减产意愿',conclusion:'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:'偏空'},
@@ -19,9 +19,9 @@
       {key:'spread',cat:'月差结构',related:'连一－连二 +900 → +2,340，Back 加深',conclusion:'近月结构明显走强，正套逻辑仍在；最新价差已高于 1,000–2,000 入场参考区间，等待回落更合适',signal:'利多'},
       {key:'inventory',cat:'库存',related:'SMM 社库 7,770 → 6,689（周 -1,081 / -13.9%，沪 2,151 / 苏 2,480 / 粤 2,058）；Mysteel 社库 7,968 → 7,103（-865 / -10.9%）；全球显性 11,148（周 -880）；SHFE 仓单 2,136（周 -724）；LME 4,045',conclusion:'两口径社库、仓单与全球显性库存共同去化，可交割货源趋紧，预计本周仍有去库和逼仓风险；这是正套优于单边追空的核心依据',signal:'利多'},
       {key:'position',cat:'持仓·席位',related:'净空单周变化（10/23→10/28，手）：sn2611 银河 640→435（-205）、东海 585→313（-272）；sn2612 银河 920→1,170（+250）、东海 377→380（+3）；sn2701 银河 469→208（-261）、光大 605→626（+21）。其余未上榜项不按零值计算',conclusion:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'},
-      {key:'risk',cat:'风险点',related:'上行风险：去库超预期、仓单快速下降或宏观利好引发近月逼仓；下行风险：中东升级推高油价与通胀压力，同时科技财报不及预期，形成风险偏好与需求预期的双重压制',conclusion:'低库存使价格上下弹性都放大；正套需防价差继续走扩后的回撤，单边空配需防近月挤仓，单边追多则需防宏观双利空',signal:'双向'}
+      {key:'risk',cat:'风险点',related:'上行风险：宏观做多窗口强化、实物门紧逼或低位点价继续带动去库；下行风险：消费持续偏弱、仓单累积、换月基差走弱及贸易商交仓',conclusion:'宏观窗口与偏弱实物成交并存，左侧单需控制仓位；同时关注基差回落和库存变化，避免把低位点价去库等同于终端消费改善',signal:'双向'}
     ],
-    final:'预计本周显性库存继续去化，低库存带来逼仓风险，正套优于单边：连一－连二价差 1,000–2,000 元/吨时择机买近抛远。单边仍看宏观，重点关注中东局势和美股财报；宏观没有额外利好时，39 万元/吨附近为短期顶部区间，可短空，但不宜在低库存环境中追空。'
+    final:'做多窗口的宏观底座未变，锡的方向由宏观窗口接管；但 SN 换月基差开始走弱，11 月及 12 月挺价力度不足，正套逻辑边际减弱。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。后续关注贸易商交仓或移仓至 12 月挺价，以及消费和库存验证。'
   };
   var source=fallback,stamp='',dayStamp='';
   function readStore(key){if(archive)return null;try{return JSON.parse(localStorage.getItem(key)||'null');}catch(e){return null;}}
@@ -49,7 +49,7 @@
       var m=note.match(/SMM 1#锡\s*([\d,]+)\s*元\/吨，日(涨|跌)\s*([\d,]+)/);
       return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
     }
-    if(key==='macro')return d+' 中东局势有所缓和，但仍需防范反复；今晚关注 FOMC 议息会，基准情形是不加息，重点关注沃什讲话；美股修复对风险偏好构成小幅支持';
+    if(key==='macro')return d+' 做多窗口的宏观底座未变：9 月底前无更鹰数据（10Y 4.990%）、油 110.62 美元、中美会晤临近；锡的方向由宏观窗口接管，成交缩 99 吨仍是左侧单风险项';
     if(key==='ai')return c.sox?'SOX 最新为 '+fmt(c.sox[1])+' 点（'+dayLabel(c.sox[0])+'），'+d+' 尚未录入新读数；继续跟踪科技财报与 AI 高频数据':d+' SOX 暂无收盘读数，继续跟踪科技财报与 AI 高频数据';
     if(key==='position')return '净空单日变化（10/27→10/28，手）：sn2611 银河 469→435（-34）、东海 324→313（-11）、光大 493→240（-253）；sn2612 银河 1,169→1,170（+1）、东海净空单 380（昨日多单未上榜）、光大未上榜；sn2701 银河 195→208（+13）、光大 609→626（+17），东海多单未上榜';
     if(key==='mine')return '10/28 矿端点价约千吨，锭端点价较少，主要为此前已交货但未定价的货源；天马矿明年配额可能存在问题，目前待核实';
@@ -67,8 +67,8 @@
     var whDown=c.wh&&c.pWh&&c.wh[1]<c.pWh[1];
     var lmeDown=c.lme&&c.pLme&&c.lme[1]<c.pLme[1];
     var premUp=c.prem&&c.pPrem&&c.prem[1]>c.pPrem[1];
-    if(key==='price')return {text:c.price&&c.price[1]>=390000?'价格进入 39 万元/吨附近参考区，宏观无额外利好时可短空，但低库存下不宜追空':'价格尚未站稳 39 万元/吨，单边不追涨；宏观无额外利好时，反弹至 39 万附近可短空',signal:'偏空'};
-    if(key==='macro')return {text:'中东局势有所缓和，但仍需防范反复；美股修复对风险偏好和锡的情绪端构成小幅利好，日度宏观不按偏空处理。今晚关注 FOMC 与后续利率路径',signal:'双向'};
+    if(key==='price')return {text:'做多窗口的宏观底座未变，但成交仍弱，左侧单维持轻仓；收盘破 39 万止损，成交重回 400 吨上方或收盘收复 41 万再加满',signal:'双向'};
+    if(key==='macro')return {text:'9 月底前无更鹰数据、油价 110.62 美元、中美会晤临近，宏观做多窗口未变；实物门紧逼为加仓信号，但成交缩 99 吨仍弱，需控制左侧单风险',signal:'利多'};
     if(key==='ai')return {text:'Anthropic 招股书缓解 AI 收入兑现担忧，费半上涨带动硬件链修复；对锡构成情绪端的小幅利好，后续继续关注美股财报',signal:'利多'};
     if(key==='position')return {text:'银河主力 sn2612 净空单周增 250 手，东海主力基本持平；光大近月明显减空、远月小幅增空。均为上期所代客口径，未上榜不等于零持仓',signal:'双向'};
     if(key==='mine')return {text:'矿端点价约千吨，挺价惜售情绪进一步松动；点价以此前已交货但未定价货源为主，锭端点价较少',signal:'偏空'};
@@ -83,7 +83,7 @@
   function autoStrategy(c){
     var deals=c.total!==null&&c.oldTotal!==null?'当日两类成交 '+fmt(c.total)+' 吨，较前日 '+signed(c.total-c.oldTotal)+' 吨':'当日成交可比数据不足';
     var warehouse=c.wh?'SHFE 仓单 '+fmt(c.wh[1])+' 吨（'+dayLabel(c.wh[0])+'）':'SHFE 仓单暂无读数';
-    return c.label+' 日度策略：近期中东局势有所缓和，但仍要防范反复；美股修复对风险偏好构成小幅支持。SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱。'+deals+'，'+warehouse+'；本周消费偏弱，此前去库主要由低位点价贡献，后续关注贸易商是交仓，还是继续移仓至 12 月挺价。日度以观望为主，若表达看空观点，可用期权，并注意权利金、波动率成本及最大亏损；评分只反映日度边际，不替代周度供需框架。';
+    return c.label+' 日度策略：做多窗口的宏观底座未变，9 月底前无更鹰数据（10Y 4.990%）、油 110.62 美元、中美会晤临近。SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱。'+deals+'，'+warehouse+'；本周消费偏弱，此前去库主要由低位点价贡献，后续关注贸易商是交仓，还是继续移仓至 12 月挺价。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。评分只反映日度边际，不替代周度供需框架。';
   }
   function scoreModel(c){
     var dealPct=c.down&&c.pDown&&c.pDown[1]?(c.down[1]-c.pDown[1])/c.pDown[1]*100:null;
@@ -165,8 +165,9 @@
       });
       var position=fallback.rows.find(function(row){return row.key==='position';}),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
       if(position&&riskIndex>=0)rows.splice(riskIndex,0,position);
-      var final=doc.querySelector('#sumsec table.sum tr.final td[colspan]');
-      if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
+      /* 周报原文保留为历史存档；日报中的宏观、风险与策略使用最新框架。 */
+      ['macro','risk'].forEach(function(key){var current=fallback.rows.find(function(row){return row.key===key;}),index=rows.findIndex(function(row){return row.key===key;});if(current&&index>=0)rows[index]=current;});
+      if(rows.length)render({rows:rows,final:fallback.final});
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
   }
   function exportStrategyPNG(){
