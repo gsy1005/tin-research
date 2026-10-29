@@ -246,6 +246,49 @@
     </section>`;
   }
 
+  function refreshFeedback(root, message, kind = '') {
+    const element = root.querySelector('[data-refresh-feedback]');
+    if (!element) return;
+    element.hidden = !message;
+    element.className = `sns-refresh-feedback ${kind}`;
+    element.textContent = message;
+  }
+
+  async function refreshData(root, state) {
+    const button = root.querySelector('[data-refresh-data]');
+    if (!button || button.disabled) return;
+    if (!['localhost', '127.0.0.1', '::1'].includes(location.hostname)) {
+      refreshFeedback(root, '线上静态页不能读取你电脑中的通达信文件。请打开本机预览，再点击“更新盘后数据”。', 'warning');
+      return;
+    }
+    button.disabled = true;
+    button.textContent = '正在更新…';
+    refreshFeedback(root, '正在复算主连双链并生成网页快照，通常需要几分钟；请勿重复点击。', 'running');
+    try {
+      const response = await fetch('/api/refresh-structures', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Tin-Refresh': 'after-hours' },
+        body: '{}',
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error(result.error || '更新接口未成功返回');
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = `./tin_structure_data.js?refresh=${Date.now()}`;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('新数据已生成，但网页脚本加载失败；请刷新页面重试。'));
+        document.head.appendChild(script);
+      });
+      render(root, state);
+      refreshFeedback(root, `${result.message} 图表与策略已切换到新快照。`, 'success');
+    } catch (error) {
+      refreshFeedback(root, `${error.message || '更新失败'}；当前页面保留上一成功数据。`, 'error');
+    } finally {
+      const currentButton = root.querySelector('[data-refresh-data]');
+      if (currentButton) { currentButton.disabled = false; currentButton.textContent = '↻ 更新盘后数据'; }
+    }
+  }
+
   function payloadFor(state) {
     return window.TIN_MARKET_DATA?.[`${state.symbol}__${state.profile}`]
       || (state.symbol === '30_SNL8' ? window.TIN_STRUCTURE_DATA?.[state.profile] : null);
@@ -267,8 +310,9 @@
       <nav class="sns-section-nav" aria-label="技术分析板块导航">${NAV_ITEMS.map(([id, label]) => `<button type="button" data-nav="${id}">${label}</button>`).join('')}<button type="button" class="sns-all-market" data-workspace="${state.workspace === 'market' ? 'tin' : 'market'}">${state.workspace === 'market' ? '返回沪锡主报告' : `全品种技术分析 · ${catalog.length}`}</button></nav>
       <section class="sns-hero"><div><span class="sns-kicker">PRIVATE · TDX AFTER-HOURS STRUCTURE</span><h3>${esc(symbolName)}主连 · 结构联立</h3><p>高级别定方向，低级别找触发；价格结构先行，指标只做验证。${state.workspace === 'market' ? ' 全品种仅展示已就绪主连快照，不混入具体月份合约。' : ''}</p></div><div class="sns-private-stamp"><b>私享</b><span>${esc(report.data_source.mode === 'local_only' ? '通达信本地K线' : '本地＋补线')}</span></div></section>
       ${state.workspace === 'market' ? `<section class="sns-market-workspace" data-market-workspace><div><span>MULTI-SYMBOL MAIN CONTINUOUS</span><h3>全品种主连工作台</h3><p>${catalog.length} 个已就绪主连 · 每个品种只显示实际可用的联立链和四级图表</p></div><div class="sns-market-tabs">${catalog.map(item => `<button type="button" data-symbol="${esc(item.symbol)}" class="${state.symbol === item.symbol ? 'active' : ''}"><b>${esc(item.name)}</b><span>${item.profiles.length} 条链</span></button>`).join('')}</div></section>` : `<button type="button" class="sns-market-entry" data-workspace="market"><span>独立入口</span><b>全品种技术分析</b><em>${catalog.length} 个已就绪主连 →</em></button>`}
-      <div class="sns-toolbar"><div class="sns-profile-tabs">${availableProfiles.map(key => `<button type="button" data-profile="${key}" class="${state.profile === key ? 'active' : ''}">${PROFILE_LABELS[key]}</button>`).join('')}</div><span>快照截至 <b>${shortTime(report.data_cutoff)}</b></span></div>
-      <div class="sns-warning">这是已收盘K线生成的结构快照，不是实时交易指令。切换级别只改变当前证据与图表，不改写原快照。</div>
+      <div class="sns-toolbar"><div class="sns-profile-tabs">${availableProfiles.map(key => `<button type="button" data-profile="${key}" class="${state.profile === key ? 'active' : ''}">${PROFILE_LABELS[key]}</button>`).join('')}</div><div class="sns-data-actions"><button type="button" class="sns-refresh-data" data-refresh-data title="读取已下载的通达信K线，复算主连并刷新本页">↻ 更新盘后数据</button><span>快照截至 <b>${shortTime(report.data_cutoff)}</b></span></div></div>
+      <div class="sns-refresh-feedback" data-refresh-feedback hidden></div>
+      <div class="sns-warning">这是已收盘K线生成的结构快照，不是实时交易指令。更新按钮只读取已下载数据，不会替你启动通达信下载。</div>
       ${chainMarkup(report, focused)}
       <section class="sns-panel sns-chart-panel"><div class="sns-panel-heading"><div><span>PRICE × CHAN × MACD</span><h3>${esc(symbolName)}主连 · ${esc(focused.label)} K线 / 缠论笔 / 中枢 / MACD</h3></div>${directionPill(focused.direction)}</div>${chartTimeframeTabs(report, focused)}<div class="sns-chart-wrap">${chartSvg(bars, focused, payload.structures?.[focused.timeframe])}</div></section>
       ${unifiedStrategyPanel(report)}
@@ -289,12 +333,15 @@
     const state = { symbol: '30_SNL8', profile: 'day_2h_30m_5m', timeframe: '5m', workspace: 'tin' };
     root.dataset.mounted = 'true';
     root.addEventListener('click', event => {
+      const refresh = event.target.closest('[data-refresh-data]');
       const workspace = event.target.closest('[data-workspace]');
       const nav = event.target.closest('[data-nav]');
       const symbol = event.target.closest('[data-symbol]');
       const profile = event.target.closest('[data-profile]');
       const timeframe = event.target.closest('[data-timeframe], [data-chart-timeframe]');
-      if (workspace) {
+      if (refresh) {
+        refreshData(root, state);
+      } else if (workspace) {
         state.workspace = workspace.dataset.workspace;
         render(root, state);
         root.querySelector('.sns-section-nav')?.scrollIntoView({ behavior: 'smooth', block: 'start' });

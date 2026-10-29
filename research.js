@@ -174,7 +174,6 @@ const group = (label, children, open = false) => ({ type: 'group', label, childr
 const NAV = [
   group('总览', [page('summary', '本周总结'), page('quarter', '季度展望'), page('framework', '产业框架')], true),
   group('重点关注', [
-    page('focus-macro', '宏观环境'), page('focus-sentiment', '锡市场情绪'),
     group('供给', [page('supply-mine', '矿端与进口'), page('supply-smelt', '冶炼与精锡'), page('inventory', '显性库存'), page('cost', '矿山成本与边际')], true),
     group('需求', [
       group('锡焊料', [
@@ -185,7 +184,7 @@ const NAV = [
       page('demand-tinplate', '马口铁'),
       page('demand-battery', '铅蓄电池')
     ], true),
-    page('ai', 'AI 高频验证'),
+    page('focus-sentiment', '锡市场情绪'), page('focus-macro', '宏观环境'), page('ai', 'AI 高频验证'),
     page('spot', '现货与进出口'), page('strategy', '策略与验证点')
   ], true),
   page('balance', '平衡表与全年情景'),
