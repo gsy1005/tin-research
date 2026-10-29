@@ -71,8 +71,8 @@
     return '';
   }
   function dailyView(key,c){
-    if(key==='price')return {text:'收盘破 39 万，多单按纪律离场、原判断作废；成交重回 400 吨上方或收盘收复 41 万后再重新评估',signal:inputSignal('price','偏空')};
-    if(key==='macro')return {text:'谷歌与三星财报压制风险偏好，微软的正面贡献不足以扭转美股动能减弱；中东外交窗口仍开，但核心分歧使宏观判断偏空',signal:inputSignal('macro','偏空')};
+    if(key==='price')return {text:'维持 39 万布空思路，关注宏观不确定性及成交、库存变化',signal:inputSignal('price','偏空')};
+    if(key==='macro')return {text:'美股财报表现分化，中东谈判及核心诉求仍有不确定性；宏观方向暂不明确，中性观察',signal:inputSignal('macro','中性')};
     if(key==='ai')return {text:'SOX 前一日上涨与今日财报扰动分化，谷歌和三星的负面反馈占主导，AI 对锡的情绪支持转弱',signal:inputSignal('ai','偏空')};
     if(key==='position')return {text:'三席位合计净空降至 558 手，东海、光大退出净空单榜单；作为云锡后续 11 月交仓参考，预估交仓规模较此前下降，银河增空仍需跟踪',signal:inputSignal('position','双向')};
     if(key==='mine')return {text:'此前已交货货源集中点价，说明矿端挺价惜售继续松动；锭端点价仍少，矿端边际偏空但并非新增供应集中释放',signal:inputSignal('mine','偏空')};
@@ -81,7 +81,7 @@
     if(key==='spot')return {text:'低位成交回升不足以确认现货转强，升贴水又缺少今日新报价；现货信号暂不改善，继续观察贸易商交仓或移仓',signal:inputSignal('spot','双向')};
     if(key==='spread')return {text:'换月基差与近月挺价均走弱，正套逻辑边际减弱；今日无新增月差数据，不进一步上调或下调结构判断',signal:inputSignal('spread','偏空')};
     if(key==='inventory')return {text:'SHFE 今日持平，既未去库也未累库；LME 续降形成外盘支撑，内外分化，低库存支撑没有进一步强化',signal:inputSignal('inventory','双向')};
-    if(key==='risk')return {text:'财报、地缘与弱成交共同压制风险偏好，且价格已触发止损；当前以离场和重新评估为主，不抢低位反弹',signal:inputSignal('risk','偏空')};
+    if(key==='risk')return {text:'宏观方向不确定，财报、地缘与弱成交仍可能扰动风险偏好；维持 39 万布空思路，谨慎观察',signal:inputSignal('risk','偏空')};
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
