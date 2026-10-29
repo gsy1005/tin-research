@@ -71,7 +71,7 @@
     return '';
   }
   function dailyView(key,c){
-    if(key==='price')return {text:'中东缓和与不加息基准预期对风险偏好有支撑，但成交仍弱，左侧单维持轻仓；收盘破 39 万止损，成交重回 400 吨上方或收盘收复 41 万再加满',signal:inputSignal('price','双向')};
+    if(key==='price')return {text:'收盘破 39 万，多单按纪律离场、原判断作废；成交重回 400 吨上方或收盘收复 41 万后再重新评估',signal:inputSignal('price','偏空')};
     if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');return {text:mt||mw?('今日变化：'+mt+'；后续关注：'+mw):'中东缓和与不加息基准预期支撑风险偏好；但协议持续性、选举前后反复、油价前高压力及沃什表态仍可能带来双向扰动',signal:inputSignal('macro','利多')};}
     if(key==='ai')return {text:soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书和三星、海力士三季报反馈偏正面，AI 硬件链情绪改善，对锡构成情绪支持'),signal:inputSignal('ai','利多')};
     if(key==='position')return {text:inputValue('position')||'银河、东海、光大主要为云锡席位；今日 sn2611 三席位合计净空单 988 手（银河 435、东海 313、光大 240），大概率对应云锡后续 11 月交仓单数量，重点跟踪仓单注册兑现',signal:inputSignal('position','双向')};
@@ -98,7 +98,7 @@
   function scoreValue(dims){return Math.max(-2,Math.min(2,dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0)));}
   function scoreModel(c){
     var dealPct=c.down&&c.pDown&&c.pDown[1]?(c.down[1]-c.pDown[1])/c.pDown[1]*100:null;
-    var dealScore=dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0))));
+    var dealScore=c.down&&c.down[1]<400?-1:(dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0)))));
     var macroSignal=dailyView('macro',c).signal,aiSignal=dailyView('ai',c).signal,inventorySignal=dailyView('inventory',c).signal,spotSignal=dailyView('spot',c).signal;
     var dims=[{name:'宏观',score:signalScore(macroSignal),weight:25},{name:'AI',score:signalScore(aiSignal),weight:10},{name:'成交需求',score:dealScore,weight:25},{name:'库存',score:signalScore(inventorySignal),weight:25},{name:'升贴水',score:signalScore(spotSignal),weight:15}];
     var value=scoreValue(dims);
