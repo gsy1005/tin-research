@@ -72,16 +72,16 @@
   }
   function dailyView(key,c){
     if(key==='price')return {text:'收盘破 39 万，多单按纪律离场、原判断作废；成交重回 400 吨上方或收盘收复 41 万后再重新评估',signal:inputSignal('price','偏空')};
-    if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');return {text:mt||mw?('今日变化：'+mt+'；后续关注：'+mw):'中东缓和与不加息基准预期支撑风险偏好；但协议持续性、选举前后反复、油价前高压力及沃什表态仍可能带来双向扰动',signal:inputSignal('macro','利多')};}
-    if(key==='ai')return {text:soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书和三星、海力士三季报反馈偏正面，AI 硬件链情绪改善，对锡构成情绪支持'),signal:inputSignal('ai','利多')};
-    if(key==='position')return {text:inputValue('position')||'银河、东海、光大主要为云锡席位；今日 sn2611 三席位合计净空单 988 手（银河 435、东海 313、光大 240），大概率对应云锡后续 11 月交仓单数量，重点跟踪仓单注册兑现',signal:inputSignal('position','双向')};
-    if(key==='mine')return {text:inputValue('mine')||'矿端点价约千吨，挺价惜售情绪进一步松动；点价以此前已交货但未定价货源为主，锭端点价较少',signal:inputSignal('mine','偏空')};
-    if(key==='smelt'){var sm=[inputValue('smelt'),inputValue('fundamentals')].filter(Boolean).join('；');return {text:sm||'云锡点火后供应恢复预期升温，后续产量大概率回升；下游月度销量相对稳定，若稳定产出兑现，供需边际将转向宽松',signal:inputSignal('smelt','偏空')};}
-    if(key==='demand')return {text:inputValue('demand')||'本周消费整体偏弱，今日下游成交继续缩量；此前去库主要由低位点价贡献，不能直接等同于终端需求改善',signal:inputSignal('demand','偏空')};
-    if(key==='spot')return {text:inputValue('spot')||'11 月和 12 月挺价力度均走弱，重点关注贸易商选择交仓，还是继续移仓至 12 月挺价',signal:inputSignal('spot','双向')};
-    if(key==='spread')return {text:inputValue('spread')||inputValue('other')||'SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱，等待最新价差和贸易商行为验证',signal:inputSignal('spread','偏空')};
-    if(key==='inventory')return {text:'SHFE 仓单'+changeText(c.wh,c.pWh,' 吨')+'，关注库存边际变化及 LME 最新库存',signal:inputSignal('inventory',c.wh&&c.pWh&&c.wh[1]>c.pWh[1]?'偏空':'利多')};
-    if(key==='risk')return {text:inputValue('risk')||'仓单转增、换月基差走弱与低库存并存，关注贸易商交仓或移仓选择，避免把低位点价去库等同于消费改善',signal:inputSignal('risk','双向')};
+    if(key==='macro')return {text:'谷歌与三星财报压制风险偏好，微软的正面贡献不足以扭转美股动能减弱；中东外交窗口仍开，但核心分歧使宏观判断偏空',signal:inputSignal('macro','偏空')};
+    if(key==='ai')return {text:'SOX 前一日上涨与今日财报扰动分化，谷歌和三星的负面反馈占主导，AI 对锡的情绪支持转弱',signal:inputSignal('ai','偏空')};
+    if(key==='position')return {text:'三席位合计净空降至 558 手，东海、光大退出净空单榜单；作为云锡后续 11 月交仓参考，预估交仓规模较此前下降，银河增空仍需跟踪',signal:inputSignal('position','双向')};
+    if(key==='mine')return {text:'此前已交货货源集中点价，说明矿端挺价惜售继续松动；锭端点价仍少，矿端边际偏空但并非新增供应集中释放',signal:inputSignal('mine','偏空')};
+    if(key==='smelt')return {text:'云锡复产预期仍在，但稳定产出尚未验证；不提前计入确定增量，后续产量兑现仍构成供应端偏空风险',signal:inputSignal('smelt','偏空')};
+    if(key==='demand')return {text:'成交只是低位反弹，未达到 400 吨确认线且显著低于常态，需求仍弱，不能视为持续补库或终端改善',signal:inputSignal('demand','偏空')};
+    if(key==='spot')return {text:'低位成交回升不足以确认现货转强，升贴水又缺少今日新报价；现货信号暂不改善，继续观察贸易商交仓或移仓',signal:inputSignal('spot','双向')};
+    if(key==='spread')return {text:'换月基差与近月挺价均走弱，正套逻辑边际减弱；今日无新增月差数据，不进一步上调或下调结构判断',signal:inputSignal('spread','偏空')};
+    if(key==='inventory')return {text:'SHFE 今日持平，既未去库也未累库；LME 续降形成外盘支撑，内外分化，低库存支撑没有进一步强化',signal:inputSignal('inventory','双向')};
+    if(key==='risk')return {text:'财报、地缘与弱成交共同压制风险偏好，且价格已触发止损；当前以离场和重新评估为主，不抢低位反弹',signal:inputSignal('risk','偏空')};
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
