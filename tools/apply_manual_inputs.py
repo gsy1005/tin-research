@@ -7,7 +7,7 @@ GitHub Actions 使用 IN_NOTES 多行文本；本地填报工具可使用同名�
 import json
 import os
 import re
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -106,6 +106,9 @@ def parse_notes(raw):
                 continue
         if current and line:
             result[current] = (result.get(current, "") + "；" + line).strip("；")
+    # 未加字段前缀的整段原文也必须保留，不能再静默丢弃。
+    if not result and not signals and raw.strip():
+        result["fundamentals"] = re.sub(r"\s+", " ", raw.strip())
     if signals:
         result["signals"] = signals
     return result
@@ -176,7 +179,8 @@ def indonesia_analysis(by_key):
 def main():
     header, db = load_js_json(DB_PATH, "window.DB_DATA=window.DB_DATA=")
     by_key = {x["k"]: x for x in db}
-    day = os.environ.get("IN_DATE", "").strip() or by_key["d0"]["s"][-1][0]
+    # 工作流写明“默认今天”，不能再用可能滞后的 SMM 价格日期作为日报日期。
+    day = os.environ.get("IN_DATE", "").strip() or datetime.now(timezone(timedelta(hours=8))).date().isoformat()
     date.fromisoformat(day)
 
     numeric = {}
