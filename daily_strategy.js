@@ -85,10 +85,8 @@
     return {text:'',signal:'中性'};
   }
   function autoStrategy(c){
-    if(inputValue('strategy'))return inputValue('strategy');
-    var deals=c.total!==null&&c.oldTotal!==null?'当日两类成交 '+fmt(c.total)+' 吨，较前日 '+signed(c.total-c.oldTotal)+' 吨':'当日成交可比数据不足';
-    var warehouse=c.wh?'SHFE 仓单 '+fmt(c.wh[1])+' 吨（'+dayLabel(c.wh[0])+'）':'SHFE 仓单暂无读数';
-    return c.label+' 日度策略：近期中东局势有所缓和，但仍需防范协议仅为暂时、选举前后反复；油价接近 120 美元前高压力位。今晚 FOMC 基准情形是不加息，重点关注沃什讲话。AI 财报反馈偏正面，'+soxDaily(c)+'。SN 换月基差开始走弱，11 月及 12 月挺价力度均不足，正套逻辑边际减弱。'+deals+'，'+warehouse+'；本周消费偏弱，此前去库主要由低位点价贡献，后续关注贸易商是交仓，还是继续移仓至 12 月挺价。左侧单维持轻仓，收盘破 39 万止损；成交重回 400 吨上方或收盘收复 41 万再加满。评分只反映日度边际，不替代周度供需框架。';
+    /* 日度策略只采用填报/供需策略表中的原文，不拼接旧日报或自动交易规则。 */
+    return inputValue('strategy')||'日度策略待填报';
   }
   function signalScore(s){
     if(s==='强多')return 2;if(s==='利多'||s==='结构多')return 1;if(s==='中性略偏多')return 0.5;

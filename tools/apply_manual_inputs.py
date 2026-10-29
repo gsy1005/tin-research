@@ -216,7 +216,7 @@ def main():
 
     note = load_note()
     if notes.get("macroToday") or notes.get("macroWatch"):
-        note["A"] = "【今日变化】" + notes.get("macroToday", "无补充") + " 【后续关注】" + notes.get("macroWatch", "无补充")
+        note["A"] = "【今日变化】" + notes.get("macroToday", "无补充") + "\n【后续关注】" + notes.get("macroWatch", "无补充")
     if notes.get("sentiment"):
         note["C"] = notes["sentiment"]
 
@@ -250,7 +250,7 @@ def main():
         other = "；".join(x for x in [notes.get("fundamentals", ""), notes.get("other", "")] if x)
         if other:
             sections.append("【其他变化】" + other + "。")
-        note["B"] = "\n\n".join(sections)
+        note["B"] = "\n".join(sections)
 
         # 红字“策略”只复制当天日度策略；评分保留在供需策略页。
         note["D"] = notes.get("strategy", "日度策略按供需策略页最新内容执行")
