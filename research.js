@@ -337,7 +337,7 @@ async function fetchJson(url) {
   finally { clearTimeout(timer); }
 }
 async function fetchTechnicalSnapshot() {
-  const sources = ['./technical.json', 'https://amiya866.github.io/tin-insight/technical.json', 'https://tin-insight-api.wangziquan-tin.workers.dev/api/technical'];
+  const sources = ['https://tin-insight-api.wangziquan-tin.workers.dev/api/technical', 'https://amiya866.github.io/tin-insight/technical.json', './technical.json'];
   let lastError;
   for (const source of sources) {
     try { const data = await fetchJson(source); if (Array.isArray(data.tech) && data.tech.length >= 3 && data.kline?.candles?.length) return data; }
