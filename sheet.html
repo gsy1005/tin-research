@@ -35,6 +35,11 @@
   .note.g{background:var(--leadbg)}.note.b{background:#E4EEF9}.note.y{background:#F7F7F7}.note.r{background:var(--soft)}
   .summary{margin:10px 6px 0;background:var(--red);color:#fff;padding:12px 16px;font-size:14px;line-height:1.75}
   .summary h2{font-size:15.5px;letter-spacing:3px;margin-bottom:6px;color:#fff}
+  .sumhead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .sumactions{display:flex;align-items:center;gap:9px}
+  #summaryRefreshStatus{font-size:11.5px;color:#FFE1E1;letter-spacing:0;white-space:nowrap}
+  #summaryRefresh{border:1px solid rgba(255,255,255,.75);border-radius:4px;background:#fff;color:var(--red);padding:3px 12px;font:700 12px/1.5 "Microsoft YaHei",sans-serif;cursor:pointer;white-space:nowrap}
+  #summaryRefresh:disabled{cursor:wait;opacity:.7}
   .summary [contenteditable]{outline:none;display:block}
   .summary [contenteditable]:focus{background:rgba(255,255,255,.08)}
   .sumblk{margin-top:8px;display:flex;gap:10px;align-items:flex-start}
@@ -99,7 +104,7 @@
     }).catch(function(){el.textContent='';});
   })();
   </script>
-  <div class="summary"><h2>日 内 总 结</h2>
+  <div class="summary"><div class="sumhead"><h2>日 内 总 结</h2><div class="sumactions"><span id="summaryRefreshStatus" aria-live="polite"></span><button type="button" id="summaryRefresh" title="重新读取数据管线已生成的最新日报文件">刷新红字</button></div></div>
     <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
     <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
     <div class="sumblk"><b>情　绪</b><div contenteditable="true" id="sumC"></div></div>
@@ -146,6 +151,42 @@
     var render=window.TIN_SHEET.render;
     window.TIN_SHEET.render=function(){var out=render.apply(this,arguments);applySimpleSummary();return out;};
   }
+})();
+</script>
+<script>
+/* 手动绕过缓存，重读数据管线已生成的日报文件；失败时保留当前页面内容。 */
+(function(){
+  var button=document.getElementById('summaryRefresh'),status=document.getElementById('summaryRefreshStatus');
+  if(!button)return;
+  function loadFresh(name){
+    return new Promise(function(resolve,reject){
+      var script=document.createElement('script'),url=name+(name.indexOf('?')<0?'?':'&')+'_refresh='+Date.now();
+      script.src=url;script.async=false;
+      script.onload=function(){script.remove();resolve();};
+      script.onerror=function(){script.remove();reject(new Error(name));};
+      document.head.appendChild(script);
+    });
+  }
+  button.addEventListener('click',async function(){
+    button.disabled=true;button.textContent='读取中…';status.textContent='正在读取数据管线';
+    try{
+      await loadFresh('db_data.js');
+      await loadFresh('summary_note.js');
+      await loadFresh('daily_overrides.js');
+      if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
+        var days=document.getElementById('days');window.TIN_SHEET.render(days?days.value:7);
+      }
+      if(window.TIN_SIMPLE_SUMMARY)window.TIN_SIMPLE_SUMMARY();
+      var now=new Date(),z=function(n){return (n<10?'0':'')+n;};
+      status.textContent='已更新 '+z(now.getHours())+':'+z(now.getMinutes());
+      button.textContent='已刷新';
+    }catch(e){
+      status.textContent='读取失败，内容未清空，请稍后重试';button.textContent='重新刷新';
+    }finally{
+      button.disabled=false;
+      setTimeout(function(){button.textContent='刷新红字';},2200);
+    }
+  });
 })();
 </script>
 <script>
