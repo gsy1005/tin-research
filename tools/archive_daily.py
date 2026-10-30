@@ -99,30 +99,30 @@ def data_table(db: list, archive_date: str) -> str:
 
 ARCHIVE_CSS = r"""
 :root{--red:#C00000;--blue:#1F4E79;--ink:#1a1a1a;--muted:#6c737d;--line:#d9d9d9;--lead:#EEF3FA}
-*{box-sizing:border-box}body{margin:0;background:#f3f4f6;color:var(--ink);font-family:"KaiTi","STKaiti","Noto Serif CJK SC",serif}.archive-top{max-width:1460px;margin:auto;padding:12px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}.archive-top a{color:var(--blue);font-size:14px;text-decoration:none}.archive-top .badge{margin-left:auto;color:var(--red);border:1px solid var(--red);border-radius:4px;padding:3px 10px;font-size:12px}.archive-wrap{max-width:1460px;margin:0 auto 36px;background:#fff;padding:0 0 18px}.archive-head{padding:20px 16px 14px;border-bottom:2px solid var(--red)}.archive-head h1{margin:0;font-size:30px;letter-spacing:3px;border-left:6px solid var(--red);padding-left:14px}.archive-head p{margin:7px 0 0 20px;color:var(--muted);font-size:13px}.archive-summary{margin:12px 6px 0;padding:12px 16px;background:var(--red);color:#fff}.archive-summary h2{font-size:16px;letter-spacing:3px;margin:0 0 8px}.summary-grid{display:grid;grid-template-columns:1fr;gap:8px}.summary-item{display:flex;gap:10px;line-height:1.7;font-size:14px}.summary-item b{flex:0 0 auto;align-self:flex-start;background:#8A0000;padding:1px 9px;border-radius:3px;font-size:13px;letter-spacing:1px}.archive-data{margin:14px 6px 0;border:1px solid var(--line)}.archive-data h2{margin:0;padding:8px 12px;background:var(--lead);border-left:5px solid var(--blue);font-size:16px}.archive-data h2 span{font-size:11px;color:var(--muted);font-weight:400;margin-left:8px}.data-scroll{overflow-x:auto}.daily-data{width:100%;min-width:850px;border-collapse:collapse;table-layout:fixed}.daily-data th,.daily-data td{border:1px solid var(--line);padding:6px 8px;font-size:13px;text-align:right;white-space:nowrap}.daily-data thead th{background:var(--blue);color:#fff;text-align:center}.daily-data th:first-child{width:210px;text-align:left}.daily-data tbody th{background:#f7f8fa}.archive-foot{margin:12px 6px 0;color:var(--muted);font-size:12px;line-height:1.7}.archive-foot a{color:var(--blue)}.strategy-block{margin:14px 6px 0}.strategy-card [contenteditable]{min-height:52px}@media(max-width:760px){.archive-top .badge{margin-left:0}.archive-wrap{margin-bottom:0}.archive-head h1{font-size:25px}.strategy-tablewrap{overflow-x:auto}.summary-item{display:block}.summary-item b{display:inline-block;margin-bottom:3px}}
+*{box-sizing:border-box}body{margin:0;background:#f3f4f6;color:var(--ink);font-family:"KaiTi","STKaiti","Noto Serif CJK SC",serif}.archive-top{max-width:1460px;margin:auto;padding:12px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}.archive-top a{color:var(--blue);font-size:14px;text-decoration:none}.archive-top .badge{margin-left:auto;color:var(--red);border:1px solid var(--red);border-radius:4px;padding:3px 10px;font-size:12px}.archive-wrap{max-width:1460px;margin:0 auto 36px;background:#fff;padding:0 0 18px}.archive-head{padding:20px 16px 14px;border-bottom:2px solid var(--red)}.archive-head h1{margin:0;font-size:30px;letter-spacing:3px;border-left:6px solid var(--red);padding-left:14px}.archive-head p{margin:7px 0 0 20px;color:var(--muted);font-size:13px}.archive-summary{margin:12px 6px 0;padding:12px 16px;background:var(--red);color:#fff}.archive-summary h2{font-size:16px;letter-spacing:3px;margin:0 0 8px}.summary-grid{display:grid;grid-template-columns:1fr;gap:8px}.summary-item{display:flex;gap:10px;line-height:1.7;font-size:14px}.summary-item div{white-space:pre-line}.summary-item b{flex:0 0 auto;align-self:flex-start;background:#8A0000;padding:1px 9px;border-radius:3px;font-size:13px;letter-spacing:1px}.archive-data{margin:14px 6px 0;border:1px solid var(--line)}.archive-data h2{margin:0;padding:8px 12px;background:var(--lead);border-left:5px solid var(--blue);font-size:16px}.archive-data h2 span{font-size:11px;color:var(--muted);font-weight:400;margin-left:8px}.data-scroll{overflow-x:auto}.daily-data{width:100%;min-width:850px;border-collapse:collapse;table-layout:fixed}.daily-data th,.daily-data td{border:1px solid var(--line);padding:6px 8px;font-size:13px;text-align:right;white-space:nowrap}.daily-data thead th{background:var(--blue);color:#fff;text-align:center}.daily-data th:first-child{width:210px;text-align:left}.daily-data tbody th{background:#f7f8fa}.archive-foot{margin:12px 6px 0;color:var(--muted);font-size:12px;line-height:1.7}.archive-foot a{color:var(--blue)}.strategy-block{margin:14px 6px 0}.strategy-card [contenteditable]{min-height:52px}@media(max-width:760px){.archive-top .badge{margin-left:0}.archive-wrap{margin-bottom:0}.archive-head h1{font-size:25px}.strategy-tablewrap{overflow-x:auto}.summary-item{display:block}.summary-item b{display:inline-block;margin-bottom:3px}}
 """
 
 
 def archive_html(archive_date: str, summary: dict, table: str, has_research: bool) -> str:
     summary_blocks = "".join(
         f'<div class="summary-item"><b>{label}</b><div>{html.escape(str(summary.get(key, "")))}</div></div>'
-        for label, key in (("宏观", "A"), ("基本面", "B"), ("情绪", "C"))
+        for label, key in (("宏观", "A"), ("基本面", "B"), ("情绪", "C"), ("策略", "D"))
     )
     research = (f'<a href="../daily_{archive_date}.html">打开当天完整研究日报 →</a>' if has_research
                 else "当天未生成长篇研究日报；本页已保存数据日报与策略快照。")
     return f"""<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><title>锡数据日报 · {archive_date} 留档</title>
-<link rel="stylesheet" href="../daily_strategy.css?v=202610271530"><style>{ARCHIVE_CSS}</style></head>
+<link rel="stylesheet" href="../daily_strategy.css?v=202610281900"><style>{ARCHIVE_CSS}</style></head>
 <body><nav class="archive-top"><a href="../daily_archive.html">← 日报留档索引</a><a href="../sheet.html">返回最新数据日报</a><span class="badge">历史快照 · 只读</span></nav>
 <main class="archive-wrap"><header class="archive-head"><h1>锡数据日报 · 留档</h1><p>{archive_date} · 日内总结、供需日度变化、周度策略和日度策略均按当天冻结</p></header>
 <section class="archive-summary"><h2>日 内 总 结</h2><div class="summary-grid">{summary_blocks}</div></section>
 <section class="strategy-block is-archive" id="dailyStrategyBlock"><div class="strategy-head"><h2>周度供需 × 日度变化</h2><span>历史快照 · 只读</span></div>
-<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:7%"><col style="width:33%"><col style="width:22%"><col style="width:32%"><col style="width:6%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>日度变化</th><th>日度结论</th><th>多空</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>
-<div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>当周结论 · 只读</span></h3><div id="weeklyStrategyText" contenteditable="false"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>当天生成 · 只读</span></h3><div id="dailyStrategyText" contenteditable="false"></div></div></div></section>
+<div class="strategy-tablewrap"><table class="weeksum"><colgroup><col style="width:6%"><col style="width:24%"><col style="width:24%"><col style="width:20%"><col style="width:20%"><col style="width:6%"></colgroup><thead><tr><th>环节</th><th>周度相关数据</th><th>周度结论</th><th>日度变化</th><th>日度结论</th><th>多空 / 评分</th></tr></thead><tbody id="weeksumBody"></tbody></table></div>
+<div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>当周结论 · 只读</span></h3><div id="weeklyScore" class="daily-score"></div><div id="weeklyStrategyText" contenteditable="false"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>当天生成 · 只读</span></h3><div id="dailyScore" class="daily-score"></div><div id="dailyStrategyText" contenteditable="false"></div></div></div></section>
 <section class="archive-data"><h2>日度数据快照<span>最近 7 个有数据日期 · 与当天日报口径一致</span></h2><div class="data-scroll">{table}</div></section>
 <footer class="archive-foot">本页为 {archive_date} 独立快照，后续 Excel、周报或日度数据更新不会改写本页。{research}</footer></main>
-<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610271915"></script></body></html>"""
+<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610302100"></script></body></html>"""
 
 
 INDEX_CSS = r"""
@@ -147,6 +147,8 @@ def main():
     OUT.mkdir(exist_ok=True)
     db = read_js_json(ROOT / "db_data.js", "window.DB_DATA=window.DB_DATA=")
     summary = read_js_json(ROOT / "summary_note.js", "window.TIN_SUMMARY_NOTE =")
+    input_path = ROOT / "daily_overrides.js"
+    daily_input = read_js_json(input_path, "window.TIN_DAILY_INPUT =") if input_path.exists() else {}
     candidates = [p[0] for item in db if item.get("k") in ("d339", "d72", "d0")
                   for p in item.get("s", []) if isinstance(p[1], (int, float))]
     archive_date = os.environ.get("IN_DATE") or summary.get("date") or max(candidates)
@@ -160,6 +162,8 @@ def main():
         copied["s"] = [p for p in item.get("s", []) if p[0] <= archive_date][-40:]
         frozen_db.append(copied)
     frozen = {"date": archive_date, "summary": summary, "weekly": weekly}
+    if daily_input.get("date") == archive_date:
+        frozen["input"] = daily_input
     js = (f"window.DB_DATA={json.dumps(frozen_db, ensure_ascii=False, separators=(',', ':'))};\n"
           f"window.TIN_SUMMARY_NOTE={json.dumps(summary, ensure_ascii=False, separators=(',', ':'))};\n"
           f"window.DAILY_ARCHIVE={json.dumps(frozen, ensure_ascii=False, separators=(',', ':'))};\n")

@@ -6,7 +6,7 @@
   var STORE_WS='TIN_DAILY_WEEKLY_STRATEGY_V1';
   var STORE_DS='TIN_DAILY_DAILY_STRATEGY_V1';
   var archive=window.DAILY_ARCHIVE||null;
-  var input=archive?null:(window.TIN_DAILY_INPUT||null);
+  var input=archive?(archive.input||null):(window.TIN_DAILY_INPUT||null);
   var keyMap={'价格':'price','宏观':'macro','美股·半导体 AI':'ai','供给·矿端':'mine','供给·冶炼端':'smelt','需求·焊料':'demand','现货·贸易':'spot','月差结构':'spread','库存':'inventory','持仓·席位':'position','风险点':'risk'};
   var fallback={
     rows:[
@@ -36,14 +36,15 @@
   function dayLabel(day){var p=day.split('-');return Number(p[1])+'/'+Number(p[2]);}
   function inputValue(key){if(!input||input.date!==dayStamp)return '';return String(input[key]||'').trim();}
   function inputSignal(key,fallback){if(!input||input.date!==dayStamp||!input.signals)return fallback;return input.signals[key]||fallback;}
+  function inputConclusion(key){if(!input||input.date!==dayStamp||!input.conclusions)return '';return String(input.conclusions[key]||'').trim();}
   function changeText(cur,pre,unit){if(!cur||!pre)return '暂无可比值';var d=cur[1]-pre[1];return '较'+(pre[0].slice(5).replace('-','/'))+(d===0?'持平':(d>0?'增加 ':'减少 ')+fmt(Math.abs(d))+(unit||''));}
   function context(){
-    var wh=last('d339'),lme=last('d334'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557');
+    var wh=last('d339'),lme=last('d334'),down=last('d72'),trade=last('d71'),price=last('d0'),prem=last('d65'),sox=last('d557'),social=last('d739');
     var day=[wh,lme,down,trade,price,prem,sox].filter(Boolean).map(function(p){return p[0];}).sort().pop()||'';
-    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pLme=prev('d334'),pSox=prev('d557');
+    var pDown=prev('d72'),pTrade=prev('d71'),pPrem=prev('d65'),pWh=prev('d339'),pLme=prev('d334'),pSox=prev('d557'),pSocial=prev('d739');
     var total=down&&trade?down[1]+trade[1]:null;
     var oldTotal=pDown&&pTrade?pDown[1]+pTrade[1]:null;
-    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,lme:lme,pLme:pLme,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,sox:sox,pSox:pSox,total:total,oldTotal:oldTotal};
+    return {day:day,label:day?dayLabel(day):'今日',wh:wh,pWh:pWh,lme:lme,pLme:pLme,down:down,pDown:pDown,trade:trade,pTrade:pTrade,price:price,prem:prem,pPrem:pPrem,sox:sox,pSox:pSox,social:social,pSocial:pSocial,total:total,oldTotal:oldTotal};
   }
   function soxDaily(c){
     if(!c.sox)return 'SOX 暂无收盘读数';
@@ -66,11 +67,12 @@
     if(key==='demand')return d+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨')+'；'+(inputValue('demand')||'本周消费整体偏弱，此前去库仍主要依赖低位点价');
     if(key==='spot')return d+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较前日 '+signed(c.total-c.oldTotal)+' 吨':'')+'；云锡升水最新为 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨'+(c.prem?'（'+dayLabel(c.prem[0])+'）':'')+'；'+(inputValue('spot')||'关注贸易商是交仓，还是继续移仓至 12 月挺价');
     if(key==='spread'){var sp=inputValue('spread')||inputValue('other');return sp?d+' '+sp:'10/28 SN 换月基差走弱，12 月挺价力度不足，11 月也在走弱；最新价差数值待补充';}
-    if(key==='inventory')return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME '+(inputValue('lme')||'今日未更新库存，最新仍为 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'）':''))+'；周频社库不变';
+    if(key==='inventory'){var social=c.social?'；Mysteel 周度社库 '+fmt(c.social[1])+' 吨（'+dayLabel(c.social[0])+'），'+changeText(c.social,c.pSocial,' 吨'):'';return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME '+(inputValue('lme')||'今日未更新库存，最新仍为 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'）':''))+social;}
     if(key==='risk'){var rk=inputValue('risk');if(rk)return d+' '+rk;return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';}
     return '';
   }
   function dailyView(key,c){
+    var custom=inputConclusion(key);if(custom)return {text:custom,signal:inputSignal(key,'中性')};
     if(key==='price')return {text:'维持 39 万布空思路，关注宏观不确定性及成交、库存变化',signal:inputSignal('price','偏空')};
     if(key==='macro')return {text:'美股财报表现分化，中东谈判及核心诉求仍有不确定性；宏观方向暂不明确，中性观察',signal:inputSignal('macro','中性')};
     if(key==='ai')return {text:'SOX 前一日上涨与今日财报扰动分化，谷歌和三星的负面反馈占主导，AI 对锡的情绪支持转弱',signal:inputSignal('ai','偏空')};

@@ -250,6 +250,9 @@ def main():
             inventory.append(f"SHFE 仓单 {fmt(wh[-1][1])} 吨（{day_label(wh[-1][0])}），{change(wh[-1], wh[-2])}")
         lme = by_key["d334"]["s"]
         inventory.append("LME " + (notes.get("lme") or (f"最新库存 {fmt(lme[-1][1])} 吨（{day_label(lme[-1][0])}）" if lme else "暂无读数")))
+        social = by_key.get("d739", {}).get("s", [])
+        if social:
+            inventory.append(f"Mysteel 周度社库 {fmt(social[-1][1])} 吨（{day_label(social[-1][0])}），{change(social[-1], social[-2])}")
         sections.append("【库存】" + "；".join(inventory) + "。")
         other = "；".join(x for x in [notes.get("fundamentals", ""), notes.get("other", "")] if x)
         if other:
