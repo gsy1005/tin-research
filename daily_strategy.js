@@ -98,7 +98,8 @@
   function scoreValue(dims){return Math.max(-2,Math.min(2,dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0)));}
   function scoreModel(c){
     var dealPct=c.down&&c.pDown&&c.pDown[1]?(c.down[1]-c.pDown[1])/c.pDown[1]*100:null;
-    var dealScore=c.down&&c.down[1]<400?-1:(dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0)))));
+    var dealSignal=inputSignal('demand','');
+    var dealScore=dealSignal?signalScore(dealSignal):(c.down&&c.down[1]<400?-1:(dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0))))));
     var macroSignal=dailyView('macro',c).signal,aiSignal=dailyView('ai',c).signal,inventorySignal=dailyView('inventory',c).signal,spotSignal=dailyView('spot',c).signal;
     var dims=[{name:'宏观',score:signalScore(macroSignal),weight:25},{name:'AI',score:signalScore(aiSignal),weight:10},{name:'成交需求',score:dealScore,weight:25},{name:'库存',score:signalScore(inventorySignal),weight:25},{name:'升贴水',score:signalScore(spotSignal),weight:15}];
     var value=scoreValue(dims);

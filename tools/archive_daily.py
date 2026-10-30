@@ -122,7 +122,7 @@ def archive_html(archive_date: str, summary: dict, table: str, has_research: boo
 <div class="strategy-grid"><div class="strategy-card weekly"><h3>周度策略<span>当周结论 · 只读</span></h3><div id="weeklyScore" class="daily-score"></div><div id="weeklyStrategyText" contenteditable="false"></div></div><div class="strategy-card daily"><h3 id="dailyStrategyTitle">日度策略<span>当天生成 · 只读</span></h3><div id="dailyScore" class="daily-score"></div><div id="dailyStrategyText" contenteditable="false"></div></div></div></section>
 <section class="archive-data"><h2>日度数据快照<span>最近 7 个有数据日期 · 与当天日报口径一致</span></h2><div class="data-scroll">{table}</div></section>
 <footer class="archive-foot">本页为 {archive_date} 独立快照，后续 Excel、周报或日度数据更新不会改写本页。{research}</footer></main>
-<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610302100"></script></body></html>"""
+<script src="{archive_date}.js"></script><script src="../daily_strategy.js?v=202610302110"></script></body></html>"""
 
 
 INDEX_CSS = r"""
