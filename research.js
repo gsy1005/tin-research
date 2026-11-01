@@ -63,53 +63,17 @@ register('supply-smelt', '冶炼与精锡', ['重点关注', '供给'], supplyGr
 register('inventory', '显性库存', ['重点关注', '供给'], takeUntil(id('invsec'), id('balance')));
 register('balance', '平衡表与全年情景', ['平衡表'], [id('balance')]);
 
-/* Demand: follow the industry-chain ownership, not the original chart order. */
+/* Demand: 接货与焊料 → 白电 → 光伏 → 锡化工 → 新能源 → 其他终端。 */
 const demandGroups = splitOnMarkers(takeUntil(id('demand'), id('spot')), node => node.nodeType === 1 && node.classList.contains('lead'));
 const solderTrail = ['重点关注', '需求', '锡焊料'];
-const chemicalTrail = ['重点关注', '需求', '锡化工'];
-register('demand-solder', '焊料开工与成交', solderTrail, demandGroups[0] || []);
-register('demand-battery', '铅蓄电池', ['重点关注', '需求'], demandGroups[2] || []);
-register('demand-appliance', '三大白电', solderTrail, demandGroups[3] || []);
-register('demand-tinplate', '马口铁', ['重点关注', '需求'], demandGroups[5] || []);
-register('demand-semi', '半导体', solderTrail, demandGroups[6] || []);
-
-function splitChartGroup(nodes, indexes) {
-  const container = nodes.find(node => node.nodeType === 1 && node.classList.contains('charts3'));
-  const charts = container.cloneNode(false);
-  $$(':scope > .cbox', container).forEach((box, index) => {
-    if (!indexes.includes(index)) return;
-    const clone = box.cloneNode(true);
-    clone.classList.remove('ec');
-    $$('canvas', clone).forEach(canvas => canvas.remove());
-    $$('img', clone).forEach(image => { image.loading = 'eager'; });
-    charts.appendChild(clone);
-  });
-  return charts;
-}
-function lead(text) {
-  const node = document.createElement('div'); node.className = 'lead'; node.textContent = text; return node;
-}
-
-function note(html) {
-  const list = document.createElement('ul'); list.className = 'sq';
-  const item = document.createElement('li'); item.innerHTML = html; list.appendChild(item);
-  return list;
-}
-
-/* Tin chemicals: weekly PVC, float glass and their combined tin use share one page. */
-register('demand-pvc', 'PVC 与浮法玻璃', chemicalTrail, demandGroups[1] || []);
-
-/* Solder downstream: keep each page's objective description with its own charts. */
-register('demand-newenergy', '新能源汽车', solderTrail, [
-  lead('新能源汽车：产量与耗锡量'),
-  note('8 月新能源汽车产量 <b>154.06 万辆</b>，环比 <b>+5.3%</b>、同比 <b>+16.8%</b>；新能源汽车耗锡量拟合 <b>999.2 吨</b>，环比 +6.4%、同比 +19.2%。'),
-  splitChartGroup(demandGroups[4], [0])
-]);
-register('demand-solar', '光伏', solderTrail, [
-  lead('光伏：组件产量／排产 · 光伏耗锡量'),
-  note('11 月光伏组件排产 <b>40.2GW</b>，环比 <b>-2%</b>。'),
-  splitChartGroup(demandGroups[4], [1, 2])
-]);
+register('demand-solder', '焊料产量、开工与成交', solderTrail, demandGroups[0] || []);
+register('demand-appliance', '三大白电', solderTrail, demandGroups[1] || []);
+register('demand-solar', '光伏', solderTrail, demandGroups[2] || []);
+register('demand-pvc', 'PVC 与浮法玻璃', ['重点关注', '需求', '锡化工'], demandGroups[3] || []);
+register('demand-newenergy', '新能源汽车', solderTrail, demandGroups[4] || []);
+register('demand-battery', '铅蓄电池', ['重点关注', '需求'], demandGroups[5] || []);
+register('demand-tinplate', '马口铁', ['重点关注', '需求'], demandGroups[6] || []);
+register('demand-semi', '半导体', solderTrail, demandGroups[7] || []);
 
 /* Other weekly pages */
 register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
