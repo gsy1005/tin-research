@@ -90,13 +90,26 @@ function lead(text) {
   const node = document.createElement('div'); node.className = 'lead'; node.textContent = text; return node;
 }
 
-/* Tin chemicals: PVC and float glass are parallel downstream pages. */
-register('demand-pvc', 'PVC', chemicalTrail, [...withoutHeading(demandGroups[1].filter(node => !(node.nodeType === 1 && node.classList.contains('charts3')))), splitChartGroup(demandGroups[1], [0])]);
-register('demand-float', '浮法玻璃', chemicalTrail, [lead('浮法玻璃：周产量 · PVC＋浮法玻璃合计耗锡'), splitChartGroup(demandGroups[1], [1, 2])]);
+function note(html) {
+  const list = document.createElement('ul'); list.className = 'sq';
+  const item = document.createElement('li'); item.innerHTML = html; list.appendChild(item);
+  return list;
+}
 
-/* Solder downstream: new-energy vehicles and photovoltaics are separate pages. */
-register('demand-newenergy', '新能源汽车', solderTrail, [...withoutHeading(demandGroups[4].filter(node => !(node.nodeType === 1 && node.classList.contains('charts3')))), splitChartGroup(demandGroups[4], [0])]);
-register('demand-solar', '光伏', solderTrail, [lead('光伏：组件产量 · 光伏耗锡量'), splitChartGroup(demandGroups[4], [1, 2])]);
+/* Tin chemicals: weekly PVC, float glass and their combined tin use share one page. */
+register('demand-pvc', 'PVC 与浮法玻璃', chemicalTrail, demandGroups[1] || []);
+
+/* Solder downstream: keep each page's objective description with its own charts. */
+register('demand-newenergy', '新能源汽车', solderTrail, [
+  lead('新能源汽车：产量与耗锡量'),
+  note('8 月新能源汽车产量 <b>154.06 万辆</b>，环比 <b>+5.3%</b>、同比 <b>+16.8%</b>；新能源汽车耗锡量拟合 <b>999.2 吨</b>，环比 +6.4%、同比 +19.2%。'),
+  splitChartGroup(demandGroups[4], [0])
+]);
+register('demand-solar', '光伏', solderTrail, [
+  lead('光伏：组件产量／排产 · 光伏耗锡量'),
+  note('11 月光伏组件排产 <b>40.2GW</b>，环比 <b>-2%</b>。'),
+  splitChartGroup(demandGroups[4], [1, 2])
+]);
 
 /* Other weekly pages */
 register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
@@ -118,8 +131,8 @@ const deckConfigs = [
   { label: 'DECK 3 · 焊料家电', labels: ['需求结构', '锡材与焊料', '白电排产', '白电耗锡', '冰箱', '洗衣机', '空调', '冷柜', '彩电'] },
   { label: 'DECK 4 · 电子光伏', labels: ['电子产品产量', '电子产品耗锡', '集成电路与 PCB', '中国出货量', '全球出货量', '半导体', '光伏', '镀锡板'] },
   { label: 'DECK 5 · 化工电池', labels: ['锡化工', '浮法玻璃', '铅蓄电池'] },
-  { label: 'DECK 6 · 汽车库存', labels: ['汽车出口', '海外溢价', 'LME 持仓', '地区升水', '显性库存'] },
-  { label: 'DECK 7 · 汽车平衡', labels: ['汽车产销', '平衡图表', '进出口盈亏', '美印尼日贸易', '日本泰国贸易', '泰国锡贸易'] }
+  { label: 'DECK 6 · 汽车', labels: ['汽车出口与渗透率', '汽车产销与耗锡'] },
+  { label: 'DECK 7 · 现货·库存·平衡·贸易', labels: ['海外溢价与现货', 'LME 持仓', '地区升水', '显性库存', '平衡图表', '进出口盈亏', '美印尼日贸易', '日本泰国贸易', '泰国锡贸易'] }
 ];
 let deckStart = id('ai-weekly-detail');
 deckConfigs.forEach((config, deckIndex) => {
@@ -181,7 +194,7 @@ const NAV = [
         page('demand-solder', '焊料开工与成交'), page('demand-appliance', '三大白电'),
         page('demand-newenergy', '新能源汽车'), page('demand-solar', '光伏'), page('demand-semi', '半导体')
       ], true),
-      group('锡化工', [page('demand-pvc', 'PVC'), page('demand-float', '浮法玻璃')], true),
+      group('锡化工', [page('demand-pvc', 'PVC 与浮法玻璃')], true),
       page('demand-tinplate', '马口铁'),
       page('demand-battery', '铅蓄电池')
     ], true),
