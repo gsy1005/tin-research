@@ -186,7 +186,7 @@
   }
   function fetchWeekly(){
     if(!window.fetch||location.protocol==='file:')return;
-    fetch('weekly_full.html',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('weekly');return r.text();}).then(function(html){
+    fetch('weekly_w44_t7q3m9r6k2x8.html',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('weekly');return r.text();}).then(function(html){
       var doc=new DOMParser().parseFromString(html,'text/html'),rows=[];
       doc.querySelectorAll('#sumsec table.sum tbody tr:not(.final)').forEach(function(tr,i){
         var c=tr.querySelectorAll('td');if(c.length<4)return;
