@@ -92,7 +92,7 @@
   }
   function signalScore(s){
     if(s==='强多')return 2;if(s==='利多'||s==='结构多')return 1;if(s==='中性略偏多')return 0.5;
-    if(s==='强空')return -2;if(s==='偏空')return -1;if(s==='中性略偏空')return -0.5;return 0;
+    if(s==='强空')return -2;if(s==='偏空'||s==='利空')return -1;if(s==='中性略偏空')return -0.5;return 0;
   }
   function scoreLabel(value){return value>=1.25?'强多':(value>=0.5?'偏多':(value>0.1?'中性略偏多':(value>=-0.1?'中性':(value>-0.5?'中性略偏空':(value>-1.25?'偏空':'强空')))));}
   function scoreValue(dims){return Math.max(-2,Math.min(2,dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0)));}
@@ -187,15 +187,16 @@
   function fetchWeekly(){
     if(!window.fetch||location.protocol==='file:')return;
     fetch('weekly_w44_t7q3m9r6k2x8.html',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('weekly');return r.text();}).then(function(html){
-      var doc=new DOMParser().parseFromString(html,'text/html'),rows=[];
-      doc.querySelectorAll('#sumsec table.sum tbody tr:not(.final)').forEach(function(tr,i){
-        var c=tr.querySelectorAll('td');if(c.length<4)return;
+      var doc=new DOMParser().parseFromString(html,'text/html'),rows=[],weeklyTable=doc.querySelector('#sumsec table.sum');
+      weeklyTable.querySelectorAll('tbody tr:not(.final)').forEach(function(tr,i){
+        if(tr.closest('table')!==weeklyTable)return;
+        var c=tr.querySelectorAll(':scope > td');if(c.length<4)return;
         var cat=c[0].textContent.trim(),hasDaily=c.length>=5&&c[2].classList.contains('daily');
-        rows.push({key:keyMap[cat]||('row'+i),cat:cat,related:c[1].textContent.trim(),conclusion:c[hasDaily?3:2].textContent.trim(),signal:c[hasDaily?4:3].textContent.trim()});
+        rows.push({key:keyMap[cat]||(cat==='需求'?'demand':('row'+i)),cat:cat==='需求'?'需求·焊料':cat,related:c[1].textContent.trim(),conclusion:c[hasDaily?3:2].textContent.trim(),signal:c[hasDaily?4:3].textContent.trim()});
       });
       var position=fallback.rows.find(function(row){return row.key==='position';}),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
       if(position&&riskIndex>=0)rows.splice(riskIndex,0,position);
-      var final=doc.querySelector('#sumsec table.sum tr.final td[colspan]');
+      var final=weeklyTable.querySelector('tr.final td[colspan]');
       if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
   }

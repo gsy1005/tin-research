@@ -8,13 +8,14 @@ import os
 import re
 from datetime import date as date_type
 from pathlib import Path
+from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "daily_archive"
 KEYS = ("d0", "d71", "d72", "d65", "d334", "d339", "d340", "d62", "d63", "d480", "d557")
 KEY_MAP = {
     "价格": "price", "宏观": "macro", "美股·半导体 AI": "ai",
-    "供给·矿端": "mine", "供给·冶炼端": "smelt", "需求·焊料": "demand",
+    "供给·矿端": "mine", "供给·冶炼端": "smelt", "需求": "demand", "需求·焊料": "demand",
     "现货·贸易": "spot", "月差结构": "spread", "库存": "inventory", "风险点": "risk",
 }
 
@@ -28,21 +29,22 @@ def read_js_json(path: Path, marker: str):
     return value
 
 
-def plain(fragment: str) -> str:
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", fragment))).strip()
-
-
 def weekly_snapshot() -> dict:
-    text = (ROOT / "weekly_full.html").read_text(encoding="utf-8")
-    match = re.search(r'<div id="sumsec">.*?<table class="sum">(.*?)</table>', text, re.S)
-    if not match:
-        raise RuntimeError("weekly_full.html 未找到周度供需表")
+    weekly_path = ROOT / "weekly_w44_t7q3m9r6k2x8.html"
+    if not weekly_path.exists():
+        weekly_path = ROOT / "weekly_full.html"
+    soup = BeautifulSoup(weekly_path.read_text(encoding="utf-8"), "html.parser")
+    table = soup.select_one("#sumsec table.sum")
+    if table is None:
+        raise RuntimeError(f"{weekly_path.name} 未找到周度供需表")
     rows, final = [], ""
-    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", match.group(1), re.S):
-        cells = re.findall(r"<td([^>]*)>(.*?)</td>", tr, re.S)
-        values = [plain(cell[1]) for cell in cells]
+    for tr in table.find_all("tr"):
+        if tr.find_parent("table") is not table:
+            continue
+        cells = tr.find_all("td", recursive=False)
+        values = [cell.get_text(" ", strip=True) for cell in cells]
         if len(values) >= 4:
-            has_daily_change = len(cells) >= 3 and 'class="daily"' in cells[2][0]
+            has_daily_change = len(cells) >= 3 and "daily" in cells[2].get("class", [])
             conclusion_index = 3 if has_daily_change and len(values) >= 5 else 2
             rows.append({
                 "key": KEY_MAP.get(values[0], f"row{len(rows)}"), "cat": values[0],
