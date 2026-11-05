@@ -57,7 +57,8 @@
     if(key==='price'){
       var note=(window.TIN_SUMMARY_NOTE&&window.TIN_SUMMARY_NOTE.B)||'';
       var m=note.match(/SMM 1#锡\s*([\d,]+)\s*元\/吨，日(涨|跌)\s*([\d,]+)/);
-      return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'');
+      var priceNote=inputValue('price');
+      return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'')+(priceNote?'；'+priceNote:'');
     }
     if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');if(mt||mw)return d+' 今日变化：'+mt+'；后续关注：'+mw;return d+' 近期中东局势有所缓和，但仍需防范协议仅为暂时、选举前后局势反复；油价接近 120 美元前高压力位。今晚关注 FOMC，基准情形是不加息，重点关注沃什讲话';}
     if(key==='ai')return soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书及三星、海力士三季报获得市场较正面反馈，继续跟踪 SOX 变化');
@@ -101,7 +102,9 @@
     var dealSignal=inputSignal('demand','');
     var dealScore=dealSignal?signalScore(dealSignal):(c.down&&c.down[1]<400?-1:(dealPct===null?0:(dealPct>=20?2:(dealPct>=5?1:(dealPct<=-20?-2:(dealPct<=-5?-1:0))))));
     var macroSignal=dailyView('macro',c).signal,aiSignal=dailyView('ai',c).signal,inventorySignal=dailyView('inventory',c).signal,spotSignal=dailyView('spot',c).signal;
-    var dims=[{name:'宏观',score:signalScore(macroSignal),weight:25},{name:'AI',score:signalScore(aiSignal),weight:10},{name:'成交需求',score:dealScore,weight:25},{name:'库存',score:signalScore(inventorySignal),weight:25},{name:'升贴水',score:signalScore(spotSignal),weight:15}];
+    var weights=input&&input.date===dayStamp&&input.weights?input.weights:{};
+    function weight(key,fallback){var value=Number(weights[key]);return Number.isFinite(value)&&value>=0?value:fallback;}
+    var dims=[{name:'宏观',score:signalScore(macroSignal),weight:weight('macro',25)},{name:'AI',score:signalScore(aiSignal),weight:weight('ai',10)},{name:'成交需求',score:dealScore,weight:weight('demand',25)},{name:'库存',score:signalScore(inventorySignal),weight:weight('inventory',25)},{name:'升贴水',score:signalScore(spotSignal),weight:weight('spot',15)}];
     var value=scoreValue(dims);
     return {value:value,label:scoreLabel(value),dims:dims,dealPct:dealPct,inventorySignal:inventorySignal,spotSignal:spotSignal};
   }
