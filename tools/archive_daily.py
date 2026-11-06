@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "daily_archive"
-KEYS = ("d0", "d71", "d72", "d65", "d334", "d339", "d340", "d62", "d63", "d480", "d557")
+KEYS = ("d0", "d71", "d72", "d65", "d334", "d339", "d340", "d62", "d63", "d64", "d480", "d557")
 KEY_MAP = {
     "价格": "price", "宏观": "macro", "美股·半导体 AI": "ai",
     "供给·矿端": "mine", "供给·冶炼端": "smelt", "需求": "demand", "需求·焊料": "demand",
@@ -88,8 +88,9 @@ def data_table(db: list, archive_date: str) -> str:
         ("LME 仓单（吨）", lambda d: value("d334", d)),
         ("印尼交易所成交（吨）", lambda d: value("d480", d)),
         ("SOX（点）", lambda d: value("d557", d)),
-        ("连一－连二（元/吨）", lambda d: (value("d63", d) - value("d62", d))
-         if value("d63", d) is not None and value("d62", d) is not None else None),
+        ("连一－连二（元/吨）", lambda d: value("d64", d) if value("d64", d) is not None
+         else ((value("d63", d) - value("d62", d))
+               if value("d63", d) is not None and value("d62", d) is not None else None)),
     ]
     head = "".join(f"<th>{day[5:]}</th>" for day in dates)
     body = []
