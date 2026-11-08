@@ -1467,8 +1467,16 @@ table.source-table td{max-width:430px;white-space:normal;vertical-align:top}
   内部研究材料，仅供参考，不构成投资建议。
 </footer>
 </div><section aria-live="polite" class="tool-page" hidden="" id="toolPage"><div class="tool-head"><div><p class="research-eyebrow">RESEARCH WORKBENCH</p><h2 id="toolTitle">研究工作台</h2></div><button id="closeTool" type="button">← 返回周报</button></div><iframe hidden="" id="toolFrame" title="锡研究工作台"></iframe></section></div></div>
-<script src="lib/chart.min.js"></script>
-<script src="charts_full/weekly_inter.js?v=20261108-w45-spread"></script><script src="charts_full/weekly_excel_extra.js?v=20261108-w45"></script><script>window.CHART_DATA=Object.assign(window.CHART_DATA||{},window.EXTRA_CHART_DATA||{});</script>
+<script>
+/* 本周总结没有图表：不下载约 2.9MB 的图表库和全量图表数据，避免首屏长时间转圈。 */
+window.WEEKLY_SUMMARY_ONLY=new URLSearchParams(location.search).get('page')==='summary';
+if(!window.WEEKLY_SUMMARY_ONLY){
+  document.write('<script src="lib/chart.min.js"><\/script>');
+  document.write('<script src="charts_full/weekly_inter.js?v=20261108-w45-spread"><\/script>');
+  document.write('<script src="charts_full/weekly_excel_extra.js?v=20261108-w45"><\/script>');
+}
+window.CHART_DATA=Object.assign(window.CHART_DATA||{},window.EXTRA_CHART_DATA||{});
+</script>
 <script>
 (function(){
   if(!window.Chart||!window.CHART_DATA)return;
