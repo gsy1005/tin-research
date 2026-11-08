@@ -1,0 +1,810 @@
+[
+  {
+    "key": "b1s01",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "00_研究导航",
+    "rows": 58,
+    "columns": 7,
+    "nonempty": 386
+  },
+  {
+    "key": "b1s02",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "目录",
+    "rows": 52,
+    "columns": 8,
+    "nonempty": 354
+  },
+  {
+    "key": "b1s03",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡精矿价格",
+    "rows": 1873,
+    "columns": 6,
+    "nonempty": 9362
+  },
+  {
+    "key": "b1s04",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "全球锡精矿年产量",
+    "rows": 67,
+    "columns": 33,
+    "nonempty": 672
+  },
+  {
+    "key": "b1s05",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "全球锡精矿储量",
+    "rows": 36,
+    "columns": 25,
+    "nonempty": 398
+  },
+  {
+    "key": "b1s06",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "DISR澳大利亚锡矿产量及进出口",
+    "rows": 151,
+    "columns": 7,
+    "nonempty": 1047
+  },
+  {
+    "key": "b1s07",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "全球主要代表矿山产量",
+    "rows": 445,
+    "columns": 53,
+    "nonempty": 2451
+  },
+  {
+    "key": "b1s08",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "全球锡精矿新增项目开发情况 ",
+    "rows": 23,
+    "columns": 19,
+    "nonempty": 273
+  },
+  {
+    "key": "b1s09",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "中国锡精矿产量",
+    "rows": 186,
+    "columns": 20,
+    "nonempty": 799
+  },
+  {
+    "key": "b1s10",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡精矿加工费统计",
+    "rows": 2411,
+    "columns": 3,
+    "nonempty": 7233
+  },
+  {
+    "key": "b1s11",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡冶炼利润",
+    "rows": 1441,
+    "columns": 11,
+    "nonempty": 15647
+  },
+  {
+    "key": "b1s12",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "冶炼厂产量",
+    "rows": 31,
+    "columns": 12,
+    "nonempty": 180
+  },
+  {
+    "key": "b1s13",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "冶炼厂分地区产量数据",
+    "rows": 133,
+    "columns": 19,
+    "nonempty": 1400
+  },
+  {
+    "key": "b1s14",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "冶炼厂开工率",
+    "rows": 122,
+    "columns": 16,
+    "nonempty": 398
+  },
+  {
+    "key": "b1s15",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "焊锡价格",
+    "rows": 1875,
+    "columns": 5,
+    "nonempty": 7498
+  },
+  {
+    "key": "b1s16",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "贸易商日度交易量",
+    "rows": 223,
+    "columns": 3,
+    "nonempty": 666
+  },
+  {
+    "key": "b1s17",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "费城半导体指数（SOX）",
+    "rows": 2821,
+    "columns": 7,
+    "nonempty": 16455
+  },
+  {
+    "key": "b1s18",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "下游焊料厂产量",
+    "rows": 52,
+    "columns": 28,
+    "nonempty": 244
+  },
+  {
+    "key": "b1s19",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "下游焊料厂开工率",
+    "rows": 68,
+    "columns": 8,
+    "nonempty": 347
+  },
+  {
+    "key": "b1s20",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "家电",
+    "rows": 407,
+    "columns": 96,
+    "nonempty": 5941
+  },
+  {
+    "key": "b1s21",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "电子产品 ",
+    "rows": 405,
+    "columns": 63,
+    "nonempty": 3128
+  },
+  {
+    "key": "b1s22",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "电子、家电进出口数据",
+    "rows": 266,
+    "columns": 88,
+    "nonempty": 5115
+  },
+  {
+    "key": "b1s23",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "家电产销计划及全球电子产品出货情况",
+    "rows": 311,
+    "columns": 57,
+    "nonempty": 3515
+  },
+  {
+    "key": "b1s24",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "汽车产销 ",
+    "rows": 408,
+    "columns": 131,
+    "nonempty": 9451
+  },
+  {
+    "key": "b1s25",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "汽车出口及新能源车渗透率",
+    "rows": 170,
+    "columns": 54,
+    "nonempty": 2711
+  },
+  {
+    "key": "b1s26",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "PVC数据",
+    "rows": 3342,
+    "columns": 58,
+    "nonempty": 12875
+  },
+  {
+    "key": "b1s27",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "光伏组件产量 ",
+    "rows": 81,
+    "columns": 13,
+    "nonempty": 292
+  },
+  {
+    "key": "b1s28",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "光伏及其他发电情况",
+    "rows": 223,
+    "columns": 145,
+    "nonempty": 9642
+  },
+  {
+    "key": "b1s29",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "马口铁产量",
+    "rows": 82,
+    "columns": 28,
+    "nonempty": 644
+  },
+  {
+    "key": "b1s30",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "镀锡板进出口量",
+    "rows": 303,
+    "columns": 33,
+    "nonempty": 1437
+  },
+  {
+    "key": "b1s31",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "浮法玻璃产量及进出口量",
+    "rows": 758,
+    "columns": 61,
+    "nonempty": 7942
+  },
+  {
+    "key": "b1s32",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "铅酸蓄电池开工率以及进出口数量",
+    "rows": 146,
+    "columns": 35,
+    "nonempty": 1802
+  },
+  {
+    "key": "b1s33",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "SHFE库存",
+    "rows": 587,
+    "columns": 5,
+    "nonempty": 2862
+  },
+  {
+    "key": "b1s34",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "lme库存",
+    "rows": 5838,
+    "columns": 2,
+    "nonempty": 11674
+  },
+  {
+    "key": "b1s35",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡锭社会库存",
+    "rows": 295,
+    "columns": 20,
+    "nonempty": 2361
+  },
+  {
+    "key": "b1s36",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡锭社会库存（分季节）",
+    "rows": 59,
+    "columns": 37,
+    "nonempty": 964
+  },
+  {
+    "key": "b1s37",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "进出口盈亏",
+    "rows": 1651,
+    "columns": 22,
+    "nonempty": 35962
+  },
+  {
+    "key": "b1s38",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "美国精锡进口",
+    "rows": 144,
+    "columns": 25,
+    "nonempty": 946
+  },
+  {
+    "key": "b1s39",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "韩国精锡及锡制品进出口",
+    "rows": 98,
+    "columns": 25,
+    "nonempty": 962
+  },
+  {
+    "key": "b1s40",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "日本精炼锡进口数量",
+    "rows": 86,
+    "columns": 51,
+    "nonempty": 1982
+  },
+  {
+    "key": "b1s41",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "印尼精锡出口",
+    "rows": 205,
+    "columns": 46,
+    "nonempty": 3386
+  },
+  {
+    "key": "b1s42",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "泰国精锡及锡矿进出口",
+    "rows": 101,
+    "columns": 33,
+    "nonempty": 1340
+  },
+  {
+    "key": "b1s43",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "马来西亚精锡出口",
+    "rows": 229,
+    "columns": 20,
+    "nonempty": 1260
+  },
+  {
+    "key": "b1s44",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "精锡进出口",
+    "rows": 142,
+    "columns": 22,
+    "nonempty": 843
+  },
+  {
+    "key": "b1s45",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "锡精矿进出口",
+    "rows": 129,
+    "columns": 7,
+    "nonempty": 788
+  },
+  {
+    "key": "b1s46",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "主要进口国金属量测算",
+    "rows": 86,
+    "columns": 6,
+    "nonempty": 506
+  },
+  {
+    "key": "b1s47",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "品牌锡价",
+    "rows": 1452,
+    "columns": 18,
+    "nonempty": 20184
+  },
+  {
+    "key": "b1s48",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "品牌价差",
+    "rows": 1587,
+    "columns": 8,
+    "nonempty": 10629
+  },
+  {
+    "key": "b1s49",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "升贴水",
+    "rows": 1587,
+    "columns": 4,
+    "nonempty": 6345
+  },
+  {
+    "key": "b1s50",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "城市锡价",
+    "rows": 2557,
+    "columns": 13,
+    "nonempty": 16157
+  },
+  {
+    "key": "b1s51",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "WBMS平衡",
+    "rows": 246,
+    "columns": 5,
+    "nonempty": 1019
+  },
+  {
+    "key": "b1s52",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "供需平衡表 ",
+    "rows": 104,
+    "columns": 34,
+    "nonempty": 1120
+  },
+  {
+    "key": "b1s53",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "进口矿金属吨",
+    "rows": 85,
+    "columns": 15,
+    "nonempty": 540
+  },
+  {
+    "key": "b1s54",
+    "file": "Mysteel锡线下数据-11.6.xlsx",
+    "sheet": "大中小型企业原料库存天数 ",
+    "rows": 22,
+    "columns": 6,
+    "nonempty": 111
+  },
+  {
+    "key": "b2s01",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "00_研究导航",
+    "rows": 40,
+    "columns": 7,
+    "nonempty": 260
+  },
+  {
+    "key": "b2s02",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "重要边际",
+    "rows": 63,
+    "columns": 4,
+    "nonempty": 5
+  },
+  {
+    "key": "b2s03",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡矿储量（年）",
+    "rows": 26,
+    "columns": 24,
+    "nonempty": 624
+  },
+  {
+    "key": "b2s04",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡矿产量（月）",
+    "rows": 277,
+    "columns": 39,
+    "nonempty": 2763
+  },
+  {
+    "key": "b2s05",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡矿价格（日）",
+    "rows": 2540,
+    "columns": 25,
+    "nonempty": 19589
+  },
+  {
+    "key": "b2s06",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "孟连口岸",
+    "rows": 98,
+    "columns": 6,
+    "nonempty": 288
+  },
+  {
+    "key": "b2s07",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "印尼交易所成交量",
+    "rows": 738,
+    "columns": 10,
+    "nonempty": 3678
+  },
+  {
+    "key": "b2s08",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "产量开工（周）",
+    "rows": 254,
+    "columns": 51,
+    "nonempty": 3605
+  },
+  {
+    "key": "b2s09",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "产量（月）",
+    "rows": 134,
+    "columns": 27,
+    "nonempty": 1047
+  },
+  {
+    "key": "b2s10",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "产量（年）",
+    "rows": 18,
+    "columns": 2,
+    "nonempty": 36
+  },
+  {
+    "key": "b2s11",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "01_研究导航",
+    "rows": 40,
+    "columns": 7,
+    "nonempty": 260
+  },
+  {
+    "key": "b2s12",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "下游开工（月）",
+    "rows": 230,
+    "columns": 29,
+    "nonempty": 3104
+  },
+  {
+    "key": "b2s13",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "焊料厂",
+    "rows": 54,
+    "columns": 14,
+    "nonempty": 115
+  },
+  {
+    "key": "b2s14",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "半导体指数",
+    "rows": 11817,
+    "columns": 20,
+    "nonempty": 48683
+  },
+  {
+    "key": "b2s15",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "焊锡价格（日）",
+    "rows": 1875,
+    "columns": 4,
+    "nonempty": 7497
+  },
+  {
+    "key": "b2s16",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "下游价格（日）",
+    "rows": 6624,
+    "columns": 11,
+    "nonempty": 72864
+  },
+  {
+    "key": "b2s17",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "镀锡板（ifind）",
+    "rows": 64,
+    "columns": 7,
+    "nonempty": 254
+  },
+  {
+    "key": "b2s18",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "02_研究导航",
+    "rows": 40,
+    "columns": 7,
+    "nonempty": 260
+  },
+  {
+    "key": "b2s19",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-光伏组件",
+    "rows": 74,
+    "columns": 19,
+    "nonempty": 427
+  },
+  {
+    "key": "b2s20",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-家电数据",
+    "rows": 301,
+    "columns": 17,
+    "nonempty": 5086
+  },
+  {
+    "key": "b2s21",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "ai相关",
+    "rows": 677,
+    "columns": 6,
+    "nonempty": 1571
+  },
+  {
+    "key": "b2s22",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-消费电子（家电）",
+    "rows": 298,
+    "columns": 55,
+    "nonempty": 3446
+  },
+  {
+    "key": "b2s23",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-消费电子（新能源汽车）",
+    "rows": 331,
+    "columns": 47,
+    "nonempty": 2437
+  },
+  {
+    "key": "b2s24",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-消费电子（电视手机电脑）",
+    "rows": 410,
+    "columns": 62,
+    "nonempty": 3226
+  },
+  {
+    "key": "b2s25",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-马口铁",
+    "rows": 32,
+    "columns": 12,
+    "nonempty": 221
+  },
+  {
+    "key": "b2s26",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-锡化工（浮法玻璃&pvc）",
+    "rows": 619,
+    "columns": 45,
+    "nonempty": 3417
+  },
+  {
+    "key": "b2s27",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "03_研究导航",
+    "rows": 40,
+    "columns": 7,
+    "nonempty": 260
+  },
+  {
+    "key": "b2s28",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "消费拟合-锡化工（化学农药）",
+    "rows": 426,
+    "columns": 15,
+    "nonempty": 1481
+  },
+  {
+    "key": "b2s29",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "持仓量",
+    "rows": 5761,
+    "columns": 4,
+    "nonempty": 21045
+  },
+  {
+    "key": "b2s30",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "库存（日）",
+    "rows": 4062,
+    "columns": 50,
+    "nonempty": 53537
+  },
+  {
+    "key": "b2s31",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "库存辅助2",
+    "rows": 3990,
+    "columns": 12,
+    "nonempty": 9751
+  },
+  {
+    "key": "b2s32",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "lme+全球显性库存",
+    "rows": 3990,
+    "columns": 23,
+    "nonempty": 10993
+  },
+  {
+    "key": "b2s33",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "库存（周）",
+    "rows": 1385,
+    "columns": 14,
+    "nonempty": 16621
+  },
+  {
+    "key": "b2s34",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "周度库存（钢联）",
+    "rows": 594,
+    "columns": 73,
+    "nonempty": 6723
+  },
+  {
+    "key": "b2s35",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "04_研究导航",
+    "rows": 40,
+    "columns": 7,
+    "nonempty": 260
+  },
+  {
+    "key": "b2s36",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "进出口",
+    "rows": 137,
+    "columns": 40,
+    "nonempty": 2391
+  },
+  {
+    "key": "b2s37",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡锭进口",
+    "rows": 121,
+    "columns": 21,
+    "nonempty": 862
+  },
+  {
+    "key": "b2s38",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡锭价格（日）",
+    "rows": 7218,
+    "columns": 45,
+    "nonempty": 158168
+  },
+  {
+    "key": "b2s39",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡比价",
+    "rows": 6942,
+    "columns": 7,
+    "nonempty": 33006
+  },
+  {
+    "key": "b2s40",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡锭升贴水",
+    "rows": 2761,
+    "columns": 32,
+    "nonempty": 41283
+  },
+  {
+    "key": "b2s41",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡锭每日成交",
+    "rows": 4025,
+    "columns": 13,
+    "nonempty": 5287
+  },
+  {
+    "key": "b2s42",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡锭溢价",
+    "rows": 65,
+    "columns": 5,
+    "nonempty": 261
+  },
+  {
+    "key": "b2s43",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "国内锡年度平衡",
+    "rows": 41,
+    "columns": 15,
+    "nonempty": 382
+  },
+  {
+    "key": "b2s44",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "矿山成本",
+    "rows": 12,
+    "columns": 7,
+    "nonempty": 67
+  },
+  {
+    "key": "b2s45",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "矿端平衡",
+    "rows": 133,
+    "columns": 18,
+    "nonempty": 1264
+  },
+  {
+    "key": "b2s46",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "锡产量平衡",
+    "rows": 133,
+    "columns": 22,
+    "nonempty": 1330
+  },
+  {
+    "key": "b2s47",
+    "file": "aa_sn_database_final.xlsx",
+    "sheet": "图表大小样式示例",
+    "rows": 0,
+    "columns": 0,
+    "nonempty": 0
+  }
+]

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>锡产业周度报告 · 完整版（可编辑）</title>
+<style>
+:root{--red:#C00000;--line:#D9D9D9;--ink:#1a1a1a;--grey:#666}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#3a3f47;font-family:"KaiTi","楷体","STKaiti","Microsoft YaHei",serif;color:var(--ink)}
+/* ---------- 工具栏 ---------- */
+.toolbar{position:sticky;top:0;z-index:1000;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+  padding:8px 14px;background:#14181f;border-bottom:1px solid #000;color:#dfe5ee;font-size:13px}
+.toolbar .ttl{font-weight:700;color:#fff;margin-right:8px}
+.toolbar button,.toolbar select,.toolbar label.btn{background:#222a36;border:1px solid #3a4556;color:#dfe5ee;
+  border-radius:6px;padding:5px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.toolbar button:hover{border-color:var(--red)}
+.toolbar button.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.toolbar .sep{width:1px;height:20px;background:#3a4556;margin:0 4px}
+.toolbar a{color:#8ab4f8;text-decoration:none;font-size:12.5px}
+.toolbar .savestate{font-size:11.5px;color:#8a94a6;margin-left:auto}
+/* ---------- 页面 ---------- */
+#stage{padding:22px 0 60px;display:flex;flex-direction:column;align-items:center;gap:26px}
+.sheetwrap{position:relative}
+.sheet{position:relative;width:960px;height:540px;background:#fff;overflow:hidden;
+  box-shadow:0 4px 24px rgba(0,0,0,.45);transform-origin:top center}
+.pageno{position:absolute;left:-2px;top:-20px;font-size:11.5px;color:#9aa5b5}
+.sheet svg.layer{position:absolute;left:0;top:0;width:960px;height:540px}
+.sheet img.pgimg{position:absolute}
+.tx{position:absolute;white-space:nowrap;line-height:1.15;padding:0;margin:0}
+body.edit .tx{outline:1px dashed transparent;cursor:text}
+body.edit .tx:hover{outline-color:#4d9fff;background:rgba(77,159,255,.06)}
+body.edit .tx[contenteditable="true"]:focus{outline:1.5px solid var(--red);background:rgba(192,0,0,.05)}
+/* ---------- 图表槽 ---------- */
+.slot{position:absolute;display:none}
+body.edit .slot{display:block}
+.slot .frame{position:absolute;inset:0;border:1.5px dashed #4d9fff;background:rgba(77,159,255,.05);cursor:move}
+.slot .frame:hover{background:rgba(77,159,255,.12)}
+.slot .ops{position:absolute;top:-26px;right:0;display:flex;gap:4px}
+.slot .ops button{font-size:11px;padding:2px 8px;border:1px solid #4d9fff;background:#fff;color:#1F4E79;
+  border-radius:4px;cursor:pointer;white-space:nowrap}
+.slot .ops button.del{border-color:#d33;color:#d33}
+.slot .rz{position:absolute;right:-6px;bottom:-6px;width:12px;height:12px;background:#4d9fff;cursor:nwse-resize;border-radius:2px}
+.slot.live .frame{border-style:solid;border-color:var(--red);background:#fff;cursor:default}
+.slot.deleted .frame{border-color:#d33;background:rgba(211,51,51,.08)}
+.slot canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+body.edit .slot .ops{display:flex}
+body:not(.edit) .slot .ops{display:none}
+/* ---------- 图表编辑弹窗 ---------- */
+.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;display:none;align-items:center;justify-content:center}
+.modal-mask.show{display:flex}
+.modal{width:560px;max-height:86vh;overflow:auto;background:#fff;border-radius:10px;padding:18px 20px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.modal h3{font-size:15px;margin-bottom:12px;color:var(--red)}
+.modal .row{margin:10px 0;font-size:13px}
+.modal .row b{display:block;margin-bottom:5px;color:#333}
+.modal input[type=text]{width:100%;padding:6px 9px;border:1px solid var(--line);border-radius:5px;font-size:13px;font-family:inherit}
+.modal select{padding:5px 8px;border:1px solid var(--line);border-radius:5px;font-size:13px;font-family:inherit}
+.indlist{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:6px 10px;column-count:2;font-size:12.5px}
+.indlist label{display:flex;gap:6px;align-items:center;padding:3px 0;cursor:pointer;break-inside:avoid}
+.years{display:flex;gap:10px;font-size:12.5px}
+.years label{display:flex;gap:4px;align-items:center;cursor:pointer}
+.modal .btns{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.modal .btns button{padding:6px 16px;border-radius:6px;border:1px solid var(--line);background:#f5f5f5;font-size:13px;cursor:pointer;font-family:inherit}
+.modal .btns button.primary{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.modal .btns button.warn{color:#d33;border-color:#d33;background:#fff}
+.modal .hint{font-size:11.5px;color:#888;margin-top:6px;line-height:1.6}
+/* ---------- 打印 / PDF 导出 ---------- */
+@page{size:960px 540px;margin:0}
+@media print{
+  body{background:#fff}
+  .toolbar,.pageno,.slot .ops,.slot .rz,.slot .frame{border:none;background:none}
+  .toolbar,.pageno,.slot .ops,.slot .rz{display:none!important}
+  #stage{padding:0;gap:0;display:block}
+  .sheetwrap{margin:0}
+  .sheet{box-shadow:none;transform:none!important;margin:0;page-break-after:always;break-inside:avoid}
+  body.edit .tx{outline:none!important}
+  .slot{display:block}
+  .slot .frame{border:none;background:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+/* ---------- 密码锁 ---------- */
+#lock{position:fixed;inset:0;z-index:9999;background:#14181f;display:flex;align-items:center;justify-content:center}
+#lock .card{background:#fff;border-radius:12px;padding:34px 40px;text-align:center;box-shadow:0 12px 50px rgba(0,0,0,.5);width:340px}
+#lock h2{font-size:17px;color:#1a1a1a;margin-bottom:4px}
+#lock p{font-size:12px;color:#888;margin-bottom:16px}
+#lock input{width:100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:7px;font-size:15px;text-align:center;letter-spacing:6px;font-family:inherit}
+#lock input:focus{outline:none;border-color:var(--red)}
+#lock button{margin-top:14px;width:100%;padding:9px 0;border:none;border-radius:7px;background:var(--red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+#lock .err{color:#d33;font-size:12px;margin-top:10px;min-height:16px}
+@media print{#lock{display:none!important}}
+</style>
+</head>
+<body>
+<div id="lock">
+  <div class="card">
+    <h2>锡产业周度报告 · 完整版</h2>
+    <p>本页已加密，请输入访问密码</p>
+    <input id="lockPwd" type="password" inputmode="numeric" maxlength="8" placeholder="密码" autocomplete="off">
+    <button id="lockBtn">解 锁</button>
+    <div class="err" id="lockErr"></div>
+  </div>
+</div>
+<div class="toolbar">
+  <span class="ttl">锡产业周度报告 · 0920 完整版</span>
+  <button id="btnEdit">✏️ 编辑模式</button>
+  <button id="btnPrint">🖨️ 导出 PDF</button>
+  <span class="sep"></span>
+  <label>跳转 <select id="jumpSel"></select></label>
+  <label>缩放 <select id="zoomSel"><option value="0">适应宽度</option><option value="1">100%</option><option value="1.25">125%</option><option value="0.75">75%</option></select></label>
+  <span class="sep"></span>
+  <button id="btnExport">⤓ 导出修改</button>
+  <label class="btn">⤒ 导入修改<input type="file" id="importFile" accept=".json" style="display:none"></label>
+  <button id="btnReset">↺ 恢复原稿</button>
+  <span class="sep"></span>
+  <a href="index.html">← 工作台</a>
+  <a href="weekly_2026-W41.html">数据周报 W41 →</a>
+  <span class="savestate" id="saveState">未修改</span>
+</div>
+<div id="stage"></div>
+
+<div class="modal-mask" id="chartModal">
+  <div class="modal">
+    <h3>图表编辑</h3>
+    <div class="row"><b>图表标题</b><input type="text" id="mTitle" placeholder="留空则不显示标题"></div>
+    <div class="row"><b>图表类型</b>
+      <select id="mType">
+        <option value="seasonal">季节性图（按年对比，横轴=周）</option>
+        <option value="line">折线图（时间序列）</option>
+        <option value="bar">柱状图（时间序列）</option>
+      </select>
+    </div>
+    <div class="row"><b>指标（可多选叠加）</b><div class="indlist" id="mInds"></div></div>
+    <div class="row" id="mYearsRow"><b>年份（季节性图）</b><div class="years" id="mYears"></div></div>
+    <div class="row"><b>起始日期（折线/柱状）</b><select id="mStart"><option value="2022-01-01">2022 起</option><option value="2023-01-01" selected>2023 起</option><option value="2024-01-01">2024 起</option><option value="2025-01-01">2025 起</option><option value="2026-01-01">2026 起</option></select></div>
+    <div class="hint">配色自动按「2026 红 / 2025 黑 / 2024 蓝 / 2023 灰」；折线图多指标按红→黑→蓝→灰循环。应用后该区域覆盖原图，可随时「恢复原图」。</div>
+    <div class="btns">
+      <button id="mRestore">恢复原图</button>
+      <button id="mDelete" class="warn">删除图表</button>
+      <button id="mCancel">取消</button>
+      <button id="mApply" class="primary">应用</button>
+    </div>
+  </div>
+</div>
+
+<script src="lib/chart.min.js"></script>
+<script src="weekly_pdf/pages_data.js"></script>
+<script src="weekly_pdf/weekly_data.js"></script>
+<script>
+(function(){
+'use strict';
+var STAGE=document.getElementById('stage');
+var LSKEY='wkpdf0920_ov1';
+var OV=loadOv();
+var charts={}; // key -> Chart instance
+var PAGE_W=960,PAGE_H=540;
+var YEAR_COLORS={2026:'#C00000',2025:'#000000',2024:'#4472C4',2023:'#BFBFBF',2022:'#D9D9D9'};
+var LINE_PALETTE=['#C00000','#000000','#4472C4','#BFBFBF','#7AB5D7','#A8871B'];
+
+function loadOv(){try{var s=localStorage.getItem(LSKEY);return s?JSON.parse(s):{texts:{},slots:{},added:{}};}catch(e){return {texts:{},slots:{},added:{}}}}
+function saveOv(){try{localStorage.setItem(LSKEY,JSON.stringify(OV));}catch(e){}markSaved()}
+var saveT=null;
+function markSaved(){var el=document.getElementById('saveState');el.textContent='已保存 '+new Date().toLocaleTimeString();}
+function markDirty(){var el=document.getElementById('saveState');el.textContent='有未保存修改…';clearTimeout(saveT);saveT=setTimeout(saveOv,600);}
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+/* ================= 页面渲染 ================= */
+function buildDeck(){
+  STAGE.innerHTML='';
+  window.PDF_PAGES.forEach(function(pg){
+    var wrap=document.createElement('div');wrap.className='sheetwrap';
+    var pageno=document.createElement('div');pageno.className='pageno';pageno.textContent='第 '+pg.no+' / '+window.PDF_PAGES.length+' 页';
+    wrap.appendChild(pageno);
+    var sh=document.createElement('div');sh.className='sheet';sh.id='pg-'+pg.no;
+    // svg 基层
+    var svg='<svg class="layer" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">';
+    svg+='<defs>'+(pg.defs||[]).join('')+'</defs>';
+    svg+=pg.svg.join('');
+    pg.slots.forEach(function(s){svg+='<g data-slotg="'+s.id+'">'+s.svg.join('')+'</g>';});
+    svg+='</svg>';
+    sh.insertAdjacentHTML('beforeend',svg);
+    // 图片
+    pg.imgs.forEach(function(im){
+      var img=document.createElement('img');img.className='pgimg';img.src=im.src;
+      img.style.left=im.x+'px';img.style.top=im.y+'px';img.style.width=im.w+'px';img.style.height=im.h+'px';
+      sh.appendChild(img);
+    });
+    // 文本
+    pg.texts.forEach(function(t,ti){
+      var d=document.createElement('div');d.className='tx';
+      d.style.left=t.x+'px';d.style.top=(t.y-1)+'px';
+      d.style.fontSize=t.size+'px';d.style.color=t.color;d.style.fontFamily='"KaiTi","楷体","STKaiti",serif';
+      if(t.bold)d.style.fontWeight='700';
+      if(t.slot!==undefined)d.dataset.slot=t.slot;
+      d.dataset.ti=ti;
+      var key=pg.no+'-'+ti;
+      d.innerHTML=(OV.texts[key]!==undefined)?OV.texts[key]:esc(t.text);
+      d.addEventListener('input',function(){OV.texts[key]=d.innerHTML;markDirty();});
+      sh.appendChild(d);
+    });
+    // 图表槽
+    pg.slots.forEach(function(s){sh.appendChild(buildSlot(pg.no,s));});
+    // 用户新增槽
+    (OV.added[pg.no]||[]).forEach(function(s){sh.appendChild(buildSlot(pg.no,s,true));});
+    // 编辑模式下“添加图表”按钮
+    var addBtn=document.createElement('button');
+    addBtn.textContent='＋图表';addBtn.className='addchart';
+    addBtn.style.cssText='position:absolute;right:6px;top:6px;z-index:60;display:none;font-size:11px;padding:2px 8px;border:1px dashed #4d9fff;background:#fff;color:#1F4E79;border-radius:4px;cursor:pointer';
+    addBtn.addEventListener('click',function(){addSlot(pg.no,sh);});
+    sh.appendChild(addBtn);
+    wrap.appendChild(sh);
+    STAGE.appendChild(wrap);
+  });
+  applyZoom();
+  applyOverrides();
+}
+document.addEventListener('click',function(){});
+// 编辑模式下显示添加按钮
+var styleEl=document.createElement('style');styleEl.textContent='body.edit .addchart{display:block}@media print{.addchart{display:none!important}}';document.head.appendChild(styleEl);
+
+/* ================= 图表槽 ================= */
+function buildSlot(pno,s,added){
+  var slot=document.createElement('div');slot.className='slot';
+  slot.dataset.pno=pno;slot.dataset.sid=s.id;
+  slot.style.left=s.x+'px';slot.style.top=s.y+'px';slot.style.width=s.w+'px';slot.style.height=s.h+'px';
+  var frame=document.createElement('div');frame.className='frame';frame.title='拖拽移动 / 右下角缩放';
+  var ops=document.createElement('div');ops.className='ops';
+  ops.innerHTML='<button class="ed">📈 编辑图表</button><button class="del">🗑</button>';
+  var rz=document.createElement('div');rz.className='rz';
+  slot.appendChild(frame);slot.appendChild(ops);slot.appendChild(rz);
+  ops.querySelector('.ed').addEventListener('click',function(e){e.stopPropagation();openModal(pno,s.id,added);});
+  ops.querySelector('.del').addEventListener('click',function(e){
+    e.stopPropagation();
+    if(!confirm('删除该图表区域？（原图将被移除，可恢复原稿找回）'))return;
+    setSlotOv(pno,s.id,{mode:'del'});applyOverrides();markDirty();
+  });
+  enableDragResize(slot,frame,rz,pno,s.id,added);
+  return slot;
+}
+function setSlotOv(pno,sid,ov){OV.slots[pno+'-'+sid]=ov;}
+function getSlotOv(pno,sid){return OV.slots[pno+'-'+sid];}
+
+function enableDragResize(slot,frame,rz,pno,sid,added){
+  var sh=null,sx=0,sy=0,sl=0,st=0,sw=0,shh=0,mode=null;
+  function down(e,m){
+    if(!document.body.classList.contains('edit'))return;
+    if(slot.classList.contains('live')&&m==='move')return; // 活图表不拖动
+    e.preventDefault();e.stopPropagation();mode=m;
+    sh=slot.parentElement;sx=e.clientX;sy=e.clientY;
+    sl=parseFloat(slot.style.left);st=parseFloat(slot.style.top);
+    sw=parseFloat(slot.style.width);shh=parseFloat(slot.style.height);
+    document.addEventListener('mousemove',mv);document.addEventListener('mouseup',up);
+  }
+  function mv(e){
+    if(!mode)return;
+    var z=currentZoom();
+    var dx=(e.clientX-sx)/z,dy=(e.clientY-sy)/z;
+    if(mode==='move'){slot.style.left=Math.max(0,sl+dx)+'px';slot.style.top=Math.max(0,st+dy)+'px';}
+    else{slot.style.width=Math.max(120,sw+dx)+'px';slot.style.height=Math.max(90,shh+dy)+'px';}
+  }
+  function up(){
+    if(mode){
+      var pos={x:parseFloat(slot.style.left),y:parseFloat(slot.style.top),w:parseFloat(slot.style.width),h:parseFloat(slot.style.height)};
+      var key=pno+'-'+sid;var o=getSlotOv(pno,sid)||{};
+      o.pos=pos;OV.slots[key]=o;
+      if(added){var arr=OV.added[pno]||[];for(var i=0;i<arr.length;i++){if(arr[i].id===sid){arr[i]=Object.assign(arr[i],pos);}}}
+      markDirty();
+    }
+    mode=null;document.removeEventListener('mousemove',mv);document.removeEventListener('mouseup',up);
+  }
+  frame.addEventListener('mousedown',function(e){down(e,'move');});
+  rz.addEventListener('mousedown',function(e){down(e,'resize');});
+}
+
+function addSlot(pno,sh){
+  var nid='u'+Date.now()%100000;
+  var s={id:nid,x:120,y:140,w:340,h:240,svg:[]};
+  (OV.added[pno]=OV.added[pno]||[]).push(s);
+  var el=buildSlot(pno,s,true);sh.appendChild(el);markDirty();
+  openModal(pno,nid,true);
+}
+
+/* ================= 覆盖应用 ================= */
+function applyOverrides(){
+  Object.keys(charts).forEach(function(k){try{charts[k].destroy();}catch(e){}});charts={};
+  document.querySelectorAll('.slot').forEach(function(slot){
+    var pno=slot.dataset.pno,sid=slot.dataset.sid;
+    var ov=getSlotOv(pno,sid);
+    var sh=slot.parentElement;
+    var g=sh.querySelector('g[data-slotg="'+sid+'"]');
+    slot.classList.remove('live','deleted');
+    slot.querySelectorAll('canvas').forEach(function(c){c.remove();});
+    // 位置覆盖
+    if(ov&&ov.pos){slot.style.left=ov.pos.x+'px';slot.style.top=ov.pos.y+'px';slot.style.width=ov.pos.w+'px';slot.style.height=ov.pos.h+'px';}
+    // 默认：显示原图
+    if(g)g.style.display='';
+    sh.querySelectorAll('.tx[data-slot="'+sid+'"]').forEach(function(t){t.style.display='';});
+    if(ov&&ov.mode==='del'){
+      slot.classList.add('deleted');
+      if(g)g.style.display='none';
+      sh.querySelectorAll('.tx[data-slot="'+sid+'"]').forEach(function(t){t.style.display='none';});
+      if(!document.body.classList.contains('edit'))slot.style.display='none';else slot.style.display='';
+    }else if(ov&&ov.mode==='live'){
+      slot.classList.add('live');slot.style.display='block';
+      if(g)g.style.display='none';
+      sh.querySelectorAll('.tx[data-slot="'+sid+'"]').forEach(function(t){t.style.display='none';});
+      renderLiveChart(slot,ov.spec,pno+'-'+sid);
+    }else{
+      slot.style.display='';
+    }
+  });
+}
+
+/* ================= 活图表渲染 ================= */
+function indById(id){return window.WEEKLY_INDICATORS.find(function(i){return i.id===id;});}
+function weekOfDate(ds){var d=new Date(ds+'T00:00:00');var start=new Date(d.getFullYear(),0,1);return (Math.floor((d-start)/86400000)+1)/7+1-1;} // 年内第几周(浮点)
+function renderLiveChart(slot,spec,key){
+  var cv=document.createElement('canvas');slot.appendChild(cv);
+  var datasets=[];
+  if(spec.type==='seasonal'){
+    var years=spec.years&&spec.years.length?spec.years:[2023,2024,2025,2026];
+    spec.inds.forEach(function(iid){
+      var ind=indById(iid);if(!ind)return;
+      years.forEach(function(y){
+        var pts=ind.data.filter(function(p){return p[0].slice(0,4)==String(y);})
+          .map(function(p){return {x:weekFloat(p[0]),y:p[1]};});
+        if(!pts.length)return;
+        var lbl=spec.inds.length>1?(ind.name+' '+y):String(y);
+        datasets.push({label:lbl,data:pts,borderColor:YEAR_COLORS[y]||'#888',
+          borderWidth:y===2026?2.2:(y===2025?1.8:1.3),pointRadius:0,tension:.15,
+          backgroundColor:'transparent'});
+      });
+    });
+  }else{
+    var start=spec.start||'2023-01-01';
+    spec.inds.forEach(function(iid,ix){
+      var ind=indById(iid);if(!ind)return;
+      var pts=ind.data.filter(function(p){return p[0]>=start;}).map(function(p){return {x:Date.parse(p[0]),y:p[1]};});
+      if(!pts.length)return;
+      var c=LINE_PALETTE[ix%LINE_PALETTE.length];
+      datasets.push({label:ind.name+(ind.unit?'（'+ind.unit+'）':''),data:pts,borderColor:c,backgroundColor:c,
+        borderWidth:1.6,pointRadius:0,tension:.1,type:spec.type==='bar'?'bar':'line'});
+    });
+  }
+  var isSeasonal=spec.type==='seasonal';
+  Chart.defaults.font.family='KaiTi';
+  charts[key]=new Chart(cv.getContext('2d'),{
+    type:spec.type==='bar'?'bar':'line',
+    data:{datasets:datasets},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{
+        title:{display:!!spec.title,text:spec.title||'',color:'#000',font:{size:13,weight:'700',family:'KaiTi'}},
+        legend:{position:'bottom',labels:{boxWidth:14,font:{size:10},color:'#333'}},
+        tooltip:{mode:'nearest',intersect:false}
+      },
+      scales:{
+        x:{type:'linear',min:isSeasonal?1:undefined,max:isSeasonal?52:undefined,
+          ticks:isSeasonal?{stepSize:9,callback:function(v){return '第'+Math.round(v)+'周';},font:{size:10},color:'#555'}
+                          :{callback:function(v){var d=new Date(v);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');},maxTicksLimit:8,font:{size:10},color:'#555'},
+          grid:{color:'#E8E8E8',borderDash:[4,4]}},
+        y:{ticks:{font:{size:10},color:'#555'},grid:{color:'#E8E8E8',borderDash:[4,4]}}
+      },
+      backgroundColor:'#fff'
+    },
+    plugins:[{id:'bg',beforeDraw:function(c){var ctx=c.ctx;ctx.save();ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.restore();}}]
+  });
+}
+function weekFloat(ds){var d=new Date(ds+'T00:00:00');var s=new Date(d.getFullYear(),0,1);return Math.floor((d-s)/86400000)/7+1;}
+
+/* ================= 编辑弹窗 ================= */
+var modal=document.getElementById('chartModal');
+var curCtx=null;
+function openModal(pno,sid,added){
+  curCtx={pno:pno,sid:sid,added:added};
+  var ov=getSlotOv(pno,sid);
+  var spec=(ov&&ov.mode==='live')?ov.spec:{title:'',type:'seasonal',inds:[],years:[2023,2024,2025,2026],start:'2023-01-01'};
+  document.getElementById('mTitle').value=spec.title||'';
+  document.getElementById('mType').value=spec.type||'seasonal';
+  document.getElementById('mStart').value=spec.start||'2023-01-01';
+  var inds=document.getElementById('mInds');inds.innerHTML='';
+  window.WEEKLY_INDICATORS.forEach(function(ind){
+    var lb=document.createElement('label');
+    lb.innerHTML='<input type="checkbox" value="'+ind.id+'"'+(spec.inds.indexOf(ind.id)>=0?' checked':'')+'> '+ind.name;
+    inds.appendChild(lb);
+  });
+  var ys=document.getElementById('mYears');ys.innerHTML='';
+  [2022,2023,2024,2025,2026].forEach(function(y){
+    var lb=document.createElement('label');
+    lb.innerHTML='<input type="checkbox" value="'+y+'"'+((spec.years||[2023,2024,2025,2026]).indexOf(y)>=0?' checked':'')+'> '+y;
+    ys.appendChild(lb);
+  });
+  modal.classList.add('show');
+}
+document.getElementById('mCancel').addEventListener('click',function(){modal.classList.remove('show');});
+document.getElementById('mApply').addEventListener('click',function(){
+  var inds=[].map.call(document.querySelectorAll('#mInds input:checked'),function(i){return i.value;});
+  if(!inds.length){alert('请至少选择一个指标');return;}
+  var years=[].map.call(document.querySelectorAll('#mYears input:checked'),function(i){return +i.value;});
+  var spec={title:document.getElementById('mTitle').value.trim(),
+    type:document.getElementById('mType').value,inds:inds,years:years,
+    start:document.getElementById('mStart').value};
+  var o=getSlotOv(curCtx.pno,curCtx.sid)||{};o.mode='live';o.spec=spec;
+  OV.slots[curCtx.pno+'-'+curCtx.sid]=o;
+  if(curCtx.added){var arr=OV.added[curCtx.pno]||[];arr.forEach(function(s){if(s.id===curCtx.sid)s.spec=spec;});}
+  modal.classList.remove('show');applyOverrides();markDirty();
+});
+document.getElementById('mRestore').addEventListener('click',function(){
+  delete OV.slots[curCtx.pno+'-'+curCtx.sid];
+  if(curCtx.added){ // 新增槽恢复原图=删除
+    OV.added[curCtx.pno]=(OV.added[curCtx.pno]||[]).filter(function(s){return s.id!==curCtx.sid;});
+    rebuildSoon();
+  }
+  modal.classList.remove('show');applyOverrides();markDirty();
+});
+document.getElementById('mDelete').addEventListener('click',function(){
+  setSlotOv(curCtx.pno,curCtx.sid,{mode:'del'});
+  modal.classList.remove('show');applyOverrides();markDirty();
+});
+function rebuildSoon(){buildDeck();document.body.classList.add('edit');}
+
+/* ================= 工具栏 ================= */
+document.getElementById('btnEdit').addEventListener('click',function(){
+  var on=document.body.classList.toggle('edit');
+  this.classList.toggle('on',on);
+  this.textContent=on?'✏️ 编辑中…（点击退出）':'✏️ 编辑模式';
+  document.querySelectorAll('.tx').forEach(function(d){d.contentEditable=on?'true':'false';});
+  applyOverrides();
+});
+document.getElementById('btnPrint').addEventListener('click',function(){
+  document.body.classList.remove('edit');
+  document.getElementById('btnEdit').classList.remove('on');
+  document.getElementById('btnEdit').textContent='✏️ 编辑模式';
+  applyOverrides();
+  setTimeout(function(){window.print();},150);
+});
+var jump=document.getElementById('jumpSel');
+window.PDF_PAGES.forEach(function(pg){var o=document.createElement('option');o.value=pg.no;o.textContent='第 '+pg.no+' 页';jump.appendChild(o);});
+jump.addEventListener('change',function(){var el=document.getElementById('pg-'+this.value);if(el)el.parentElement.scrollIntoView({behavior:'smooth'});});
+function currentZoom(){
+  var v=document.getElementById('zoomSel').value;
+  if(v==='0')return Math.min(1.6,(window.innerWidth-60)/PAGE_W);
+  return parseFloat(v);
+}
+function applyZoom(){
+  var z=currentZoom();
+  document.querySelectorAll('.sheet').forEach(function(sh){
+    sh.style.transform='scale('+z+')';
+    sh.parentElement.style.width=PAGE_W*z+'px';
+    sh.parentElement.style.height=PAGE_H*z+'px';
+  });
+}
+document.getElementById('zoomSel').addEventListener('change',applyZoom);
+window.addEventListener('resize',function(){if(document.getElementById('zoomSel').value==='0')applyZoom();});
+document.getElementById('btnExport').addEventListener('click',function(){
+  var blob=new Blob([JSON.stringify(OV,null,1)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='weekly0920_edits.json';a.click();
+});
+document.getElementById('importFile').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(){try{OV=JSON.parse(r.result);saveOv();buildDeck();alert('已导入修改');}catch(e){alert('导入失败：'+e.message);}};r.readAsText(f);
+  this.value='';
+});
+document.getElementById('btnReset').addEventListener('click',function(){
+  if(!confirm('放弃所有修改，恢复 PDF 原稿？'))return;
+  OV={texts:{},slots:{},added:{}};saveOv();buildDeck();
+});
+
+buildDeck();
+})();
+</script>
+<script>
+(function(){
+  var KEY='wr_auth_ok';
+  var lock=document.getElementById('lock');
+  function ok(){lock.style.display='none';}
+  try{if(sessionStorage.getItem(KEY)==='1'){ok();return;}}catch(e){}
+  var pwd=document.getElementById('lockPwd'),err=document.getElementById('lockErr');
+  function h(s){var v=7;for(var i=0;i<s.length;i++)v=v*31+s.charCodeAt(i);return v;}
+  function tryUnlock(){
+    if(h(pwd.value.trim())===7972075){try{sessionStorage.setItem(KEY,'1');}catch(e){}ok();}
+    else{err.textContent='密码错误，请重试';pwd.value='';pwd.focus();}
+  }
+  document.getElementById('lockBtn').addEventListener('click',tryUnlock);
+  pwd.addEventListener('keydown',function(e){if(e.key==='Enter')tryUnlock();});
+  pwd.focus();
+})();
+</script>
+</body>
+</html>

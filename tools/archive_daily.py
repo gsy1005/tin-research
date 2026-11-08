@@ -30,7 +30,7 @@ def read_js_json(path: Path, marker: str):
 
 
 def weekly_snapshot() -> dict:
-    weekly_path = ROOT / "weekly_w44_t7q3m9r6k2x8.html"
+    weekly_path = ROOT / "weekly_w45_n8v4c6q2x7m1.html"
     if not weekly_path.exists():
         weekly_path = ROOT / "weekly_full.html"
     soup = BeautifulSoup(weekly_path.read_text(encoding="utf-8"), "html.parser")

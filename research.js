@@ -50,10 +50,11 @@ register('quarter', '季度展望', ['总览'], [id('q4outlook')]);
 register('framework', '产业框架', ['总览'], [id('framework')]);
 register('datagap', '数据缺口', ['总览'], [id('datagap')]);
 
-/* Focus: sentiment and macro */
-const focusGroups = splitOnMarkers(takeUntil(id('focus'), id('ai')), node => node.nodeType === 1 && node.classList.contains('lead'));
-register('focus-sentiment', '锡市场情绪', ['重点关注'], focusGroups[0] || []);
-register('focus-macro', '宏观环境', ['重点关注'], focusGroups[1] || []);
+/* Focus: sentiment, macro and an independent daily-change journal. */
+register('focus-sentiment', '锡市场情绪', ['重点关注'], takeUntil(id('sentiment'), id('macro-focus')));
+register('focus-macro', '宏观环境', ['重点关注'], takeUntil(id('macro-focus'), id('anomaly-focus')));
+register('focus-anomaly', '数据异动监测', ['重点关注'], takeUntil(id('anomaly-focus'), id('daily-focus')));
+register('focus-daily', '本周日报逐日变化', ['重点关注'], takeUntil(id('daily-focus'), id('ai')));
 register('ai', 'AI 高频验证', ['重点关注'], takeUntil(id('ai'), id('supply')));
 
 /* Supply and inventory */
@@ -79,7 +80,7 @@ register('demand-semi', '半导体', solderTrail, demandGroups[7] || []);
 register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
 register('strategy', '策略与验证点', ['重点关注'], takeUntil(id('strategy'), id('lab')));
 register('lab', '图表工作区', ['图表工作区'], takeUntil(id('lab'), id('ai-detail')));
-register('cost', '矿山成本与边际', ['重点关注', '供给'], takeUntil(id('minecost'), id('decks')));
+register('cost', '矿山成本与边际', ['重点关注', '供给'], takeUntil(id('minecost'), $('h2[data-detail-chapter]', wrap)));
 
 /* AI tin-demand chapters */
 const aiGroups = splitOnMarkers(takeUntil(id('ai-detail'), id('minecost')), node => node.nodeType === 1 && node.classList.contains('lead'));
@@ -87,33 +88,30 @@ const aiLabels = ['核心结论', '研究背景', '测算边界', '芯片端', '
 const aiIds = ['ai-core', 'ai-background', 'ai-boundary', 'ai-chip', 'ai-board', 'ai-results', 'ai-pcb', 'ai-conclusion', 'ai-tracking'];
 aiGroups.forEach((nodes, index) => register(aiIds[index], aiLabels[index], ['AI 耗锡专题'], nodes));
 
-/* Detailed decks: each DECK continues into its own chart topics. */
-const deckConfigs = [
-  { start: 'ai-weekly-detail', label: 'AI 与美股', labels: ['产业链扩展数据', '美股财报验证'] },
-  { label: 'DECK 1 · 矿端', labels: ['储量', '全球产量', '潜在项目', '矿山季度产量', '海外矿山一', '海外矿山二', '中国矿端', '锡精矿进口'] },
-  { label: 'DECK 2 · 冶炼', labels: ['全球冶炼占比', 'ITA 精锡', '中国冶炼', '周度冶炼', '锡锭进口', '精锡进出口'] },
-  { label: 'DECK 3 · 焊料家电', labels: ['需求结构', '锡材与焊料', '白电排产', '白电耗锡', '冰箱', '洗衣机', '空调', '冷柜', '彩电'] },
-  { label: 'DECK 4 · 电子光伏', labels: ['电子产品产量', '电子产品耗锡', '集成电路与 PCB', '中国出货量', '全球出货量', '半导体', '光伏', '镀锡板'] },
-  { label: 'DECK 5 · 化工电池', labels: ['锡化工', '浮法玻璃', '铅蓄电池'] },
-  { label: 'DECK 6 · 汽车', labels: ['汽车出口与渗透率', '汽车产销与耗锡'] },
-  { label: 'DECK 7 · 现货·库存·平衡·贸易', labels: ['海外溢价与现货', 'LME 持仓', '地区升水', '显性库存', '平衡图表', '进出口盈亏', '美印尼日贸易', '日本泰国贸易', '泰国锡贸易'] }
-];
-let deckStart = id('ai-weekly-detail');
-deckConfigs.forEach((config, deckIndex) => {
-  const heading = deckIndex === 0 ? deckStart : (() => {
-    let h = deckStart;
-    for (let i = 0; i < deckIndex; i++) h = nextH2(h);
-    return h;
-  })();
-  const end = nextH2(heading);
-  const groups = splitOnMarkers(takeUntil(heading, end), node => node.nodeType === 1 && node.classList.contains('lead'));
-  groups.forEach((nodes, topicIndex) => {
-    const pageId = `deck-${deckIndex + 1}-${topicIndex + 1}`;
-    register(pageId, config.labels[topicIndex] || `图表主题 ${topicIndex + 1}`, ['详细周报', config.label], nodes);
-    config.children = config.children || [];
-    config.children.push({ id: pageId, label: config.labels[topicIndex] || `图表主题 ${topicIndex + 1}` });
+/* Complete detailed report.  Supply and demand have child topics; spot,
+   inventory, balance and trade remain peer-level chapters in both DOM and NAV. */
+const detailConfigs = $$('h2[data-detail-chapter]', wrap).map(chapter => {
+  const chapterId = chapter.dataset.detailChapter;
+  const topics = [];
+  let topic = chapter.nextElementSibling;
+  while (topic && !isH2(topic)) {
+    if (topic.matches?.('h3[data-detail-topic]')) topics.push(topic);
+    topic = topic.nextElementSibling;
+  }
+  const config = { id: chapterId, label: chapter.dataset.label, topics: [] };
+  topics.forEach((heading, index) => {
+    const end = topics[index + 1] || nextH2(chapter);
+    const topicId = heading.dataset.detailTopic;
+    const pageId = `detail-${topicId}`;
+    const trail = ['详细周报'];
+    if (chapterId === 'detail-supply' || chapterId === 'detail-demand') trail.push(config.label);
+    const nodes = takeUntil(heading, end).filter(node => !(node.nodeType === 1 && node.matches('h3[data-detail-topic]')));
+    register(pageId, heading.dataset.label, trail, nodes);
+    config.topics.push({ id: pageId, label: heading.dataset.label });
   });
+  return config;
 });
+register('detail-rawdata', 'Excel 原始数据附录', ['详细周报'], takeUntil(id('rawdata'), nextH2(id('rawdata'))));
 
 /* Create independent report pages. */
 const sourceFooter = $('footer', wrap);
@@ -151,7 +149,7 @@ const group = (label, children, open = false) => ({ type: 'group', label, childr
 const NAV = [
   group('总览', [page('summary', '本周总结'), page('quarter', '季度展望'), page('framework', '产业框架')], true),
   group('重点关注', [
-    page('focus-macro', '宏观环境'), page('focus-sentiment', '锡市场情绪'),
+    page('focus-macro', '宏观环境'), page('focus-sentiment', '锡市场情绪'), page('focus-anomaly', '数据异动监测'), page('focus-daily', '本周日报逐日变化'),
     group('供给', [page('supply-mine', '矿端与进口'), page('supply-smelt', '冶炼与精锡'), page('inventory', '显性库存'), page('cost', '矿山成本与边际')], true),
     group('需求', [
       group('锡焊料', [
@@ -168,7 +166,13 @@ const NAV = [
   page('balance', '平衡表与全年情景'),
   group('AI 耗锡专题', aiIds.filter(pid => registry.has(pid)).map(pid => page(pid, aiLabels[aiIds.indexOf(pid)]))),
   page('lab', '图表工作区'),
-  group('详细周报', deckConfigs.map(config => group(config.label, config.children.map(child => page(child.id, child.label))))),
+  group('详细周报', [
+    ...detailConfigs.map(config => {
+      const children = config.topics.map(topic => page(topic.id, topic.label));
+      return (config.id === 'detail-supply' || config.id === 'detail-demand') ? group(config.label, children) : children[0];
+    }).filter(Boolean),
+    page('detail-rawdata', 'Excel 原始数据附录')
+  ]),
   group('研究工作台', [
     { type: 'tool', id: 'daily', label: '锡研究日报' }, { type: 'tool', id: 'sheet', label: '数据日报' },
     { type: 'tool', id: 'archive', label: '周报留档' }, { type: 'tool', id: 'news', label: '市场信息和情绪' },
@@ -567,7 +571,7 @@ $('#prevPage').addEventListener('click', () => stepPage(-1));
 $('#nextPage').addEventListener('click', () => stepPage(1));
 
 /* Legacy in-report anchors route to the corresponding independent page. */
-const anchorRoutes = { '#sumsec': 'summary', '#q4outlook': 'quarter', '#framework': 'framework', '#focus': 'focus-sentiment', '#sentiment': 'focus-sentiment', '#ai': 'ai', '#supply': 'supply-mine', '#smelt': 'supply-smelt', '#invsec': 'inventory', '#balance': 'balance', '#demand': 'demand-solder', '#spot': 'spot', '#strategy': 'strategy', '#lab': 'lab', '#ai-detail': 'ai-core', '#minecost': 'cost', '#decks': 'deck-1-1' };
+const anchorRoutes = { '#sumsec': 'summary', '#q4outlook': 'quarter', '#framework': 'framework', '#focus': 'focus-sentiment', '#sentiment': 'focus-sentiment', '#ai': 'ai', '#supply': 'supply-mine', '#smelt': 'supply-smelt', '#invsec': 'inventory', '#balance': 'balance', '#demand': 'demand-solder', '#spot': 'spot', '#strategy': 'strategy', '#lab': 'lab', '#ai-detail': 'ai-core', '#minecost': 'cost', '#decks': 'detail-supply-mine' };
 wrap.addEventListener('click', event => {
   const anchor = event.target.closest('a[href^="#"]'); if (!anchor) return;
   const hash = anchor.getAttribute('href');

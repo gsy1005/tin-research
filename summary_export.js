@@ -12,11 +12,11 @@
     if(button.disabled)return;
     button.disabled=true;var oldText=button.textContent;button.textContent='正在生成…';
     try{
-      var width=1600,date=document.querySelector('.research-stamp b')?.textContent.trim()||'2026-10-30';
+      var width=1600,date=document.querySelector('.research-stamp b')?.textContent.trim()||'2026-11-06';
       var tone=document.querySelector('.report-page[data-page="summary"] .tone')||document.querySelector('.tone');
       var exportRoot=document.createElement('div');exportRoot.className='export-root';
       var title=document.createElement('div');title.className='export-title';
-      title.innerHTML='<div><p>TIN WEEKLY RESEARCH · 2026 W44</p><h1>锡研究周报 · 本周总结</h1></div><div class="export-meta"><b>中哲金属 · 甘思雨</b><span>数据截至　'+date+'</span></div>';
+      title.innerHTML='<div><p>TIN WEEKLY RESEARCH · 2026 W45</p><h1>锡研究周报 · 本周总结</h1></div><div class="export-meta"><b>中哲金属 · 甘思雨</b><span>数据截至　'+date+'</span></div>';
       exportRoot.appendChild(title);
       if(tone){var toneClone=tone.cloneNode(true);toneClone.removeAttribute('contenteditable');exportRoot.appendChild(toneClone);}
       var clone=sum.cloneNode(true);clone.querySelectorAll('.summary-export-bar').forEach(function(el){el.remove();});clone.querySelectorAll('[contenteditable]').forEach(function(el){el.removeAttribute('contenteditable');});exportRoot.appendChild(clone);
