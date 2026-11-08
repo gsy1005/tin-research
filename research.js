@@ -64,17 +64,18 @@ register('supply-smelt', '冶炼与精锡', ['重点关注', '供给'], supplyGr
 register('inventory', '显性库存', ['重点关注', '供给'], takeUntil(id('invsec'), id('balance')));
 register('balance', '平衡表与全年情景', ['平衡表'], [id('balance')]);
 
-/* Demand: 接货与焊料 → 白电 → 光伏 → 锡化工 → 新能源 → 其他终端。 */
+/* Demand: 接货与焊料 → 白电 → 消费电子 → 光伏 → 锡化工 → 新能源 → 其他终端。 */
 const demandGroups = splitOnMarkers(takeUntil(id('demand'), id('spot')), node => node.nodeType === 1 && node.classList.contains('lead'));
 const solderTrail = ['重点关注', '需求', '锡焊料'];
 register('demand-solder', '焊料产量、开工与成交', solderTrail, demandGroups[0] || []);
 register('demand-appliance', '三大白电', solderTrail, demandGroups[1] || []);
-register('demand-solar', '光伏', solderTrail, demandGroups[2] || []);
-register('demand-pvc', 'PVC 与浮法玻璃', ['重点关注', '需求', '锡化工'], demandGroups[3] || []);
-register('demand-newenergy', '新能源汽车', solderTrail, demandGroups[4] || []);
-register('demand-battery', '铅蓄电池', ['重点关注', '需求'], demandGroups[5] || []);
-register('demand-tinplate', '马口铁', ['重点关注', '需求'], demandGroups[6] || []);
-register('demand-semi', '半导体', solderTrail, demandGroups[7] || []);
+register('demand-electronics', '消费电子', solderTrail, demandGroups[2] || []);
+register('demand-solar', '光伏', solderTrail, demandGroups[3] || []);
+register('demand-pvc', 'PVC 与浮法玻璃', ['重点关注', '需求', '锡化工'], demandGroups[4] || []);
+register('demand-newenergy', '新能源汽车', solderTrail, demandGroups[5] || []);
+register('demand-battery', '铅蓄电池', ['重点关注', '需求'], demandGroups[6] || []);
+register('demand-tinplate', '马口铁', ['重点关注', '需求'], demandGroups[7] || []);
+register('demand-semi', '半导体', solderTrail, demandGroups[8] || []);
 
 /* Other weekly pages */
 register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
@@ -154,7 +155,8 @@ const NAV = [
     group('需求', [
       group('锡焊料', [
         page('demand-solder', '焊料开工与成交'), page('demand-appliance', '三大白电'),
-        page('demand-newenergy', '新能源汽车'), page('demand-solar', '光伏'), page('demand-semi', '半导体')
+        page('demand-electronics', '消费电子'), page('demand-newenergy', '新能源汽车'),
+        page('demand-solar', '光伏'), page('demand-semi', '半导体')
       ], true),
       group('锡化工', [page('demand-pvc', 'PVC 与浮法玻璃')], true),
       page('demand-tinplate', '马口铁'),
