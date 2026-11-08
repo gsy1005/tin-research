@@ -92,8 +92,8 @@
     return inputValue('strategy')||'日度策略待填报';
   }
   function signalScore(s){
-    if(s==='强多')return 2;if(s==='利多'||s==='结构多')return 1;if(s==='中性略偏多')return 0.5;
-    if(s==='强空')return -2;if(s==='偏空'||s==='利空')return -1;if(s==='中性略偏空')return -0.5;return 0;
+    if(s==='强多')return 2;if(s==='利多'||s==='偏多'||s==='结构多')return 1;if(s==='中性略偏多'||s==='中性偏多')return 0.5;
+    if(s==='强空')return -2;if(s==='偏空'||s==='利空'||s==='反弹偏空')return -1;if(s==='中性略偏空'||s==='中性偏空')return -0.5;return 0;
   }
   function scoreLabel(value){return value>=1.25?'强多':(value>=0.5?'偏多':(value>0.1?'中性略偏多':(value>=-0.1?'中性':(value>-0.5?'中性略偏空':(value>-1.25?'偏空':'强空')))));}
   function scoreValue(dims){return Math.max(-2,Math.min(2,dims.reduce(function(sum,d){return sum+d.score*d.weight/100;},0)));}
@@ -140,8 +140,7 @@
   }
   function updateDaily(){
     var c=context();dayStamp=c.day;
-    var hasInput=!!(input&&input.date===dayStamp);
-    var edits=readStore(STORE_DAY),values=!hasInput&&edits&&edits.date===dayStamp?edits.values:{};
+    var edits=readStore(STORE_DAY),values=edits&&edits.date===dayStamp?edits.values:{};
     source.rows.forEach(function(row){
       var td=document.querySelector('#weeksumBody [data-daily-key="'+row.key+'"]');
       if(td)td.textContent=values['change:'+row.key]||values[row.key]||dailyText(row.key,c);
@@ -158,7 +157,7 @@
     renderScore(c);
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
     var el=document.getElementById('dailyStrategyText'),saved=readStore(STORE_DS);
-    if(el)el.textContent=!hasInput&&saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
+    if(el)el.textContent=saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
   }
   function render(next){
     source=next;stamp=hash(JSON.stringify(next));
@@ -187,20 +186,40 @@
     if(archive)document.querySelectorAll('#dailyStrategyBlock [contenteditable]').forEach(function(el){el.contentEditable='false';});
     updateDaily();
   }
+  function cleanText(el){return el?el.textContent.replace(/\s+/g,' ').trim():'';}
+  function relatedText(cell){
+    var nested=cell.querySelector(':scope > table');if(!nested)return cleanText(cell);
+    var parts=[];nested.querySelectorAll('tr').forEach(function(tr){
+      var c=tr.querySelectorAll(':scope > td');if(c.length>=2)parts.push(cleanText(c[0])+'：'+cleanText(c[1]));
+    });
+    return parts.join('；');
+  }
+  function weeklyPositionRow(){
+    var text=inputValue('position');if(!text)return null;
+    return {key:'position',cat:'持仓·席位',related:'截至最新填报：'+text+'；缺少上周同合约、同席位完整对照，不计算周度增减',conclusion:'席位净空为榜单可见口径，未上榜不等于零持仓；用于观察后续交仓意愿，仍需结合 SHFE 仓单验证',signal:'双向'};
+  }
+  function fetchText(url){return fetch(url,{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(url);return r.text();});}
   function fetchWeekly(){
     if(!window.fetch||location.protocol==='file:')return;
-    fetch('weekly_w44_t7q3m9r6k2x8.html',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error('weekly');return r.text();}).then(function(html){
+    var sourceUrl='weekly_full.html';
+    fetchText('index.html').then(function(html){
+      var doc=new DOMParser().parseFromString(html,'text/html'),frame=doc.querySelector('#f-weekly2');
+      return frame&&(frame.getAttribute('src')||frame.getAttribute('data-lazy'))||sourceUrl;
+    }).catch(function(){return sourceUrl;}).then(function(url){
+      sourceUrl=url;return fetchText(url);
+    }).then(function(html){
       var doc=new DOMParser().parseFromString(html,'text/html'),rows=[],weeklyTable=doc.querySelector('#sumsec table.sum');
+      if(!weeklyTable)throw new Error('weekly summary');
       weeklyTable.querySelectorAll('tbody tr:not(.final)').forEach(function(tr,i){
         if(tr.closest('table')!==weeklyTable)return;
         var c=tr.querySelectorAll(':scope > td');if(c.length<4)return;
-        var cat=c[0].textContent.trim(),hasDaily=c.length>=5&&c[2].classList.contains('daily');
-        rows.push({key:keyMap[cat]||(cat==='需求'?'demand':('row'+i)),cat:cat==='需求'?'需求·焊料':cat,related:c[1].textContent.trim(),conclusion:c[hasDaily?3:2].textContent.trim(),signal:c[hasDaily?4:3].textContent.trim()});
+        var cat=cleanText(c[0]),hasDaily=c.length>=5&&c[2].classList.contains('daily');
+        rows.push({key:keyMap[cat]||(cat==='需求'?'demand':('row'+i)),cat:cat,related:relatedText(c[1]),conclusion:cleanText(c[hasDaily?3:2]),signal:cleanText(c[hasDaily?4:3])});
       });
-      var position=fallback.rows.find(function(row){return row.key==='position';}),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
+      var position=weeklyPositionRow(),riskIndex=rows.findIndex(function(row){return row.key==='risk';});
       if(position&&riskIndex>=0)rows.splice(riskIndex,0,position);
       var final=weeklyTable.querySelector('tr.final td[colspan]');
-      if(rows.length)render({rows:rows,final:final?final.textContent.trim():fallback.final});
+      if(rows.length){block.dataset.weeklySource=sourceUrl;render({rows:rows,final:final?cleanText(final):fallback.final});}
     }).catch(function(){/* 离线或跨域时保留内置周度数据 */});
   }
   function exportStrategyPNG(){
