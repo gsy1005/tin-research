@@ -199,9 +199,15 @@
       }
     });
   }
-  removeCopperChart();
-  addCustomsCharts();
-  addIndonesiaChart();
-  addCash3MChart();
-  tunePremiumChart();
+  function refreshCustoms() {
+    var host = document.getElementById('charts');
+    if (!host) return;
+    removeCopperChart();
+    if (!host.querySelector('.customs-chart')) addCustomsCharts();
+    if (!host.querySelector('.indonesia-chart')) addIndonesiaChart();
+    if (!host.querySelector('.cash3m-chart')) addCash3MChart();
+    tunePremiumChart();
+  }
+  window.TIN_SHEET_CUSTOMS_REFRESH = refreshCustoms;
+  refreshCustoms();
 })();
