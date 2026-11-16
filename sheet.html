@@ -88,7 +88,7 @@
     <option value="5">近 5 个交易日</option>
     <option value="10">近 10 个交易日</option>
   </select>
-  <span class="hint">日内总结可点击编辑；供需表和两种策略已移至独立“供需策略”页面</span>
+  <span class="hint">供需表和两种策略已移至独立“供需策略”页面</span>
 </div>
 <div id="sheet">
   <div class="shead-bar"><span class="author">中哲金属 · 甘思雨</span><h1>锡数据日报</h1><div class="sub" id="ssub">TIN DAILY DATA SHEET · <span id="pageVer" style="letter-spacing:0">版本检测中…</span></div></div>
@@ -104,12 +104,6 @@
     }).catch(function(){el.textContent='';});
   })();
   </script>
-  <div class="summary"><div class="sumhead"><h2>日 内 总 结</h2><div class="sumactions"><span id="summaryRefreshStatus" aria-live="polite"></span><button type="button" id="summaryRefresh" title="重新读取数据管线已生成的最新日报文件">刷新红字</button></div></div>
-    <div class="sumblk"><b>宏　观</b><div contenteditable="true" id="sumA"></div></div>
-    <div class="sumblk"><b>基本面</b><div contenteditable="true" id="sumB"></div></div>
-    <div class="sumblk"><b>情　绪</b><div contenteditable="true" id="sumC"></div></div>
-    <div class="sumblk"><b>策　略</b><div contenteditable="true" id="sumD"></div></div>
-  </div>
   <div class="main">
     <div class="ttable"><table id="dtable"></table></div>
   </div>
@@ -135,60 +129,6 @@
 <script src="sheet_customs.js?v=202610301226"></script>
 <script src="daily_overrides.js?v=20261116-cash700-v3"></script>
 <script src="daily_strategy.js?v=20261116-input-refresh"></script>
-<script>
-/* 日报顶部保留四段简短结论；切换天数或刷新数据后仍保持简洁。 */
-(function(){
-  function applySimpleSummary(){
-    var n=window.TIN_SUMMARY_NOTE||{};
-    [['sumA','A'],['sumB','B'],['sumC','C'],['sumD','D']].forEach(function(x){
-      var el=document.getElementById(x[0]);
-      if(el&&n[x[1]]&&el.textContent!==n[x[1]])el.textContent=n[x[1]];
-    });
-  }
-  window.TIN_SIMPLE_SUMMARY=applySimpleSummary;
-  applySimpleSummary();
-  if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
-    var render=window.TIN_SHEET.render;
-    window.TIN_SHEET.render=function(){var out=render.apply(this,arguments);applySimpleSummary();return out;};
-  }
-})();
-</script>
-<script>
-/* 手动绕过缓存，重读数据管线已生成的日报文件；失败时保留当前页面内容。 */
-(function(){
-  var button=document.getElementById('summaryRefresh'),status=document.getElementById('summaryRefreshStatus');
-  if(!button)return;
-  function loadFresh(name){
-    return new Promise(function(resolve,reject){
-      var script=document.createElement('script'),url=name+(name.indexOf('?')<0?'?':'&')+'_refresh='+Date.now();
-      script.src=url;script.async=false;
-      script.onload=function(){script.remove();resolve();};
-      script.onerror=function(){script.remove();reject(new Error(name));};
-      document.head.appendChild(script);
-    });
-  }
-  button.addEventListener('click',async function(){
-    button.disabled=true;button.textContent='读取中…';status.textContent='正在读取数据管线';
-    try{
-      await loadFresh('db_data.js');
-      await loadFresh('summary_note.js');
-      await loadFresh('daily_overrides.js');
-      if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
-        var days=document.getElementById('days');window.TIN_SHEET.render(days?days.value:7);
-      }
-      if(window.TIN_SIMPLE_SUMMARY)window.TIN_SIMPLE_SUMMARY();
-      var now=new Date(),z=function(n){return (n<10?'0':'')+n;};
-      status.textContent='已更新 '+z(now.getHours())+':'+z(now.getMinutes());
-      button.textContent='已刷新';
-    }catch(e){
-      status.textContent='读取失败，内容未清空，请稍后重试';button.textContent='重新刷新';
-    }finally{
-      button.disabled=false;
-      setTimeout(function(){button.textContent='刷新红字';},2200);
-    }
-  });
-})();
-</script>
 <script>
 /* 无图表时工作区收成一条，点击标题展开操作条；有图表后操作条常显 */
 (function(){
