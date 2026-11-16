@@ -125,6 +125,40 @@
       }
     });
   }
+  function addCash3MChart() {
+    if (!window.Chart) return;
+    var pts = recent('d737', '2026-10-01');
+    if (!pts.length) return;
+    var box = document.createElement('div');
+    box.className = 'cbox customs-chart cash3m-chart';
+    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜SMM 正式日线）</span></div><div class="cc"><canvas></canvas></div>';
+    var host = document.getElementById('charts');
+    var indonesia = host.querySelector('.indonesia-chart');
+    host.insertBefore(box, indonesia ? indonesia.nextSibling : host.firstChild);
+    new window.Chart(box.querySelector('canvas').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: pts.map(function (p) { return p[0]; }),
+        datasets: [{ label: 'Cash-3M', data: pts.map(function (p) { return p[1]; }),
+          borderColor: RED, backgroundColor: RED, borderWidth: 2,
+          pointRadius: 2, pointHoverRadius: 4, tension: 0.15 }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: function (ctx) {
+            return 'Cash-3M：' + Number(ctx.parsed.y).toLocaleString('zh-CN', { maximumFractionDigits: 2 }) + ' 美元/吨';
+          } } }
+        },
+        scales: {
+          x: { ticks: { maxTicksLimit: 10, maxRotation: 0 }, grid: { display: false } },
+          y: { beginAtZero: false, ticks: { callback: function (v) { return Number(v).toLocaleString('zh-CN'); } } }
+        }
+      }
+    });
+  }
   function tunePremiumChart() {
     document.querySelectorAll('#charts .cbox').forEach(function (box) {
       if (!/三档升贴水/.test(titleOf(box))) return;
@@ -168,5 +202,6 @@
   removeCopperChart();
   addCustomsCharts();
   addIndonesiaChart();
+  addCash3MChart();
   tunePremiumChart();
 })();
