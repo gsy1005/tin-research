@@ -74,7 +74,7 @@ function dailyUpdate(req, res) {
       env['IN_SIGNAL_' + key.toUpperCase()] = value;
     }
     const run = spawnSync(process.env.PYTHON || 'python', ['tools/apply_manual_inputs.py'], {
-      cwd: ROOT, env: { ...process.env, ...env }, encoding: 'utf8', timeout: 120000,
+      cwd: ROOT, env: { ...process.env, ...env }, encoding: 'utf8', timeout: 480000,
       windowsHide: true, maxBuffer: 4 * 1024 * 1024
     });
     if (run.error) return sendJson(res, 500, { ok: false, error: '更新程序启动失败：' + run.error.message });

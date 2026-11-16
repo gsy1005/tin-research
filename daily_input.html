@@ -22,7 +22,7 @@
 <div class="field"><label for="trx">下游成交 <span>吨</span></label><input id="trx" type="number" step="any" required><input id="trxDate" type="date" aria-label="下游成交数据日期" required></div>
 <div class="field"><label for="trt">同业成交 <span>吨</span></label><input id="trt" type="number" step="any" required><input id="trtDate" type="date" aria-label="同业成交数据日期" required></div>
 <div class="field"><label for="yx">云锡升贴水 <span>元/吨</span></label><input id="yx" type="number" step="any" required><input id="yxDate" type="date" aria-label="云锡升贴水数据日期" required></div>
-<div class="field"><label for="sox">SOX 收盘价 <span>点</span></label><input id="sox" type="number" step="any" required><input id="soxDate" type="date" aria-label="SOX 数据日期" required></div>
+<div class="field"><label for="sox">SOX 收盘价 <span>点；留空=自动抓取</span></label><input id="sox" type="number" step="any"><input id="soxDate" type="date" aria-label="SOX 数据日期"></div>
 </div></section>
 <section class="card"><h2>02 · 宏观与 AI</h2><div class="fields">
 <div class="field wide"><label for="macroToday">今日变化 <span>中东、油价、AI 财报及 SOX 等</span></label><textarea id="macroToday" class="large"></textarea></div>
@@ -96,7 +96,7 @@
       }
       var r=await fetch('/api/daily-update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(v)}),raw=await r.text(),out;
       try{out=JSON.parse(raw);}catch(parseError){throw new Error('写入接口未返回 JSON（HTTP '+r.status+'）。请确认使用 npm run dev 启动本地预览；线上请使用上方工作流');}
-      if(!r.ok||!out.ok)throw new Error(out.error||('HTTP '+r.status));localStorage.removeItem('TIN_DAILY_INPUT_DRAFT');statusEl.className='status ok';statusEl.textContent='更新完成：'+out.date+'，日报与供需策略已同步';var s=out.summary||{};preview.textContent='【宏观】\n'+(s.A||'')+'\n\n【基本面】\n'+(s.B||'')+'\n\n【策略】\n'+(s.D||'');
+      if(!r.ok||!out.ok)throw new Error(out.error||('HTTP '+r.status));localStorage.removeItem('TIN_DAILY_INPUT_DRAFT');statusEl.className='status '+(out.publicMarket&&out.publicMarket.ok===false?'err':'ok');statusEl.textContent='更新完成：'+out.date+'，日报与供需策略已同步'+(out.publicMarket&&out.publicMarket.ok===false?'；部分公开行情抓取失败，已保留旧值':'，公开行情已同步');var s=out.summary||{};preview.textContent='【宏观】\n'+(s.A||'')+'\n\n【基本面】\n'+(s.B||'')+'\n\n【策略】\n'+(s.D||'')+(out.publicMarket&&out.publicMarket.ok===false?'\n\n【公开行情失败项】\n'+JSON.stringify(out.publicMarket.failed):'');
     }catch(err){statusEl.className='status err';statusEl.textContent='更新失败：'+err.message+'（草稿已保留）';preview.textContent='请确认本地预览服务已启动；若在静态页面使用，请复制管线补充信息，再进入“日报一键更新”工作流运行。';}
     finally{btn.disabled=false;}
   });

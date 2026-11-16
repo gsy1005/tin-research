@@ -18,8 +18,8 @@ on:
         description: '今日印尼交易所成交量（吨；无成交填0）★必填'
         required: true
       sox:
-        description: '最新SOX收盘价（点）★必填'
-        required: true
+        description: '最新SOX收盘价（点；留空=自动抓取）'
+        required: false
       shfe:
         description: '今日SHFE仓单（吨）★必填'
         required: true

@@ -7,6 +7,8 @@ GitHub Actions 使用 IN_NOTES 多行文本；本地填报工具可使用同名�
 import json
 import os
 import re
+import subprocess
+import sys
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -176,7 +178,25 @@ def indonesia_analysis(by_key):
     return analysis
 
 
+def update_public_market():
+    if os.environ.get("IN_SKIP_PUBLIC_FETCH", "").strip() == "1":
+        return None
+    run = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "fetch_public_market_data.py")],
+        cwd=ROOT, text=True, encoding="utf-8", capture_output=True, timeout=450,
+    )
+    if run.returncode:
+        return {"ok": False, "updated": [], "failed": [{"indicator": "public_market",
+                "error": (run.stderr or run.stdout or "公开行情程序执行失败").strip()[-1000:]}]}
+    try:
+        return json.loads(run.stdout.strip().splitlines()[-1])
+    except Exception as exc:
+        return {"ok": False, "updated": [], "failed": [{"indicator": "public_market",
+                "error": f"公开行情结果解析失败：{exc}"}]}
+
+
 def main():
+    public_market = update_public_market()
     header, db = load_js_json(DB_PATH, "window.DB_DATA=window.DB_DATA=")
     by_key = {x["k"]: x for x in db}
     # 工作流写明“默认今天”，不能再用可能滞后的 SMM 价格日期作为日报日期。
@@ -265,7 +285,7 @@ def main():
         NOTE_PATH.write_text("window.TIN_SUMMARY_NOTE = " + json.dumps(note, ensure_ascii=False) + ";\n", encoding="utf-8")
 
     print(json.dumps({"ok": True, "date": day, "numeric": sorted(numeric), "notes": bool(new_notes),
-                      "summary": note}, ensure_ascii=False))
+                      "publicMarket": public_market, "summary": note}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
