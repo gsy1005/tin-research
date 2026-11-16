@@ -47,7 +47,7 @@ function dailyUpdate(req, res) {
       return sendJson(res, 400, { ok: false, error: '请填写有效日期' });
     }
     const env = { IN_DATE: body.date };
-    const numbers = { trx: 'IN_TRX', trt: 'IN_TRT', shfe: 'IN_SHFE', yx: 'IN_YX', sox: 'IN_SOX', idn: 'IN_IDN' };
+    const numbers = { trx: 'IN_TRX', trt: 'IN_TRT', shfe: 'IN_SHFE', yx: 'IN_YX', sox: 'IN_SOX', idn: 'IN_IDN', cash: 'IN_CASH' };
     const dates = body.dates || {};
     for (const [key, name] of Object.entries(numbers)) {
       const value = String(body[key] == null ? '' : body[key]).trim();

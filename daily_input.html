@@ -12,13 +12,14 @@
 <body>
 <header class="top"><h1>每日填报</h1><span class="sub">一次填写，同步数据日报 + 供需策略 + 日度评分</span><span class="spacer"></span><a class="btn light" href="index.html?v=sheet" target="_top">数据日报</a><a class="btn light" href="index.html?v=strategy" target="_top">供需策略</a></header>
 <main class="wrap">
-<div class="notice"><span id="environmentText">本地预览中点击“一键更新日报”会直接修改项目文件。修改上方主日期会同步六项数据日期；印尼、SOX 等沿用旧数据时，可单独保留下方原日期，避免重复累计。草稿自动保存在本机浏览器。</span> <a id="workflowLink" href="https://github.com/gsy1005/tin-research/actions/workflows/update_daily.yml" target="_blank" rel="noopener" hidden>打开“日报一键更新”工作流 →</a></div>
+<div class="notice"><span id="environmentText">本地预览中点击“一键更新日报”会直接修改项目文件。修改上方主日期会同步七项数据日期；印尼、SOX 等沿用旧数据时，可单独保留下方原日期，避免重复累计。草稿自动保存在本机浏览器。</span> <a id="workflowLink" href="https://github.com/gsy1005/tin-research/actions/workflows/update_daily.yml" target="_blank" rel="noopener" hidden>打开“日报一键更新”工作流 →</a></div>
 <form id="dailyForm">
 <div class="grid">
 <section class="card full"><h2>01 · 日度数据</h2><div class="fields">
 <div class="field"><label for="date">日报日期</label><input id="date" type="date" required></div>
 <div class="field"><label for="shfe">SHFE 仓单 <span>吨</span></label><input id="shfe" type="number" step="any" required><input id="shfeDate" type="date" aria-label="SHFE 仓单数据日期" required></div>
 <div class="field"><label for="idn">印尼交易所成交 <span>吨；无成交填 0</span></label><input id="idn" type="number" step="any" required><input id="idnDate" type="date" aria-label="印尼成交数据日期" required></div>
+<div class="field"><label for="cash">LME Cash-3M <span>美元/吨</span></label><input id="cash" type="number" step="any" required><input id="cashDate" type="date" aria-label="Cash-3M 数据日期" required></div>
 <div class="field"><label for="trx">下游成交 <span>吨</span></label><input id="trx" type="number" step="any" required><input id="trxDate" type="date" aria-label="下游成交数据日期" required></div>
 <div class="field"><label for="trt">同业成交 <span>吨</span></label><input id="trt" type="number" step="any" required><input id="trtDate" type="date" aria-label="同业成交数据日期" required></div>
 <div class="field"><label for="yx">云锡升贴水 <span>元/吨</span></label><input id="yx" type="number" step="any" required><input id="yxDate" type="date" aria-label="云锡升贴水数据日期" required></div>
@@ -53,13 +54,13 @@
 <section class="card full"><h2>更新结果预览</h2><div class="preview" id="preview">提交后显示本次生成的红字宏观、基本面与策略。</div><div class="footer">同步位置：数据日报红字 A/B/C/D、供需表日度变化与日度结论、日度策略、日度评分。周度框架不随每日填报自动改写。</div></section>
 </div></form>
 </main>
-<script src="db_data.js"></script><script src="daily_overrides.js"></script>
+<script src="db_data.js?v=20261117-cash-input"></script><script src="daily_overrides.js?v=20261117-cash-input"></script>
 <script>
 (function(){
   var form=document.getElementById('dailyForm'),statusEl=document.getElementById('status'),preview=document.getElementById('preview');
   var textKeys=['macroToday','macroWatch','ai','fundamentals','mine','spot','lme','other','demand','position','sentiment','strategy'];
-  var numKeys=['trx','trt','shfe','yx','idn','sox'];
-  var seriesKey={trx:'d72',trt:'d71',shfe:'d339',yx:'d65',idn:'d480',sox:'d557'};
+  var numKeys=['trx','trt','shfe','yx','idn','cash','sox'];
+  var seriesKey={trx:'d72',trt:'d71',shfe:'d339',yx:'d65',idn:'d480',cash:'d737',sox:'d557'};
   function latest(k){var row=(window.DB_DATA||[]).find(function(x){return x.k===k;});return row&&row.s.length?row.s[row.s.length-1]:null;}
   function set(id,value){document.getElementById(id).value=value==null?'':value;}
   function loadCurrent(){
@@ -79,7 +80,7 @@
   }
   var staticHost=/(^|\.)github\.io$/i.test(window.location.hostname),workflowLink=document.getElementById('workflowLink');
   if(staticHost){
-    document.getElementById('environmentText').textContent='当前为线上静态页，不能直接写入项目文件。点击“复制并准备更新”会自动复制管线补充信息；再打开工作流，填写六项数值并把补充信息粘贴到 notes 后运行。草稿自动保存在本机浏览器。';
+    document.getElementById('environmentText').textContent='当前为线上静态页，不能直接写入项目文件。点击“复制并准备更新”会自动复制管线补充信息；再打开工作流，填写七项数值并把补充信息粘贴到 notes 后运行。草稿自动保存在本机浏览器。';
     workflowLink.hidden=false;document.getElementById('submitBtn').textContent='复制并准备更新';
   }
   document.getElementById('date').addEventListener('change',function(){var day=this.value;numKeys.forEach(function(k){set(k+'Date',day);});});

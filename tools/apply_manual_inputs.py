@@ -205,7 +205,8 @@ def main():
 
     numeric = {}
     for env_name, key in [("IN_TRX", "d72"), ("IN_TRT", "d71"), ("IN_SHFE", "d339"),
-                          ("IN_YX", "d65"), ("IN_SOX", "d557"), ("IN_IDN", "d480")]:
+                          ("IN_YX", "d65"), ("IN_SOX", "d557"), ("IN_IDN", "d480"),
+                          ("IN_CASH", "d737")]:
         value = os.environ.get(env_name, "").strip()
         if value:
             value_day = os.environ.get(env_name + "_DATE", "").strip() or day

@@ -65,10 +65,6 @@
       var cell = row.cells[column - 2 + offset];
       if (!cell) continue;
       var result = valueOnOrBefore(points, dates[column]);
-      /* 用户提供的 11/16 最新值；历史正式日线不做覆盖。 */
-      if (key === 'd737' && dates[column] === '2026-11-16') {
-        result = { date: '2026-11-16', value: 700 };
-      }
       setText(cell, result ? result.value.toLocaleString('zh-CN', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals

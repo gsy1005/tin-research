@@ -131,7 +131,7 @@
     if (!pts.length) return;
     var box = document.createElement('div');
     box.className = 'cbox customs-chart cash3m-chart';
-    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜SMM 正式日线）</span></div><div class="cc"><canvas></canvas></div>';
+    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜日线）</span></div><div class="cc"><canvas></canvas></div>';
     var host = document.getElementById('charts');
     var indonesia = host.querySelector('.indonesia-chart');
     host.insertBefore(box, indonesia ? indonesia.nextSibling : host.firstChild);
