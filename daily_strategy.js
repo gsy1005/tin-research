@@ -131,16 +131,17 @@
     document.querySelectorAll('#weeksumBody [data-field]').forEach(function(td){var label=td.querySelector('.signal-label');values[td.dataset.key+'|'+td.dataset.field]=(label?label.textContent:td.textContent).trim();});
     writeStore(STORE_WEEK,{stamp:stamp,values:values});
   }
+  function currentInputStamp(){return hash(JSON.stringify(input||{}));}
   function saveDailyCells(){
     var values={};
     document.querySelectorAll('#weeksumBody [data-daily-key]').forEach(function(td){values['change:'+td.dataset.dailyKey]=td.textContent.trim();});
     document.querySelectorAll('#weeksumBody [data-daily-conclusion-key]').forEach(function(td){values['conclusion:'+td.dataset.dailyConclusionKey]=td.textContent.trim();});
     document.querySelectorAll('#weeksumBody [data-daily-signal-key]').forEach(function(td){var label=td.querySelector('.signal-label');values['signal:'+td.dataset.dailySignalKey]=(label?label.textContent:td.textContent).trim();});
-    writeStore(STORE_DAY,{date:dayStamp,values:values});
+    writeStore(STORE_DAY,{date:dayStamp,inputStamp:currentInputStamp(),values:values});
   }
   function updateDaily(){
     var c=context();dayStamp=c.day;
-    var edits=readStore(STORE_DAY),values=edits&&edits.date===dayStamp?edits.values:{};
+    var edits=readStore(STORE_DAY),values=edits&&edits.date===dayStamp&&edits.inputStamp===currentInputStamp()?edits.values:{};
     source.rows.forEach(function(row){
       var td=document.querySelector('#weeksumBody [data-daily-key="'+row.key+'"]');
       if(td)td.textContent=values['change:'+row.key]||values[row.key]||dailyText(row.key,c);
@@ -157,7 +158,7 @@
     renderScore(c);
     var title=document.getElementById('dailyStrategyTitle');if(title)title.textContent='日度策略 · '+c.label;
     var el=document.getElementById('dailyStrategyText'),saved=readStore(STORE_DS);
-    if(el)el.textContent=saved&&saved.date===dayStamp&&saved.text?saved.text:autoStrategy(c);
+    if(el)el.textContent=saved&&saved.date===dayStamp&&saved.inputStamp===currentInputStamp()&&saved.text?saved.text:autoStrategy(c);
   }
   function render(next){
     source=next;stamp=hash(JSON.stringify(next));
@@ -266,7 +267,7 @@
     if(t.matches('#weeksumBody [data-daily-key], #weeksumBody [data-daily-conclusion-key], #weeksumBody [data-daily-signal-key]'))saveDailyCells();
     else if(t.matches('#weeksumBody [data-field]'))saveWeekly();
     else if(t.id==='weeklyStrategyText')writeStore(STORE_WS,{stamp:stamp,text:t.textContent.trim()});
-    else if(t.id==='dailyStrategyText')writeStore(STORE_DS,{date:dayStamp,text:t.textContent.trim()});
+    else if(t.id==='dailyStrategyText')writeStore(STORE_DS,{date:dayStamp,inputStamp:currentInputStamp(),text:t.textContent.trim()});
   });
   render(archive&&archive.weekly?archive.weekly:fallback);if(!archive)fetchWeekly();
   if(window.TIN_SHEET&&typeof window.TIN_SHEET.render==='function'){
