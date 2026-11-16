@@ -127,34 +127,54 @@
   }
   function addCash3MChart() {
     if (!window.Chart) return;
+    /* 完整历史仍保存在 d737；图中仅叠加最近五个年份，避免早年极值压平近期月差。 */
     var pts = series('d737').filter(function (p) { return typeof p[1] === 'number'; });
     if (!pts.length) return;
+    var latestYear = Number(pts[pts.length - 1][0].slice(0, 4));
+    var years = [];
+    for (var year = latestYear - 4; year <= latestYear; year++) years.push(String(year));
+    var selected = pts.filter(function (p) { return years.indexOf(p[0].slice(0, 4)) !== -1; });
+    var labels = Array.from(new Set(selected.map(function (p) { return p[0].slice(5); }))).sort();
+    var colors = ['#8c8c8c', BLUE, '#2a9d8f', '#b07d2b', RED];
+    var datasets = years.map(function (year, i) {
+      var byDay = {};
+      selected.forEach(function (p) {
+        if (p[0].slice(0, 4) === year) byDay[p[0].slice(5)] = p[1];
+      });
+      var current = year === String(latestYear);
+      return {
+        label: year + (current ? '（最新）' : ''),
+        data: labels.map(function (day) { return Object.prototype.hasOwnProperty.call(byDay, day) ? byDay[day] : null; }),
+        borderColor: colors[i], backgroundColor: colors[i], borderWidth: current ? 3 : 1.4,
+        pointRadius: 0, pointHoverRadius: 4, tension: 0.08, spanGaps: true
+      };
+    });
+    var values = selected.map(function (p) { return p[1]; });
+    var min = Math.min.apply(Math, values), max = Math.max.apply(Math, values);
+    var padding = Math.max((max - min) * 0.08, 20);
     var box = document.createElement('div');
     box.className = 'cbox customs-chart cash3m-chart';
-    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜2006 至今完整日线）</span></div><div class="cc"><canvas></canvas></div>';
+    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜' + years[0] + '—' + latestYear + ' 季节图）</span></div><div class="cc" style="height:300px"><canvas></canvas></div>';
     var host = document.getElementById('charts');
     var indonesia = host.querySelector('.indonesia-chart');
     host.insertBefore(box, indonesia ? indonesia.nextSibling : host.firstChild);
     new window.Chart(box.querySelector('canvas').getContext('2d'), {
       type: 'line',
-      data: {
-        labels: pts.map(function (p) { return p[0]; }),
-        datasets: [{ label: 'Cash-3M', data: pts.map(function (p) { return p[1]; }),
-          borderColor: RED, backgroundColor: RED, borderWidth: 1.5,
-          pointRadius: 0, pointHoverRadius: 3, tension: 0.05 }]
-      },
+      data: { labels: labels, datasets: datasets },
       options: {
         responsive: true, maintainAspectRatio: false, animation: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-          legend: { display: false },
+          legend: { position: 'top', labels: { boxWidth: 14, boxHeight: 8, font: { size: 11 } } },
           tooltip: { callbacks: { label: function (ctx) {
-            return 'Cash-3M：' + Number(ctx.parsed.y).toLocaleString('zh-CN', { maximumFractionDigits: 2 }) + ' 美元/吨';
+            if (ctx.parsed.y === null) return ctx.dataset.label + '：无数据';
+            return ctx.dataset.label + '：' + Number(ctx.parsed.y).toLocaleString('zh-CN', { maximumFractionDigits: 2 }) + ' 美元/吨';
           } } }
         },
         scales: {
-          x: { ticks: { maxTicksLimit: 10, maxRotation: 0 }, grid: { display: false } },
-          y: { beginAtZero: false, ticks: { callback: function (v) { return Number(v).toLocaleString('zh-CN'); } } }
+          x: { ticks: { maxTicksLimit: 12, maxRotation: 0 }, grid: { display: false } },
+          y: { beginAtZero: false, min: min - padding, max: max + padding,
+            ticks: { callback: function (v) { return Number(v).toLocaleString('zh-CN'); } } }
         }
       }
     });
