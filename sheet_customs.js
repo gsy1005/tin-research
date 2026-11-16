@@ -127,11 +127,11 @@
   }
   function addCash3MChart() {
     if (!window.Chart) return;
-    var pts = recent('d737', '2026-10-01');
+    var pts = series('d737').filter(function (p) { return typeof p[1] === 'number'; });
     if (!pts.length) return;
     var box = document.createElement('div');
     box.className = 'cbox customs-chart cash3m-chart';
-    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜日线）</span></div><div class="cc"><canvas></canvas></div>';
+    box.innerHTML = '<div class="ct"><span>LME Cash-3M（美元/吨｜2006 至今完整日线）</span></div><div class="cc"><canvas></canvas></div>';
     var host = document.getElementById('charts');
     var indonesia = host.querySelector('.indonesia-chart');
     host.insertBefore(box, indonesia ? indonesia.nextSibling : host.firstChild);
@@ -140,8 +140,8 @@
       data: {
         labels: pts.map(function (p) { return p[0]; }),
         datasets: [{ label: 'Cash-3M', data: pts.map(function (p) { return p[1]; }),
-          borderColor: RED, backgroundColor: RED, borderWidth: 2,
-          pointRadius: 2, pointHoverRadius: 4, tension: 0.15 }]
+          borderColor: RED, backgroundColor: RED, borderWidth: 1.5,
+          pointRadius: 0, pointHoverRadius: 3, tension: 0.05 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false, animation: false,
