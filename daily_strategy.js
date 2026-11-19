@@ -61,14 +61,17 @@
       return (c.price?dayLabel(c.price[0]):d)+' SMM 1#锡 '+(c.price?fmt(c.price[1]):'—')+' 元/吨'+(m?'，日'+m[2]+' '+m[3]+' 元/吨':'')+(priceNote?'；'+priceNote:'');
     }
     if(key==='macro'){var mt=inputValue('macroToday'),mw=inputValue('macroWatch');if(mt||mw)return d+' 今日变化：'+mt+'；后续关注：'+mw;return d+' 近期中东局势有所缓和，但仍需防范协议仅为暂时、选举前后局势反复；油价接近 120 美元前高压力位。今晚关注 FOMC，基准情形是不加息，重点关注沃什讲话';}
-    if(key==='ai')return soxDaily(c)+'；'+(inputValue('ai')||'Anthropic 招股书及三星、海力士三季报获得市场较正面反馈，继续跟踪 SOX 变化');
+    if(key==='ai')return inputValue('ai')?d+' '+inputValue('ai'):soxDaily(c)+'；Anthropic 招股书及三星、海力士三季报获得市场较正面反馈，继续跟踪 SOX 变化';
     if(key==='position')return inputValue('position')||'10/28 云锡三席位 sn2611 合计净空单 988 手（银河 435、东海 313、光大 240），较 10/27 合计减少 298 手';
     if(key==='mine')return inputValue('mine')?d+' '+inputValue('mine'):'10/28 矿端点价约千吨，锭端点价较少，主要为此前已交货但未定价的货源；天马矿明年配额可能存在问题，目前待核实';
     if(key==='smelt'){var sm=[inputValue('smelt'),inputValue('fundamentals')].filter(Boolean).join('；');return sm?d+' '+sm:d+' 云锡已开始点火，后续关注能否稳定产出产品；周度开工与产量继续跟踪';}
     if(key==='demand')return (c.down?dayLabel(c.down[0]):d)+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨')+'；'+(inputValue('demand')||'本周消费整体偏弱，此前去库仍主要依赖低位点价');
-    if(key==='spot')return (c.down?dayLabel(c.down[0]):d)+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较 '+(c.pDown?dayLabel(c.pDown[0]):'前一日')+' '+signed(c.total-c.oldTotal)+' 吨':'')+'；云锡升水最新为 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨'+(c.prem?'（'+dayLabel(c.prem[0])+'）':'')+'；'+(inputValue('spot')||'关注贸易商是交仓，还是继续移仓至 12 月挺价');
+    if(key==='spot'){
+      var deal=(c.down&&c.trade&&c.down[0]===c.trade[0])?(dayLabel(c.down[0])+' 总成交 '+(c.total===null?'—':fmt(c.total))+' 吨'+(c.total!==null&&c.oldTotal!==null?'，较 '+(c.pDown?dayLabel(c.pDown[0]):'前一日')+' '+signed(c.total-c.oldTotal)+' 吨':'')):(c.down?dayLabel(c.down[0]):d)+' 下游成交 '+(c.down?fmt(c.down[1]):'—')+' 吨，'+changeText(c.down,c.pDown,' 吨')+'；今日未提供同业成交，不计算总成交';
+      return deal+'；云锡升水最新为 '+(c.prem?fmt(c.prem[1]):'—')+' 元/吨'+(c.prem?'（'+dayLabel(c.prem[0])+'）':'')+'；'+(inputValue('spot')||'关注贸易商是交仓，还是继续移仓至 12 月挺价');
+    }
     if(key==='spread'){var sp=inputValue('spread')||inputValue('other');return sp?d+' '+sp:'10/28 SN 换月基差走弱，12 月挺价力度不足，11 月也在走弱；最新价差数值待补充';}
-    if(key==='inventory'){var social=c.social?'；Mysteel 周度社库 '+fmt(c.social[1])+' 吨（'+dayLabel(c.social[0])+'），'+changeText(c.social,c.pSocial,' 吨'):'';return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME '+(inputValue('lme')||'今日未更新库存，最新仍为 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'）':''))+social;}
+    if(key==='inventory'){var social=c.social?'；Mysteel 周度社库 '+fmt(c.social[1])+' 吨（'+dayLabel(c.social[0])+'），'+changeText(c.social,c.pSocial,' 吨'):'';var inventoryNote=inputValue('inventory');if(inventoryNote)return d+' '+inventoryNote+social;return d+' SHFE 仓单 '+(c.wh?fmt(c.wh[1]):'—')+' 吨（'+(c.wh?dayLabel(c.wh[0]):'—')+'），'+changeText(c.wh,c.pWh,' 吨')+'；LME '+(inputValue('lme')||'今日未更新库存，最新仍为 '+(c.lme?fmt(c.lme[1]):'—')+' 吨'+(c.lme?'（'+dayLabel(c.lme[0])+'）':''))+social;}
     if(key==='risk'){var rk=inputValue('risk');if(rk)return d+' '+rk;return c.wh&&c.pWh&&c.wh[1]<c.pWh[1]&&c.total!==null&&c.oldTotal!==null&&c.total<c.oldTotal?d+' 仓单下降但成交缩量，云锡点火复产与近月低库存并存，双向波动风险仍高':d+' 关注仓单、成交与宏观消息的反向扰动，避免单边追涨杀跌';}
     return '';
   }
