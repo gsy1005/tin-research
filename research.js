@@ -78,7 +78,13 @@ register('demand-tinplate', '马口铁', ['重点关注', '需求'], demandGroup
 register('demand-semi', '半导体', solderTrail, demandGroups[8] || []);
 
 /* Other weekly pages */
-register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
+const tradeMarker = id('trade');
+if (tradeMarker) {
+  register('spot', '现货与基差', ['重点关注'], takeUntil(id('spot'), tradeMarker));
+  register('trade', '进出口', ['重点关注'], takeUntil(tradeMarker, id('strategy')));
+} else {
+  register('spot', '现货与进出口', ['重点关注'], takeUntil(id('spot'), id('strategy')));
+}
 register('strategy', '策略与验证点', ['重点关注'], takeUntil(id('strategy'), id('lab')));
 register('lab', '图表工作区', ['图表工作区'], takeUntil(id('lab'), id('ai-detail')));
 register('cost', '矿山成本与边际', ['重点关注', '供给'], takeUntil(id('minecost'), $('h2[data-detail-chapter]', wrap)));
@@ -163,7 +169,7 @@ const NAV = [
       page('demand-battery', '铅蓄电池')
     ], true),
     page('ai', 'AI 高频验证'),
-    page('spot', '现货与进出口'), page('strategy', '策略与验证点')
+    ...(registry.has('trade') ? [page('spot', '现货与基差'), page('trade', '进出口')] : [page('spot', '现货与进出口')]), page('strategy', '策略与验证点')
   ], true),
   page('balance', '平衡表与全年情景'),
   group('AI 耗锡专题', aiIds.filter(pid => registry.has(pid)).map(pid => page(pid, aiLabels[aiIds.indexOf(pid)]))),
@@ -573,7 +579,7 @@ $('#prevPage').addEventListener('click', () => stepPage(-1));
 $('#nextPage').addEventListener('click', () => stepPage(1));
 
 /* Legacy in-report anchors route to the corresponding independent page. */
-const anchorRoutes = { '#sumsec': 'summary', '#q4outlook': 'quarter', '#framework': 'framework', '#focus': 'focus-sentiment', '#sentiment': 'focus-sentiment', '#ai': 'ai', '#supply': 'supply-mine', '#smelt': 'supply-smelt', '#invsec': 'inventory', '#balance': 'balance', '#demand': 'demand-solder', '#spot': 'spot', '#strategy': 'strategy', '#lab': 'lab', '#ai-detail': 'ai-core', '#minecost': 'cost', '#decks': 'detail-supply-mine' };
+const anchorRoutes = { '#sumsec': 'summary', '#q4outlook': 'quarter', '#framework': 'framework', '#focus': 'focus-sentiment', '#sentiment': 'focus-sentiment', '#ai': 'ai', '#supply': 'supply-mine', '#smelt': 'supply-smelt', '#invsec': 'inventory', '#balance': 'balance', '#demand': 'demand-solder', '#spot': 'spot', '#trade': 'trade', '#strategy': 'strategy', '#lab': 'lab', '#ai-detail': 'ai-core', '#minecost': 'cost', '#decks': 'detail-supply-mine' };
 wrap.addEventListener('click', event => {
   const anchor = event.target.closest('a[href^="#"]'); if (!anchor) return;
   const hash = anchor.getAttribute('href');
